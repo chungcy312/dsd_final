@@ -26,8 +26,8 @@ set_load         1     [all_outputs]
 # TODO: You NEED to modify the constraints to pass gate-level simulation correctly (check TB and slow_memory)
 # Note: You may also add more constraints for your design (but do not overwrite the existing ones in above section)
 #####################################################
-set t_in   0.0
-set t_out  0.0
+set t_in   [expr $cycle * 0.5]
+set t_out  [expr $cycle * 0.5]
 set_input_delay  $t_in  -clock CLK [remove_from_collection [all_inputs] [get_ports clk]]
 set_output_delay $t_out -clock CLK [all_outputs]
 #####################################################
