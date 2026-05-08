@@ -1,0 +1,31 @@
+13_00_00_00 // 0x00 nop
+6F_00_00_06 // 0x04 jal x0,0x64 // to Main
+23_2E_80_3E // 0x08 sw x8,0x3FC(x0) // unused OutputTestPort
+67_80_00_00 // 0x0C jalr x0,x1,0
+93_05_00_01 // 0x10 addi x11,x0,16
+93_04_00_00 // 0x14 addi x9,x0,0
+13_05_10_00 // 0x18 addi x10,x0,1
+93_07_00_00 // 0x1C addi x15,x0,0
+23_A0_97_00 // 0x20 sw x9,0(x15)
+93_87_47_00 // 0x24 addi x15,x15,4
+23_A0_A7_00 // 0x28 sw x10,0(x15)
+13_84_04_00 // 0x2C addi x8,x9,0
+13_00_00_00 // 0x30 nop // was jal x1,OutputTestPort
+13_04_05_00 // 0x34 addi x8,x10,0
+13_00_00_00 // 0x38 nop // was jal x1,OutputTestPort
+13_06_20_00 // 0x3C addi x12,x0,2
+33_05_95_00 // 0x40 add x10,x10,x9
+B3_04_95_40 // 0x44 sub x9,x10,x9
+93_87_47_00 // 0x48 addi x15,x15,4
+23_A0_A7_00 // 0x4C sw x10,0(x15)
+13_04_05_00 // 0x50 addi x8,x10,0
+13_00_00_00 // 0x54 nop // was jal x1,OutputTestPort
+13_06_16_00 // 0x58 addi x12,x12,1
+E3_12_B6_FE // 0x5C bne x12,x11,0x40
+67_00_01_00 // 0x60 jalr x0,x2,0
+13_01_00_07 // 0x64 addi x2,x0,0x70
+6F_F0_9F_FA // 0x68 jal x0,0x10
+13_00_00_00 // 0x6C nop
+13_04_D0_D5 // 0x70 addi x8,x0,0xD5D
+13_00_00_00 // 0x74 nop
+13_00_00_00 // 0x78 nop

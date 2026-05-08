@@ -1,0 +1,5 @@
+13_00_00_00 // 0x00 nop
+13_08_80_0B // 0x04 addi x16,x0,0x0B8
+67_01_88_F5 // 0x08 jalr x2,x16,-168 // target 0x10, x2=0x0C
+93_01_F0_06 // 0x0C addi x3,x0,111 // wrong path, must be flushed
+23_20_20_00 // 0x10 sw x2,0(x0) // D[0]=12

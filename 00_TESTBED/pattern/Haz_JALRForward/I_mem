@@ -1,0 +1,6 @@
+13_00_00_00 // 0x00 nop
+93_00_40_01 // 0x04 addi x1,x0,20 // target 0x14
+67_81_00_00 // 0x08 jalr x2,x1,0 // base needs EX/MEM forward, x2=0x0C
+93_01_F0_06 // 0x0C addi x3,x0,111 // wrong path
+23_20_30_00 // 0x10 sw x3,0(x0) // must be flushed
+23_20_20_00 // 0x14 sw x2,0(x0) // D[0]=12

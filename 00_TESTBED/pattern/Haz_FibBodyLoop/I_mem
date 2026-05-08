@@ -1,0 +1,13 @@
+13_00_00_00 // 0x00 nop
+93_05_50_00 // 0x04 addi x11,x0,5 // loop until i == 5
+93_04_00_00 // 0x08 addi x9,x0,0 // f(i-2)
+13_05_10_00 // 0x0C addi x10,x0,1 // f(i-1)
+93_07_00_00 // 0x10 addi x15,x0,0 // store pointer
+13_06_20_00 // 0x14 addi x12,x0,2 // i
+33_05_95_00 // 0x18 add x10,x10,x9
+B3_04_95_40 // 0x1C sub x9,x10,x9 // uses x10 from previous add
+93_87_47_00 // 0x20 addi x15,x15,4
+23_A0_A7_00 // 0x24 sw x10,0(x15) // store current fib
+13_06_16_00 // 0x28 addi x12,x12,1
+E3_16_B6_FE // 0x2C bne x12,x11,0x18
+13_00_00_00 // 0x30 nop

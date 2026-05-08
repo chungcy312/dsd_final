@@ -109,6 +109,54 @@ module Final_tb;
 			$display("[INFO]: Testing with pattern <noHazard>");
 		`elsif hasHazard
 			$display("[INFO]: Testing with pattern <hasHazard>");
+		`elsif customHazard
+			$display("[INFO]: Testing with pattern <customHazard>");
+		`elsif hazEXMEMForward
+			$display("[INFO]: Testing with pattern <hazEXMEMForward>");
+		`elsif hazMEMWBForward
+			$display("[INFO]: Testing with pattern <hazMEMWBForward>");
+		`elsif hazStoreDataForward
+			$display("[INFO]: Testing with pattern <hazStoreDataForward>");
+		`elsif hazLoadUse
+			$display("[INFO]: Testing with pattern <hazLoadUse>");
+		`elsif hazLoadBranch
+			$display("[INFO]: Testing with pattern <hazLoadBranch>");
+		`elsif hazBranchForward
+			$display("[INFO]: Testing with pattern <hazBranchForward>");
+		`elsif hazJALFlush
+			$display("[INFO]: Testing with pattern <hazJALFlush>");
+		`elsif hazJALRForward
+			$display("[INFO]: Testing with pattern <hazJALRForward>");
+		`elsif hazJALRNegImm
+			$display("[INFO]: Testing with pattern <hazJALRNegImm>");
+		`elsif hazCallReturn
+			$display("[INFO]: Testing with pattern <hazCallReturn>");
+		`elsif hazDCacheConflictFlush
+			$display("[INFO]: Testing with pattern <hazDCacheConflictFlush>");
+		`elsif hazFibOnly
+			$display("[INFO]: Testing with pattern <hazFibOnly>");
+		`elsif hazBubbleOnly
+			$display("[INFO]: Testing with pattern <hazBubbleOnly>");
+		`elsif hazFibNoOutput
+			$display("[INFO]: Testing with pattern <hazFibNoOutput>");
+		`elsif hazAddiBneLoop
+			$display("[INFO]: Testing with pattern <hazAddiBneLoop>");
+		`elsif hazAdjacentAddiBne
+			$display("[INFO]: Testing with pattern <hazAdjacentAddiBne>");
+		`elsif hazBneBack28
+			$display("[INFO]: Testing with pattern <hazBneBack28>");
+		`elsif hazFibBodyLoop
+			$display("[INFO]: Testing with pattern <hazFibBodyLoop>");
+		`elsif hazFibBodyLong
+			$display("[INFO]: Testing with pattern <hazFibBodyLong>");
+		`elsif hazFibBodyGap
+			$display("[INFO]: Testing with pattern <hazFibBodyGap>");
+		`elsif hazFibInitBodyNoGap
+			$display("[INFO]: Testing with pattern <hazFibInitBodyNoGap>");
+		`elsif hazBranchFlushJalr
+			$display("[INFO]: Testing with pattern <hazBranchFlushJalr>");
+		`elsif hazStoreBranchFlushJalr
+			$display("[INFO]: Testing with pattern <hazStoreBranchFlushJalr>");
 		`elsif BrPred
 			$display("[INFO]: Testing with pattern <BrPred>");
 		`elsif Scaling

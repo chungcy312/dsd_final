@@ -1,0 +1,5 @@
+13_00_00_00 // 0x00 nop
+93_00_50_00 // 0x04 addi x1,x0,5
+93_04_00_00 // 0x08 addi x9,x0,0 // spacing instruction
+13_81_70_00 // 0x0C addi x2,x1,7 // needs MEM/WB forward x1
+23_20_20_00 // 0x10 sw x2,0(x0) // D[0]=12

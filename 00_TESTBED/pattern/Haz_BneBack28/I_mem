@@ -1,0 +1,13 @@
+13_00_00_00 // 0x00 nop
+93_00_40_00 // 0x04 addi x1,x0,4 // loop bound
+13_01_00_00 // 0x08 addi x2,x0,0 // counter
+13_00_00_00 // 0x0C nop
+13_01_11_00 // 0x10 addi x2,x2,1 // loop start, previous I-cache line
+13_00_00_00 // 0x14 nop
+13_00_00_00 // 0x18 nop
+13_00_00_00 // 0x1C nop
+13_00_00_00 // 0x20 nop
+13_00_00_00 // 0x24 nop
+13_00_00_00 // 0x28 nop
+E3_12_11_FE // 0x2C bne x2,x1,0x10 // backward -28, same style as Fibonacci 0x5C->0x40
+23_20_20_00 // 0x30 sw x2,0(x0) // D[0]=4

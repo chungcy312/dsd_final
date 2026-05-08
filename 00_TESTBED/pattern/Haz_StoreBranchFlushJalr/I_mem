@@ -1,0 +1,11 @@
+13_00_00_00 // 0x00 nop
+13_02_10_00 // 0x04 addi x4,x0,1
+23_20_40_00 // 0x08 sw x4,0(x0) // create D-cache miss/stall before branch
+93_00_10_00 // 0x0C addi x1,x0,1
+13_01_80_02 // 0x10 addi x2,x0,0x28 // wrong-path jalr target
+93_01_70_00 // 0x14 addi x3,x0,7
+63_96_00_00 // 0x18 bne x1,x0,0x24 // taken
+67_00_01_00 // 0x1C jalr x0,x2,0 // wrong path, must be flushed
+13_00_00_00 // 0x20 nop
+23_22_30_00 // 0x24 sw x3,4(x0) // D[1]=7
+13_00_00_00 // 0x28 nop // wrong-path target

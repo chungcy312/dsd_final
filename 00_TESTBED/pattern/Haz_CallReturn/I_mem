@@ -1,0 +1,9 @@
+13_00_00_00 // 0x00 nop
+13_04_A0_02 // 0x04 addi x8,x0,42
+EF_00_40_01 // 0x08 jal x1,+20 // call function at 0x1C, x1=0x0C
+93_02_10_02 // 0x0C addi x5,x0,33 // executed after return
+23_20_50_00 // 0x10 sw x5,0(x0) // D[0]=33 if return is correct
+6F_00_00_01 // 0x14 jal x0,+16 // skip function body after return
+13_00_00_00 // 0x18 nop
+23_2E_80_3E // 0x1C sw x8,0x3FC(x0) // function body, like OutputTestPort
+67_80_00_00 // 0x20 jalr x0,x1,0 // return through x1

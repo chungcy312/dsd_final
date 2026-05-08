@@ -1,0 +1,7 @@
+13_00_00_00 // 0x00 nop
+93_00_10_01 // 0x04 addi x1,x0,0x11
+23_20_10_00 // 0x08 sw x1,0(x0) // dirty low line
+13_01_20_02 // 0x0C addi x2,x0,0x22
+23_20_20_10 // 0x10 sw x2,0x100(x0) // same D-cache set as 0x000 for 16 direct-mapped blocks
+93_01_30_03 // 0x14 addi x3,x0,0x33
+23_20_30_00 // 0x18 sw x3,0(x0) // revisit low line after 0x100 access

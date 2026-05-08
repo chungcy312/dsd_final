@@ -1,0 +1,11 @@
+13_00_00_00 // 0x00 nop
+93_00_10_00 // 0x04 addi x1,x0,1
+13_01_40_02 // 0x08 addi x2,x0,0x24 // wrong-path jalr target
+93_01_70_00 // 0x0C addi x3,x0,7
+63_96_00_00 // 0x10 bne x1,x0,0x1C // taken
+67_00_01_00 // 0x14 jalr x0,x2,0 // wrong path, must be flushed
+13_00_00_00 // 0x18 nop
+23_20_30_00 // 0x1C sw x3,0(x0) // D[0]=7
+6F_00_80_00 // 0x20 jal x0,0x28 // skip wrong-path target
+13_00_00_00 // 0x24 nop // wrong-path target
+13_00_00_00 // 0x28 nop

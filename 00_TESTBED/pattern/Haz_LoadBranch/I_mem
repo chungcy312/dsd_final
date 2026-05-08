@@ -1,0 +1,8 @@
+13_00_00_00 // 0x00 nop
+83_20_40_00 // 0x04 lw x1,4(x0) // D[1]=5
+13_01_50_00 // 0x08 addi x2,x0,5
+63_86_20_00 // 0x0C beq x1,x2,+12 // load-use into branch compare
+93_01_F0_06 // 0x10 addi x3,x0,111 // wrong path
+23_20_30_00 // 0x14 sw x3,0(x0) // must be flushed
+93_01_60_01 // 0x18 addi x3,x0,22
+23_20_30_00 // 0x1C sw x3,0(x0) // D[0]=22

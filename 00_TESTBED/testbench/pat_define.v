@@ -28,6 +28,174 @@
     `define GOLDEN          "../00_TESTBED/pattern/Hazard/D_gold"
 `endif
 
+`ifdef customHazard
+	`define N_MEM_CHECK 	32
+	`define IMEM_INIT       "../00_TESTBED/pattern/CustomHazard/I_mem_customHazard"
+    `define DMEM_INIT       "../00_TESTBED/pattern/CustomHazard/D_mem"
+    `define GOLDEN          "../00_TESTBED/pattern/CustomHazard/D_gold"
+`endif
+
+`ifdef hazEXMEMForward
+	`define N_MEM_CHECK 	16
+	`define IMEM_INIT       "../00_TESTBED/pattern/Haz_EXMEMForward/I_mem"
+    `define DMEM_INIT       "../00_TESTBED/pattern/Haz_EXMEMForward/D_mem"
+    `define GOLDEN          "../00_TESTBED/pattern/Haz_EXMEMForward/D_gold"
+`endif
+
+`ifdef hazMEMWBForward
+	`define N_MEM_CHECK 	16
+	`define IMEM_INIT       "../00_TESTBED/pattern/Haz_MEMWBForward/I_mem"
+    `define DMEM_INIT       "../00_TESTBED/pattern/Haz_MEMWBForward/D_mem"
+    `define GOLDEN          "../00_TESTBED/pattern/Haz_MEMWBForward/D_gold"
+`endif
+
+`ifdef hazStoreDataForward
+	`define N_MEM_CHECK 	16
+	`define IMEM_INIT       "../00_TESTBED/pattern/Haz_StoreDataForward/I_mem"
+    `define DMEM_INIT       "../00_TESTBED/pattern/Haz_StoreDataForward/D_mem"
+    `define GOLDEN          "../00_TESTBED/pattern/Haz_StoreDataForward/D_gold"
+`endif
+
+`ifdef hazLoadUse
+	`define N_MEM_CHECK 	16
+	`define IMEM_INIT       "../00_TESTBED/pattern/Haz_LoadUse/I_mem"
+    `define DMEM_INIT       "../00_TESTBED/pattern/Haz_LoadUse/D_mem"
+    `define GOLDEN          "../00_TESTBED/pattern/Haz_LoadUse/D_gold"
+`endif
+
+`ifdef hazLoadBranch
+	`define N_MEM_CHECK 	16
+	`define IMEM_INIT       "../00_TESTBED/pattern/Haz_LoadBranch/I_mem"
+    `define DMEM_INIT       "../00_TESTBED/pattern/Haz_LoadBranch/D_mem"
+    `define GOLDEN          "../00_TESTBED/pattern/Haz_LoadBranch/D_gold"
+`endif
+
+`ifdef hazBranchForward
+	`define N_MEM_CHECK 	16
+	`define IMEM_INIT       "../00_TESTBED/pattern/Haz_BranchForward/I_mem"
+    `define DMEM_INIT       "../00_TESTBED/pattern/Haz_BranchForward/D_mem"
+    `define GOLDEN          "../00_TESTBED/pattern/Haz_BranchForward/D_gold"
+`endif
+
+`ifdef hazJALFlush
+	`define N_MEM_CHECK 	16
+	`define IMEM_INIT       "../00_TESTBED/pattern/Haz_JALFlush/I_mem"
+    `define DMEM_INIT       "../00_TESTBED/pattern/Haz_JALFlush/D_mem"
+    `define GOLDEN          "../00_TESTBED/pattern/Haz_JALFlush/D_gold"
+`endif
+
+`ifdef hazJALRForward
+	`define N_MEM_CHECK 	16
+	`define IMEM_INIT       "../00_TESTBED/pattern/Haz_JALRForward/I_mem"
+    `define DMEM_INIT       "../00_TESTBED/pattern/Haz_JALRForward/D_mem"
+    `define GOLDEN          "../00_TESTBED/pattern/Haz_JALRForward/D_gold"
+`endif
+
+`ifdef hazJALRNegImm
+	`define N_MEM_CHECK 	16
+	`define IMEM_INIT       "../00_TESTBED/pattern/Haz_JALRNegImm/I_mem"
+    `define DMEM_INIT       "../00_TESTBED/pattern/Haz_JALRNegImm/D_mem"
+    `define GOLDEN          "../00_TESTBED/pattern/Haz_JALRNegImm/D_gold"
+`endif
+
+`ifdef hazCallReturn
+	`define N_MEM_CHECK 	16
+	`define IMEM_INIT       "../00_TESTBED/pattern/Haz_CallReturn/I_mem"
+    `define DMEM_INIT       "../00_TESTBED/pattern/Haz_CallReturn/D_mem"
+    `define GOLDEN          "../00_TESTBED/pattern/Haz_CallReturn/D_gold"
+`endif
+
+`ifdef hazDCacheConflictFlush
+	`define N_MEM_CHECK 	17
+	`define IMEM_INIT       "../00_TESTBED/pattern/Haz_DCacheConflictFlush/I_mem"
+    `define DMEM_INIT       "../00_TESTBED/pattern/Haz_DCacheConflictFlush/D_mem"
+    `define GOLDEN          "../00_TESTBED/pattern/Haz_DCacheConflictFlush/D_gold"
+`endif
+
+`ifdef hazFibOnly
+	`define N_MEM_CHECK 	16
+	`define IMEM_INIT       "../00_TESTBED/pattern/Haz_FibOnly/I_mem"
+    `define DMEM_INIT       "../00_TESTBED/pattern/Haz_FibOnly/D_mem"
+    `define GOLDEN          "../00_TESTBED/pattern/Haz_FibOnly/D_gold"
+`endif
+
+`ifdef hazBubbleOnly
+	`define N_MEM_CHECK 	16
+	`define IMEM_INIT       "../00_TESTBED/pattern/Haz_BubbleOnly/I_mem"
+    `define DMEM_INIT       "../00_TESTBED/pattern/Haz_BubbleOnly/D_mem"
+    `define GOLDEN          "../00_TESTBED/pattern/Haz_BubbleOnly/D_gold"
+`endif
+
+`ifdef hazFibNoOutput
+	`define N_MEM_CHECK 	16
+	`define IMEM_INIT       "../00_TESTBED/pattern/Haz_FibNoOutput/I_mem"
+    `define DMEM_INIT       "../00_TESTBED/pattern/Haz_FibNoOutput/D_mem"
+    `define GOLDEN          "../00_TESTBED/pattern/Haz_FibNoOutput/D_gold"
+`endif
+
+`ifdef hazAddiBneLoop
+	`define N_MEM_CHECK 	16
+	`define IMEM_INIT       "../00_TESTBED/pattern/Haz_AddiBneLoop/I_mem"
+    `define DMEM_INIT       "../00_TESTBED/pattern/Haz_AddiBneLoop/D_mem"
+    `define GOLDEN          "../00_TESTBED/pattern/Haz_AddiBneLoop/D_gold"
+`endif
+
+`ifdef hazAdjacentAddiBne
+	`define N_MEM_CHECK 	16
+	`define IMEM_INIT       "../00_TESTBED/pattern/Haz_AdjacentAddiBne/I_mem"
+    `define DMEM_INIT       "../00_TESTBED/pattern/Haz_AdjacentAddiBne/D_mem"
+    `define GOLDEN          "../00_TESTBED/pattern/Haz_AdjacentAddiBne/D_gold"
+`endif
+
+`ifdef hazBneBack28
+	`define N_MEM_CHECK 	16
+	`define IMEM_INIT       "../00_TESTBED/pattern/Haz_BneBack28/I_mem"
+    `define DMEM_INIT       "../00_TESTBED/pattern/Haz_BneBack28/D_mem"
+    `define GOLDEN          "../00_TESTBED/pattern/Haz_BneBack28/D_gold"
+`endif
+
+`ifdef hazFibBodyLoop
+	`define N_MEM_CHECK 	16
+	`define IMEM_INIT       "../00_TESTBED/pattern/Haz_FibBodyLoop/I_mem"
+    `define DMEM_INIT       "../00_TESTBED/pattern/Haz_FibBodyLoop/D_mem"
+    `define GOLDEN          "../00_TESTBED/pattern/Haz_FibBodyLoop/D_gold"
+`endif
+
+`ifdef hazFibBodyLong
+	`define N_MEM_CHECK 	16
+	`define IMEM_INIT       "../00_TESTBED/pattern/Haz_FibBodyLong/I_mem"
+    `define DMEM_INIT       "../00_TESTBED/pattern/Haz_FibBodyLong/D_mem"
+    `define GOLDEN          "../00_TESTBED/pattern/Haz_FibBodyLong/D_gold"
+`endif
+
+`ifdef hazFibBodyGap
+	`define N_MEM_CHECK 	16
+	`define IMEM_INIT       "../00_TESTBED/pattern/Haz_FibBodyGap/I_mem"
+    `define DMEM_INIT       "../00_TESTBED/pattern/Haz_FibBodyGap/D_mem"
+    `define GOLDEN          "../00_TESTBED/pattern/Haz_FibBodyGap/D_gold"
+`endif
+
+`ifdef hazFibInitBodyNoGap
+	`define N_MEM_CHECK 	16
+	`define IMEM_INIT       "../00_TESTBED/pattern/Haz_FibInitBodyNoGap/I_mem"
+    `define DMEM_INIT       "../00_TESTBED/pattern/Haz_FibInitBodyNoGap/D_mem"
+    `define GOLDEN          "../00_TESTBED/pattern/Haz_FibInitBodyNoGap/D_gold"
+`endif
+
+`ifdef hazBranchFlushJalr
+	`define N_MEM_CHECK 	16
+	`define IMEM_INIT       "../00_TESTBED/pattern/Haz_BranchFlushJalr/I_mem"
+    `define DMEM_INIT       "../00_TESTBED/pattern/Haz_BranchFlushJalr/D_mem"
+    `define GOLDEN          "../00_TESTBED/pattern/Haz_BranchFlushJalr/D_gold"
+`endif
+
+`ifdef hazStoreBranchFlushJalr
+	`define N_MEM_CHECK 	16
+	`define IMEM_INIT       "../00_TESTBED/pattern/Haz_StoreBranchFlushJalr/I_mem"
+    `define DMEM_INIT       "../00_TESTBED/pattern/Haz_StoreBranchFlushJalr/D_mem"
+    `define GOLDEN          "../00_TESTBED/pattern/Haz_StoreBranchFlushJalr/D_gold"
+`endif
+
 // =========================================================== //
 // Extension Patterns                                          //
 // =========================================================== //

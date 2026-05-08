@@ -40,8 +40,32 @@ CHIP.v
 ########################################################
 # Pattern Definition                                   #
 ########################################################
-+define+noHazard
+// +define+noHazard
 // +define+hasHazard
+// +define+customHazard
+// +define+hazEXMEMForward
+// +define+hazMEMWBForward
+// +define+hazStoreDataForward
+// +define+hazLoadUse
+// +define+hazLoadBranch
+// +define+hazBranchForward
+// +define+hazJALFlush
+// +define+hazJALRForward
+// +define+hazJALRNegImm
+// +define+hazCallReturn
+// +define+hazDCacheConflictFlush
+// +define+hazFibOnly
+// +define+hazBubbleOnly
+// +define+hazFibNoOutput
+// +define+hazAddiBneLoop
+// +define+hazAdjacentAddiBne
+// +define+hazBneBack28
+// +define+hazFibBodyLoop
+// +define+hazFibBodyLong
+// +define+hazFibBodyGap
+// +define+hazFibInitBodyNoGap
++define+hazBranchFlushJalr
+// +define+hazStoreBranchFlushJalr
 
 // +define+BrPred
 // +define+Scaling

@@ -1,0 +1,3 @@
+13_00_00_00 // 0x00 nop
+93_00_A0_02 // 0x04 addi x1,x0,42
+23_20_10_00 // 0x08 sw x1,0(x0) // store data needs forward, D[0]=42

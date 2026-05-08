@@ -1,0 +1,32 @@
+13_00_00_00 // 0x00 nop
+93_00_50_00 // 0x04 addi x1,  x0, 5
+13_81_70_00 // 0x08 addi x2,  x1, 7        // EX/MEM forward x1
+B3_01_11_00 // 0x0C add  x3,  x2, x1       // EX/MEM forward x2
+23_20_30_00 // 0x10 sw   x3,  0(x0)        // store-data forward x3, D[0] = 17
+13_02_00_01 // 0x14 addi x4,  x0, 16
+23_24_40_00 // 0x18 sw   x4,  8(x0)        // D[2] = 16
+83_22_80_00 // 0x1C lw   x5,  8(x0)
+33_83_12_00 // 0x20 add  x6,  x5, x1       // load-use bubble, D[3] = 21
+23_26_60_00 // 0x24 sw   x6, 12(x0)
+83_23_C0_00 // 0x28 lw   x7, 12(x0)
+63_86_63_00 // 0x2C beq  x7, x6, +12       // load-use into branch compare
+13_04_F0_06 // 0x30 addi x8, x0, 111       // wrong path, must be flushed
+23_28_80_00 // 0x34 sw   x8, 16(x0)
+13_04_60_01 // 0x38 addi x8, x0, 22
+23_28_80_00 // 0x3C sw   x8, 16(x0)        // D[4] = 22
+93_04_10_00 // 0x40 addi x9,  x0, 1
+13_85_04_00 // 0x44 addi x10, x9, 0
+63_16_05_00 // 0x48 bne  x10, x0, +12      // EX/MEM forward into branch
+13_04_00_07 // 0x4C addi x8,  x0, 112      // wrong path, must be flushed
+23_2A_80_00 // 0x50 sw   x8, 20(x0)
+13_04_10_02 // 0x54 addi x8,  x0, 33
+23_2A_80_00 // 0x58 sw   x8, 20(x0)        // D[5] = 33
+EF_05_C0_00 // 0x5C jal  x11, +12          // JAL flush; x11 = 0x60
+13_04_10_07 // 0x60 addi x8,  x0, 113      // wrong path, must be flushed
+23_2C_80_00 // 0x64 sw   x8, 24(x0)
+23_2C_B0_00 // 0x68 sw   x11,24(x0)        // D[6] = 0x60
+13_06_C0_07 // 0x6C addi x12,x0, 124       // target address 0x7C
+E7_06_06_00 // 0x70 jalr x13,x12,0         // JALR base forward; x13 = 0x74
+13_04_20_07 // 0x74 addi x8, x0, 114       // wrong path, must be flushed
+23_2E_80_00 // 0x78 sw   x8, 28(x0)
+23_2E_D0_00 // 0x7C sw   x13,28(x0)        // D[7] = 0x74

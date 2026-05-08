@@ -243,6 +243,7 @@ wire load_use_stall;
 wire mem_busy;
 wire global_stall;
 wire idex_insert_bubble;
+wire ex_redirect_valid;
 
 assign branch_predict_taken = 1'b0;
 assign mem_busy = exmem_valid & (exmem_mem_read | exmem_mem_write) & ~dmem_ready;
@@ -250,7 +251,8 @@ assign global_stall = (~done_r & ~imem_ready) | mem_busy;
 assign load_use_stall = ifid_valid & idex_valid & idex_mem_read & (idex_rd != 5'b0) &
                         ((id_use_rs1 & (id_rs1 == idex_rd)) |
                          (id_use_rs2 & (id_rs2 == idex_rd)));
-assign idex_insert_bubble = ex_redirect | load_use_stall;
+assign ex_redirect_valid = idex_valid & ex_redirect;
+assign idex_insert_bubble = ex_redirect_valid | load_use_stall;
 assign o_flush = done_r;
 assign o_done = done_r;
 
@@ -258,7 +260,7 @@ if_stage if_stage0 (
     .clk            (clk),
     .rst_n          (rst_n),
     .stall          (if_stall),
-    .redirect       (ex_redirect),
+    .redirect       (ex_redirect_valid),
     .redirect_pc    (ex_redirect_pc),
     .predict_taken  (branch_predict_taken),
     .predict_pc     (32'b0),
@@ -415,72 +417,78 @@ always @(posedge clk or negedge rst_n) begin
         memwb_rd <= 5'b0;
         memwb_reg_wen <= 1'b0;
         memwb_flush_instr <= 1'b0;
-    end else if (!global_stall) begin
-        if (memwb_valid && memwb_flush_instr) begin
-            done_r <= 1'b1;
-        end
-
-        memwb_valid <= exmem_valid;
-        memwb_wb_data <= mem_wb_data;
-        memwb_rd <= exmem_rd;
-        memwb_reg_wen <= exmem_reg_wen;
-        memwb_flush_instr <= exmem_flush_instr;
-
-        exmem_valid <= idex_valid;
-        exmem_alu_result <= ex_alu_result;
-        exmem_store_data <= ex_store_data;
-        exmem_wb_data <= ex_wb_data;
-        exmem_rd <= idex_rd;
-        exmem_mem_read <= idex_mem_read;
-        exmem_mem_write <= idex_mem_write;
-        exmem_reg_wen <= idex_reg_wen;
-        exmem_flush_instr <= idex_flush_instr;
-        exmem_wb_sel <= idex_wb_sel;
-
-        if (idex_insert_bubble) begin
-            idex_valid <= 1'b0;
-            idex_mem_read <= 1'b0;
-            idex_mem_write <= 1'b0;
-            idex_reg_wen <= 1'b0;
-            idex_branch <= 1'b0;
-            idex_jal <= 1'b0;
-            idex_jalr <= 1'b0;
-            idex_flush_instr <= 1'b0;
-        end else begin
-            idex_valid <= ifid_valid;
-            idex_pc <= ifid_pc;
-            idex_pc4 <= ifid_pc4;
-            idex_rdata1 <= id_rdata1;
-            idex_rdata2 <= id_rdata2;
-            idex_imm_i <= id_imm_i;
-            idex_imm_s <= id_imm_s;
-            idex_imm_b <= id_imm_b;
-            idex_imm_j <= id_imm_j;
-            idex_imm_u <= id_imm_u;
-            idex_rs1 <= id_rs1;
-            idex_rs2 <= id_rs2;
-            idex_rd <= id_rd;
-            idex_funct3 <= id_funct3;
-            idex_alu_ctrl <= id_alu_ctrl;
-            idex_alu_src_imm <= id_alu_src_imm;
-            idex_mem_read <= id_mem_read;
-            idex_mem_write <= id_mem_write;
-            idex_reg_wen <= id_reg_wen;
-            idex_branch <= id_branch;
-            idex_jal <= id_jal;
-            idex_jalr <= id_jalr;
-            idex_lui <= id_lui;
-            idex_flush_instr <= id_flush_instr;
-            idex_wb_sel <= id_wb_sel;
-        end
-
-        if (ex_redirect) begin
+    end else begin
+        if (ex_redirect_valid) begin
             ifid_valid <= 1'b0;
-        end else if (!load_use_stall) begin
-            ifid_valid <= imem_ready & ~done_r;
-            ifid_pc <= if_pc;
-            ifid_pc4 <= if_pc4;
-            ifid_inst <= if_inst;
+        end
+
+        if (!global_stall) begin
+            if (memwb_valid && memwb_flush_instr) begin
+                done_r <= 1'b1;
+            end
+
+            memwb_valid <= exmem_valid;
+            memwb_wb_data <= mem_wb_data;
+            memwb_rd <= exmem_rd;
+            memwb_reg_wen <= exmem_reg_wen;
+            memwb_flush_instr <= exmem_flush_instr;
+
+            exmem_valid <= idex_valid;
+            exmem_alu_result <= ex_alu_result;
+            exmem_store_data <= ex_store_data;
+            exmem_wb_data <= ex_wb_data;
+            exmem_rd <= idex_rd;
+            exmem_mem_read <= idex_mem_read;
+            exmem_mem_write <= idex_mem_write;
+            exmem_reg_wen <= idex_reg_wen;
+            exmem_flush_instr <= idex_flush_instr;
+            exmem_wb_sel <= idex_wb_sel;
+
+            if (idex_insert_bubble) begin
+                idex_valid <= 1'b0;
+                idex_mem_read <= 1'b0;
+                idex_mem_write <= 1'b0;
+                idex_reg_wen <= 1'b0;
+                idex_branch <= 1'b0;
+                idex_jal <= 1'b0;
+                idex_jalr <= 1'b0;
+                idex_flush_instr <= 1'b0;
+            end else begin
+                idex_valid <= ifid_valid;
+                idex_pc <= ifid_pc;
+                idex_pc4 <= ifid_pc4;
+                idex_rdata1 <= id_rdata1;
+                idex_rdata2 <= id_rdata2;
+                idex_imm_i <= id_imm_i;
+                idex_imm_s <= id_imm_s;
+                idex_imm_b <= id_imm_b;
+                idex_imm_j <= id_imm_j;
+                idex_imm_u <= id_imm_u;
+                idex_rs1 <= id_rs1;
+                idex_rs2 <= id_rs2;
+                idex_rd <= id_rd;
+                idex_funct3 <= id_funct3;
+                idex_alu_ctrl <= id_alu_ctrl;
+                idex_alu_src_imm <= id_alu_src_imm;
+                idex_mem_read <= id_mem_read;
+                idex_mem_write <= id_mem_write;
+                idex_reg_wen <= id_reg_wen;
+                idex_branch <= id_branch;
+                idex_jal <= id_jal;
+                idex_jalr <= id_jalr;
+                idex_lui <= id_lui;
+                idex_flush_instr <= id_flush_instr;
+                idex_wb_sel <= id_wb_sel;
+            end
+
+            if (ex_redirect_valid) begin
+                ifid_valid <= 1'b0;
+            end else if (!load_use_stall) begin
+                ifid_valid <= imem_ready & ~done_r;
+                ifid_pc <= if_pc;
+                ifid_pc4 <= if_pc4;
+                ifid_inst <= if_inst;
+            end
         end
     end
 end
@@ -841,8 +849,12 @@ module register_file(
 reg [31:0] data_r [0:31];
 integer i;
 
-assign rdata1 = (read1 == 5'b0) ? 32'b0 : data_r[read1];
-assign rdata2 = (read2 == 5'b0) ? 32'b0 : data_r[read2];
+assign rdata1 = (read1 == 5'b0) ? 32'b0 :
+                (wen && write_reg == read1) ? wdata :
+                data_r[read1];
+assign rdata2 = (read2 == 5'b0) ? 32'b0 :
+                (wen && write_reg == read2) ? wdata :
+                data_r[read2];
 
 always @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
