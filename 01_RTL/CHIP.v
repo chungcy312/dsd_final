@@ -1,8 +1,8 @@
 module CHIP #(
     parameter ICACHE_BLOCKS = 16,
-    parameter ICACHE_WAYS   = 1,
+    parameter ICACHE_WAYS   = 2,
     parameter DCACHE_BLOCKS = 16,
-    parameter DCACHE_WAYS   = 1
+    parameter DCACHE_WAYS   = 2
 ) (
     clk,
     rst_n,
@@ -150,22 +150,17 @@ reg done_r;
 wire        if_stall;
 wire        branch_predict_taken;
 wire [31:0] if_pc;
-wire [31:0] if_pc4;
 wire [31:0] if_inst;
 
 reg        ifid_valid;
 reg [31:0] ifid_pc;
-reg [31:0] ifid_pc4;
 reg [31:0] ifid_inst;
 
 wire [4:0]  id_rs1;
 wire [4:0]  id_rs2;
 wire [4:0]  id_rd;
-wire [31:0] id_imm_i;
-wire [31:0] id_imm_s;
-wire [31:0] id_imm_b;
-wire [31:0] id_imm_j;
-wire [31:0] id_imm_u;
+wire [31:0] id_imm_alu;
+wire [31:0] id_imm_aux;
 wire [31:0] id_rdata1;
 wire [31:0] id_rdata2;
 wire [2:0]  id_funct3;
@@ -179,20 +174,15 @@ wire        id_reg_wen;
 wire        id_branch;
 wire        id_jal;
 wire        id_jalr;
-wire        id_lui;
 wire        id_flush_instr;
 wire [1:0]  id_wb_sel;
 
 reg        idex_valid;
 reg [31:0] idex_pc;
-reg [31:0] idex_pc4;
 reg [31:0] idex_rdata1;
 reg [31:0] idex_rdata2;
-reg [31:0] idex_imm_i;
-reg [31:0] idex_imm_s;
-reg [31:0] idex_imm_b;
-reg [31:0] idex_imm_j;
-reg [31:0] idex_imm_u;
+reg [31:0] idex_imm_alu;
+reg [31:0] idex_imm_aux;
 reg [4:0]  idex_rs1;
 reg [4:0]  idex_rs2;
 reg [4:0]  idex_rd;
@@ -205,7 +195,6 @@ reg        idex_reg_wen;
 reg        idex_branch;
 reg        idex_jal;
 reg        idex_jalr;
-reg        idex_lui;
 reg        idex_flush_instr;
 reg [1:0]  idex_wb_sel;
 
@@ -213,20 +202,17 @@ wire [31:0] exmem_forward_data;
 wire [31:0] memwb_forward_data;
 wire        ex_redirect;
 wire [31:0] ex_redirect_pc;
-wire [31:0] ex_alu_result;
+wire [31:0] ex_result;
 wire [31:0] ex_store_data;
-wire [31:0] ex_wb_data;
 
 reg        exmem_valid;
-reg [31:0] exmem_alu_result;
+reg [31:0] exmem_result;
 reg [31:0] exmem_store_data;
-reg [31:0] exmem_wb_data;
 reg [4:0]  exmem_rd;
 reg        exmem_mem_read;
 reg        exmem_mem_write;
 reg        exmem_reg_wen;
 reg        exmem_flush_instr;
-reg [1:0]  exmem_wb_sel;
 
 wire [31:0] mem_wb_data;
 
@@ -269,7 +255,6 @@ if_stage if_stage0 (
     .done           (done_r),
     .imem_addr      (imem_addr),
     .if_pc          (if_pc),
-    .if_pc4         (if_pc4),
     .if_inst        (if_inst)
 );
 
@@ -285,11 +270,8 @@ id_stage id_stage0 (
     .rs1            (id_rs1),
     .rs2            (id_rs2),
     .rd             (id_rd),
-    .imm_i          (id_imm_i),
-    .imm_s          (id_imm_s),
-    .imm_b          (id_imm_b),
-    .imm_j          (id_imm_j),
-    .imm_u          (id_imm_u),
+    .imm_alu        (id_imm_alu),
+    .imm_aux        (id_imm_aux),
     .rdata1         (id_rdata1),
     .rdata2         (id_rdata2),
     .funct3         (id_funct3),
@@ -303,31 +285,24 @@ id_stage id_stage0 (
     .branch         (id_branch),
     .jal            (id_jal),
     .jalr           (id_jalr),
-    .lui            (id_lui),
     .flush_instr    (id_flush_instr),
     .wb_sel         (id_wb_sel)
 );
 
 ex_stage ex_stage0 (
     .pc             (idex_pc),
-    .pc4            (idex_pc4),
     .rdata1         (idex_rdata1),
     .rdata2         (idex_rdata2),
-    .imm_i          (idex_imm_i),
-    .imm_s          (idex_imm_s),
-    .imm_b          (idex_imm_b),
-    .imm_j          (idex_imm_j),
-    .imm_u          (idex_imm_u),
+    .imm_alu        (idex_imm_alu),
+    .imm_aux        (idex_imm_aux),
     .rs1            (idex_rs1),
     .rs2            (idex_rs2),
     .funct3         (idex_funct3),
     .alu_ctrl       (idex_alu_ctrl),
     .alu_src_imm    (idex_alu_src_imm),
-    .mem_write      (idex_mem_write),
     .branch         (idex_branch),
     .jal            (idex_jal),
     .jalr           (idex_jalr),
-    .lui            (idex_lui),
     .wb_sel         (idex_wb_sel),
     .exmem_wen      (exmem_valid & exmem_reg_wen & ~exmem_mem_read),
     .exmem_rd       (exmem_rd),
@@ -337,18 +312,16 @@ ex_stage ex_stage0 (
     .memwb_wdata    (memwb_forward_data),
     .redirect       (ex_redirect),
     .redirect_pc    (ex_redirect_pc),
-    .alu_result     (ex_alu_result),
-    .store_data     (ex_store_data),
-    .wb_data        (ex_wb_data)
+    .result         (ex_result),
+    .store_data     (ex_store_data)
 );
 
 mem_stage mem_stage0 (
     .valid          (exmem_valid),
     .mem_read       (exmem_mem_read),
     .mem_write      (exmem_mem_write),
-    .alu_result     (exmem_alu_result),
+    .result         (exmem_result),
     .store_data     (exmem_store_data),
-    .ex_wb_data     (exmem_wb_data),
     .dmem_rdata     (dmem_rdata),
     .dmem_req       (dmem_req),
     .dmem_wen       (dmem_wen),
@@ -367,7 +340,7 @@ wb_stage wb_stage0 (
     .wb_wdata       (wb_wdata)
 );
 
-assign exmem_forward_data = exmem_wb_data;
+assign exmem_forward_data = exmem_result;
 assign memwb_forward_data = memwb_wb_data;
 
 always @(posedge clk or negedge rst_n) begin
@@ -375,18 +348,13 @@ always @(posedge clk or negedge rst_n) begin
         done_r <= 1'b0;
         ifid_valid <= 1'b0;
         ifid_pc <= 32'b0;
-        ifid_pc4 <= 32'b0;
         ifid_inst <= 32'b0;
         idex_valid <= 1'b0;
         idex_pc <= 32'b0;
-        idex_pc4 <= 32'b0;
         idex_rdata1 <= 32'b0;
         idex_rdata2 <= 32'b0;
-        idex_imm_i <= 32'b0;
-        idex_imm_s <= 32'b0;
-        idex_imm_b <= 32'b0;
-        idex_imm_j <= 32'b0;
-        idex_imm_u <= 32'b0;
+        idex_imm_alu <= 32'b0;
+        idex_imm_aux <= 32'b0;
         idex_rs1 <= 5'b0;
         idex_rs2 <= 5'b0;
         idex_rd <= 5'b0;
@@ -399,19 +367,16 @@ always @(posedge clk or negedge rst_n) begin
         idex_branch <= 1'b0;
         idex_jal <= 1'b0;
         idex_jalr <= 1'b0;
-        idex_lui <= 1'b0;
         idex_flush_instr <= 1'b0;
         idex_wb_sel <= WB_ALU;
         exmem_valid <= 1'b0;
-        exmem_alu_result <= 32'b0;
+        exmem_result <= 32'b0;
         exmem_store_data <= 32'b0;
-        exmem_wb_data <= 32'b0;
         exmem_rd <= 5'b0;
         exmem_mem_read <= 1'b0;
         exmem_mem_write <= 1'b0;
         exmem_reg_wen <= 1'b0;
         exmem_flush_instr <= 1'b0;
-        exmem_wb_sel <= WB_ALU;
         memwb_valid <= 1'b0;
         memwb_wb_data <= 32'b0;
         memwb_rd <= 5'b0;
@@ -434,15 +399,13 @@ always @(posedge clk or negedge rst_n) begin
             memwb_flush_instr <= exmem_flush_instr;
 
             exmem_valid <= idex_valid;
-            exmem_alu_result <= ex_alu_result;
+            exmem_result <= ex_result;
             exmem_store_data <= ex_store_data;
-            exmem_wb_data <= ex_wb_data;
             exmem_rd <= idex_rd;
             exmem_mem_read <= idex_mem_read;
             exmem_mem_write <= idex_mem_write;
             exmem_reg_wen <= idex_reg_wen;
             exmem_flush_instr <= idex_flush_instr;
-            exmem_wb_sel <= idex_wb_sel;
 
             if (idex_insert_bubble) begin
                 idex_valid <= 1'b0;
@@ -456,14 +419,10 @@ always @(posedge clk or negedge rst_n) begin
             end else begin
                 idex_valid <= ifid_valid;
                 idex_pc <= ifid_pc;
-                idex_pc4 <= ifid_pc4;
                 idex_rdata1 <= id_rdata1;
                 idex_rdata2 <= id_rdata2;
-                idex_imm_i <= id_imm_i;
-                idex_imm_s <= id_imm_s;
-                idex_imm_b <= id_imm_b;
-                idex_imm_j <= id_imm_j;
-                idex_imm_u <= id_imm_u;
+                idex_imm_alu <= id_imm_alu;
+                idex_imm_aux <= id_imm_aux;
                 idex_rs1 <= id_rs1;
                 idex_rs2 <= id_rs2;
                 idex_rd <= id_rd;
@@ -476,7 +435,6 @@ always @(posedge clk or negedge rst_n) begin
                 idex_branch <= id_branch;
                 idex_jal <= id_jal;
                 idex_jalr <= id_jalr;
-                idex_lui <= id_lui;
                 idex_flush_instr <= id_flush_instr;
                 idex_wb_sel <= id_wb_sel;
             end
@@ -486,7 +444,6 @@ always @(posedge clk or negedge rst_n) begin
             end else if (!load_use_stall) begin
                 ifid_valid <= imem_ready & ~done_r;
                 ifid_pc <= if_pc;
-                ifid_pc4 <= if_pc4;
                 ifid_inst <= if_inst;
             end
         end
@@ -508,7 +465,6 @@ module if_stage(
     input         done,
     output [31:0] imem_addr,
     output [31:0] if_pc,
-    output [31:0] if_pc4,
     output [31:0] if_inst
 );
 reg [31:0] pc;
@@ -519,7 +475,6 @@ assign pc4 = pc + 32'd4;
 assign seq_pc = predict_taken ? predict_pc : pc4;
 assign imem_addr = pc;
 assign if_pc = pc;
-assign if_pc4 = pc4;
 assign if_inst = {imem_rdata[7:0], imem_rdata[15:8], imem_rdata[23:16], imem_rdata[31:24]};
 
 always @(posedge clk or negedge rst_n) begin
@@ -541,11 +496,8 @@ module id_stage(
     output [4:0]  rs1,
     output [4:0]  rs2,
     output [4:0]  rd,
-    output [31:0] imm_i,
-    output [31:0] imm_s,
-    output [31:0] imm_b,
-    output [31:0] imm_j,
-    output [31:0] imm_u,
+    output [31:0] imm_alu,
+    output [31:0] imm_aux,
     output [31:0] rdata1,
     output [31:0] rdata2,
     output [2:0]  funct3,
@@ -559,7 +511,6 @@ module id_stage(
     output        branch,
     output        jal,
     output        jalr,
-    output        lui,
     output        flush_instr,
     output [1:0]  wb_sel
 );
@@ -578,6 +529,11 @@ wire is_branch;
 wire is_jal;
 wire is_jalr;
 wire is_lui;
+wire [31:0] imm_i;
+wire [31:0] imm_s;
+wire [31:0] imm_b;
+wire [31:0] imm_j;
+wire [31:0] imm_u;
 
 assign opcode = inst[6:0];
 assign funct3 = inst[14:12];
@@ -600,6 +556,9 @@ assign imm_s = {{20{inst[31]}}, inst[31:25], inst[11:7]};
 assign imm_b = {{19{inst[31]}}, inst[31], inst[7], inst[30:25], inst[11:8], 1'b0};
 assign imm_j = {{11{inst[31]}}, inst[31], inst[19:12], inst[20], inst[30:21], 1'b0};
 assign imm_u = {inst[31:12], 12'b0};
+assign imm_alu = is_store ? imm_s : imm_i;
+assign imm_aux = is_jal ? imm_j :
+                 is_branch ? imm_b : imm_u;
 
 assign use_rs1 = is_rtype | is_itype | is_load | is_store | is_branch | is_jalr;
 assign use_rs2 = is_rtype | is_store | is_branch;
@@ -609,7 +568,6 @@ assign mem_write = is_store;
 assign branch = is_branch;
 assign jal = is_jal;
 assign jalr = is_jalr;
-assign lui = is_lui;
 assign flush_instr = (inst == 32'h00202007);
 assign reg_wen = (is_rtype | is_itype | is_load | is_jal | is_jalr | is_lui) & ~flush_instr;
 assign wb_sel = is_load ? WB_MEM :
@@ -638,24 +596,18 @@ endmodule
 
 module ex_stage(
     input  [31:0] pc,
-    input  [31:0] pc4,
     input  [31:0] rdata1,
     input  [31:0] rdata2,
-    input  [31:0] imm_i,
-    input  [31:0] imm_s,
-    input  [31:0] imm_b,
-    input  [31:0] imm_j,
-    input  [31:0] imm_u,
+    input  [31:0] imm_alu,
+    input  [31:0] imm_aux,
     input  [4:0]  rs1,
     input  [4:0]  rs2,
     input  [2:0]  funct3,
     input  [3:0]  alu_ctrl,
     input         alu_src_imm,
-    input         mem_write,
     input         branch,
     input         jal,
     input         jalr,
-    input         lui,
     input  [1:0]  wb_sel,
     input         exmem_wen,
     input  [4:0]  exmem_rd,
@@ -665,9 +617,8 @@ module ex_stage(
     input  [31:0] memwb_wdata,
     output        redirect,
     output [31:0] redirect_pc,
-    output [31:0] alu_result,
-    output [31:0] store_data,
-    output [31:0] wb_data
+    output [31:0] result,
+    output [31:0] store_data
 );
 localparam WB_ALU = 2'd0;
 localparam WB_MEM = 2'd1;
@@ -677,6 +628,8 @@ localparam WB_IMM = 2'd3;
 wire [31:0] fwd_rs1;
 wire [31:0] fwd_rs2;
 wire [31:0] alu_input2;
+wire [31:0] alu_result;
+wire [31:0] pc4;
 wire branch_taken;
 
 assign fwd_rs1 = (exmem_wen && exmem_rd != 5'b0 && exmem_rd == rs1) ? exmem_wdata :
@@ -685,19 +638,19 @@ assign fwd_rs1 = (exmem_wen && exmem_rd != 5'b0 && exmem_rd == rs1) ? exmem_wdat
 assign fwd_rs2 = (exmem_wen && exmem_rd != 5'b0 && exmem_rd == rs2) ? exmem_wdata :
                  (memwb_wen && memwb_rd != 5'b0 && memwb_rd == rs2) ? memwb_wdata :
                  rdata2;
-assign alu_input2 = mem_write ? imm_s :
-                    alu_src_imm ? imm_i : fwd_rs2;
+assign pc4 = pc + 32'd4;
+assign alu_input2 = alu_src_imm ? imm_alu : fwd_rs2;
 assign store_data = fwd_rs2;
 assign branch_taken = branch &&
                       ((funct3 == 3'b000 && fwd_rs1 == fwd_rs2) ||
                        (funct3 == 3'b001 && fwd_rs1 != fwd_rs2));
 assign redirect = jal | jalr | branch_taken;
-assign redirect_pc = jal ? (pc + imm_j) :
-                     jalr ? ((fwd_rs1 + imm_i) & 32'hffff_fffe) :
-                     (pc + imm_b);
-assign wb_data = (wb_sel == WB_PC4) ? pc4 :
-                 (wb_sel == WB_IMM) ? imm_u :
-                 alu_result;
+assign redirect_pc = jal ? (pc + imm_aux) :
+                     jalr ? ((fwd_rs1 + imm_alu) & 32'hffff_fffe) :
+                     (pc + imm_aux);
+assign result = (wb_sel == WB_PC4) ? pc4 :
+                (wb_sel == WB_IMM) ? imm_aux :
+                alu_result;
 
 alu alu0 (
     .input1     (fwd_rs1),
@@ -711,9 +664,8 @@ module mem_stage(
     input         valid,
     input         mem_read,
     input         mem_write,
-    input  [31:0] alu_result,
+    input  [31:0] result,
     input  [31:0] store_data,
-    input  [31:0] ex_wb_data,
     input  [31:0] dmem_rdata,
     output        dmem_req,
     output        dmem_wen,
@@ -725,10 +677,10 @@ wire [31:0] dmem_rdata_cpu;
 
 assign dmem_req = valid & (mem_read | mem_write);
 assign dmem_wen = mem_write;
-assign dmem_addr = alu_result;
+assign dmem_addr = result;
 assign dmem_wdata = {store_data[7:0], store_data[15:8], store_data[23:16], store_data[31:24]};
 assign dmem_rdata_cpu = {dmem_rdata[7:0], dmem_rdata[15:8], dmem_rdata[23:16], dmem_rdata[31:24]};
-assign wb_data = mem_read ? dmem_rdata_cpu : ex_wb_data;
+assign wb_data = mem_read ? dmem_rdata_cpu : result;
 endmodule
 
 module wb_stage(
