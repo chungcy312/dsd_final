@@ -1,0 +1,296 @@
+/*
+	Author: 		Pony Wang
+	Last Edition: 	2026/03/24
+	Description: 	
+		Testbench for Final Project (RISC-V Pipelined Processor)
+		After recieved done signal from processor, the testbench will check the correctness of the result (data in slow_memD)
+	Note: 
+		The design is connected at testbench, include:
+			1. CHIP (RISCV + D_cache + I_chache)
+			2. slow memory for data
+			3. slow memory for instruction
+*/
+
+`timescale 1 ns/10 ps
+
+`include "../00_TESTBED/testbench/tb_define.v"
+`include "../00_TESTBED/testbench/pat_define.v"
+
+module Final_tb;
+	// ======================================= //
+	// Design I/O							   //
+	// ======================================= //
+	reg 			clk;
+	reg 			rst_n;
+	wire 			mem_read_D;
+	wire 			mem_write_D;
+	wire [31:4] 	mem_addr_D;
+	wire [127:0] 	mem_wdata_D;
+	wire [127:0] 	mem_rdata_D;
+	wire 			mem_ready_D;
+	wire 			mem_read_I;
+	wire 			mem_write_I;
+	wire [31:4] 	mem_addr_I;
+	wire [127:0]	mem_wdata_I;
+	wire [127:0] 	mem_rdata_I;
+	wire 			mem_ready_I;
+	wire 			done;
+
+	// ======================================= //
+	// Utils 								   //
+	// ======================================= //
+	integer i;
+	reg  [10:0] 	error_cnt;
+	reg  			flag_flush_padded;
+	reg	 [31:0]		golden_ans [0:`N_MEM_CHECK];
+
+
+	// ======================================= //
+	// DEBUG								   //
+	// ======================================= //
+	integer cycle_count;
+	integer report_cycle_count = 1000;
+	initial cycle_count = 0;
+
+	// always @(posedge clk) begin
+	// 	cycle_count = cycle_count + 1;
+	// 	if (cycle_count % report_cycle_count == 0) begin
+	// 		$display("Current cycle = %0d", cycle_count);
+	// 	end
+	// end
+
+
+	
+	generate		// & Module Instantiation
+		CHIP chip0 (
+			.clk 			(clk),
+			.rst_n			(rst_n),
+			// ~ For slow_memD	
+			.mem_read_D		(mem_read_D),
+			.mem_write_D	(mem_write_D),
+			.mem_addr_D		(mem_addr_D),
+			.mem_wdata_D	(mem_wdata_D),
+			.mem_rdata_D	(mem_rdata_D),
+			.mem_ready_D	(mem_ready_D),
+			// ~ For slow_memI
+			.mem_read_I		(mem_read_I),
+			.mem_write_I	(mem_write_I),
+			.mem_addr_I		(mem_addr_I),
+			.mem_wdata_I	(mem_wdata_I),
+			.mem_rdata_I	(mem_rdata_I),
+			.mem_ready_I	(mem_ready_I),
+			// ~ For Testbench
+			.o_done			(done)
+		);
+
+		`MEMORY_CELL #(.MEM_NUM(`N_MEM_CHECK)) slow_memD(
+			.clk        (clk)           ,
+			.mem_read   (mem_read_D)    ,
+			.mem_write  (mem_write_D)   ,
+			.mem_addr   (mem_addr_D)    ,
+			.mem_wdata  (mem_wdata_D)   ,
+			.mem_rdata  (mem_rdata_D)   ,
+			.mem_ready  (mem_ready_D)
+		);
+
+		`MEMORY_CELL slow_memI(
+			.clk        (clk)           ,
+			.mem_read   (mem_read_I)    ,
+			.mem_write  (mem_write_I)   ,
+			.mem_addr   (mem_addr_I)    ,
+			.mem_wdata  (mem_wdata_I)   ,
+			.mem_rdata  (mem_rdata_I)   ,
+			.mem_ready  (mem_ready_I)
+		);
+	endgenerate
+
+	initial begin	// * Display current pattern information
+		`ifdef noHazard
+			$display("[INFO]: Testing with pattern <noHazard>");
+		`elsif hasHazard
+			$display("[INFO]: Testing with pattern <hasHazard>");
+		`elsif BrPred
+			$display("[INFO]: Testing with pattern <BrPred>");
+		`elsif Scaling
+			$display("[INFO]: Testing with pattern <Scaling>");
+		`elsif compression
+			$display("[INFO]: Testing with pattern <compression>");
+		`elsif compression_uncompressed
+			$display("[INFO]: Testing with pattern <compression_uncompressed>");
+		`elsif QSort
+			$display("[INFO]: Testing with pattern <QSort>");
+		`elsif QSort_uncompressed
+			$display("[INFO]: Testing with pattern <QSort_uncompressed>");
+		`elsif Conv
+			$display("[INFO]: Testing with pattern <Conv>");
+		`elsif Conv_uncompressed
+			$display("[INFO]: Testing with pattern <Conv_uncompressed>");
+		`elsif Mul
+			$display("[INFO]: Testing with pattern <Mul>");
+		`elsif LFSR_HIST
+			$display("[INFO]: Testing with pattern <LFSR_HIST>");
+		`elsif LFSR_HIST_short
+			$display("[INFO]: Testing with pattern <LFSR_HIST_short>");
+		`else
+			$display("[ERROR]: Testing with pattern <unknown>");
+			$finish;
+		`endif 
+	end
+	
+	initial begin	// ~ Initialize the data memory from files
+		$readmemh (`GOLDEN,    golden_ans );
+		$readmemh (`DMEM_INIT, slow_memD.mem ); // initialize data in DMEM
+		$readmemh (`IMEM_INIT, slow_memI.mem ); // initialize data in IMEM
+
+		// ^ Pad instruction set with [FLUSH+N*NOP]
+		flag_flush_padded = 1'b0;
+		for (i=0; i<slow_memI.MEM_NUM*4; i=i+1) begin
+			if (slow_memI.mem[i] === 32'hxx_xx_xx_xx) begin
+				if (~flag_flush_padded) begin
+					slow_memI.mem[i] = `INST_FLUSH; // padding the IMEM with flush instruction
+					flag_flush_padded = 1'b1;
+				end
+				else begin
+					slow_memI.mem[i] = `INST_NOP; 	// padding the IMEM with NOP instruction
+				end
+			end
+		end
+	end
+
+	initial begin	// SDF Annotation
+		`ifdef SDF
+			$sdf_annotate(`SDFFILE, chip0);
+		`endif
+	end
+
+	initial begin	// FSDB Dump
+		`ifdef FSDB
+			// waveform dump
+			$fsdbDumpfile("Final.fsdb");
+			$fsdbDumpvars(0,Final_tb,"+mda");
+			$fsdbDumpvars;
+		`endif
+	end
+
+	initial begin	// ^ Simulation Start
+		DISPLAY_START_INFO;
+
+		error_cnt = 0;
+		clk = 1;
+		rst_n = 1'b1;
+		RESET_DESIGN();
+	end
+
+	initial begin	// ! Time Limitation Exceeded
+		// calculate clock cycles for all operation (you can modify it)
+		#(`CYCLE * `MAX_CYCLES) 
+		DISPLAY_TLE_INFO;
+	 	$finish;
+	end
+
+	// Clock Generation
+	always #(`CYCLE*0.5) clk = ~clk;
+	
+	// Check Result
+	always @(done) begin
+		if (done) begin
+			#(`CYCLE*10) 	CHECK_SLOW_MEMORY_D_RESULT;
+			#(`CYCLE)		REPORT_RESULT;
+			#(`CYCLE) 		$finish;
+		end
+	end
+
+task RESET_DESIGN;
+	begin
+		$display("==================================");
+		$display("Reset ...");
+		$display("==================================");
+		#(`CYCLE*1.6) rst_n = 1'b0;
+		#(`CYCLE*5.0) rst_n = 1'b1;
+	end
+endtask
+
+task CHECK_SLOW_MEMORY_D_RESULT;
+	begin
+		for (i=0; i<`N_MEM_CHECK; i=i+1) begin
+			if (golden_ans[i] !== slow_memD.mem[i]) begin
+				@(negedge clk);
+				$display("[ERROR  ]: golden_ans[%3d] = %h, slow_memD.mem[%3d] = %h", i, golden_ans[i], i, slow_memD.mem[i]);
+				error_cnt = error_cnt + 1;
+			end
+			else begin
+				`ifdef PRINT_SUCCESS_INFO
+					@(negedge clk);
+					$display("[SUCCESS]: golden_ans[%3d] = %h, slow_memD.mem[%3d] = %h", i, golden_ans[i], i, slow_memD.mem[i]);
+				`endif 
+			end
+		end
+	end
+endtask
+
+task DISPLAY_START_INFO;
+	begin
+		$display("-----------------------------------------------------\n");
+	 	$display("START!!! Simulation Start .....\n");
+	 	$display("-----------------------------------------------------\n");
+	end
+endtask
+
+task DISPLAY_TLE_INFO;
+	begin
+		$display("============================================================================");
+		$display("\n           Error!!! There is something wrong with your code ...!          ");
+		$display("\n                       The test result is .....FAIL                     \n");
+		$display("============================================================================");
+	end
+endtask
+
+task DISPLAY_SUCCESS_INFO;
+	begin
+		$display("============================================================================");
+		$display("\n \\(^o^)/ CONGRATULATIONS!!  The simulation result is PASS!!!\n");
+		$display("============================================================================");
+	end
+endtask
+
+task DISPLAY_FAILED_INFO;
+	begin
+		$display("============================================================================");
+		$display("\n (T_T) FAIL!! The simulation result is FAIL!!! there were %d errors at all.\n", error_cnt);
+		$display("============================================================================");
+	end
+endtask
+
+task REPORT_RESULT;
+	begin
+		if (error_cnt == 0) begin
+			$system("../00_TESTBED/info/success");
+			DISPLAY_SUCCESS_INFO;
+		end
+		else begin
+			$system("../00_TESTBED/info/failed");
+			DISPLAY_FAILED_INFO;
+		end
+	end
+endtask
+
+task print_file;
+	input [1023:0] filename;
+	integer fd;
+	integer c;
+	begin
+	fd = $fopen(filename, "r");
+	if (fd == 0) begin
+		$display("ERROR: cannot open file: %0s", filename);
+	end else begin
+		while (!$feof(fd)) begin
+		c = $fgetc(fd);
+		if (c != -1)
+			$write("%c", c);
+		end
+		$fclose(fd);
+	end
+	end
+endtask
+
+endmodule
