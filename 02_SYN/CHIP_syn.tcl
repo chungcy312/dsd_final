@@ -5,7 +5,7 @@ set DESIGN "CHIP"
 
 # Area-first synthesis target. Gate simulation effectively uses the
 # testbench `CYCLE value from tb_define.v, which is 10 ns in this project.
-set cycle             10.0
+set cycle             3.0
 set clk_uncertainty    0.10
 set clk_latency        0.50
 set input_delay       [expr $cycle * 0.5]
@@ -41,11 +41,17 @@ set_output_delay $output_delay -clock CLK [all_outputs]
 set_max_area 0
 set_flatten true -effort high
 set_structure true
+set compile_ultra_ungroup_dw true
 
 check_design > ./Report/${DESIGN}_check_design.rpt
 
-compile_ultra -ungroup_all -area_high_effort_script
-compile_ultra -incremental -area_high_effort_script
+# Some DC versions do not support compile_ultra -ungroup_all, and some ignore
+# -area_high_effort_script.  Compile, flatten hierarchy, then explicitly run
+# area optimization while keeping timing constraints active.
+compile_ultra
+ungroup -all -flatten
+compile_ultra -incremental
+optimize_netlist -area
 
 set bus_inference_style {%s[%d]}
 set bus_naming_style    {%s[%d]}
@@ -62,8 +68,17 @@ set verilogout_higher_designs_first true
 report_qor                                      > ./Report/${DESIGN}_syn.qor
 report_constraint -all_violators               > ./Report/${DESIGN}_syn.constraint
 report_area -hierarchy                         > ./Report/${DESIGN}_syn.area
-report_timing -delay min -max_paths 20         > ./Report/${DESIGN}_syn.timing_min
-report_timing -delay max -max_paths 20         > ./Report/${DESIGN}_syn.timing_max
+report_timing -delay min -max_paths 20 -path full -nets -transition_time -capacitance \
+                                                   > ./Report/${DESIGN}_syn.timing_min
+report_timing -delay max -max_paths 50 -path full -nets -transition_time -capacitance \
+                                                   > ./Report/${DESIGN}_syn.timing_max
+report_timing -delay max -max_paths 1 -path full_clock_expanded -nets -transition_time -capacitance -input_pins \
+                                                   > ./Report/${DESIGN}_syn.critical_path
+report_timing -delay max -max_paths 10 -nworst 3 -path end \
+                                                   > ./Report/${DESIGN}_syn.worst_endpoints
+report_timing -delay max -group CLK -max_paths 20 -path full -nets -transition_time -capacitance \
+                                                   > ./Report/${DESIGN}_syn.timing_CLK
+report_timing_summary                            > ./Report/${DESIGN}_syn.timing_summary
 report_power                                   > ./Report/${DESIGN}_syn.power
 
 write -f ddc     -hierarchy -output ./Netlist/${DESIGN}_syn.ddc

@@ -41,7 +41,7 @@ CHIP.v
 # Pattern Definition                                   #
 ########################################################
 // +define+noHazard
-// +define+hasHazard
++define+hasHazard
 // +define+customHazard
 // +define+hazEXMEMForward
 // +define+hazMEMWBForward
@@ -64,7 +64,7 @@ CHIP.v
 // +define+hazFibBodyLong
 // +define+hazFibBodyGap
 // +define+hazFibInitBodyNoGap
-+define+hazBranchFlushJalr
+// +define+hazBranchFlushJalr
 // +define+hazStoreBranchFlushJalr
 
 // +define+BrPred
