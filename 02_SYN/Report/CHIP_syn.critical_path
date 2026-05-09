@@ -1,0 +1,90 @@
+ 
+****************************************
+Report : timing
+        -path full_clock_expanded
+        -delay max
+        -input_pins
+        -nets
+        -max_paths 1
+        -transition_time
+        -capacitance
+Design : CHIP
+Version: U-2022.12
+Date   : Sat May  9 23:51:30 2026
+****************************************
+
+ # A fanout number of 1000 was used for high fanout net computations.
+
+Operating Conditions: slow   Library: slow
+Wire Load Model Mode: top
+
+  Startpoint: rst_n (input port clocked by CLK)
+  Endpoint: icache0_data_reg_10__93_
+            (rising edge-triggered flip-flop clocked by CLK)
+  Path Group: CLK
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  CHIP               tsmc13_wl10           slow
+
+  Point                        Fanout       Cap     Trans      Incr       Path
+  -------------------------------------------------------------------------------
+  clock CLK (rise edge)                                        0.00       0.00
+  clock network delay (ideal)                                  0.50       0.50
+  input external delay                                         1.80       2.30 r
+  rst_n (in)                                         0.07      0.07       2.37 r
+  rst_n (net)                    2         0.07                0.00       2.37 r
+  U8953/A (INVX16)                                   0.07      0.00       2.37 r
+  U8953/Y (INVX16)                                   0.06      0.05       2.43 f
+  n6366 (net)                    6         0.17                0.00       2.43 f
+  U8998/A (BUFX20)                                   0.06      0.00       2.43 f
+  U8998/Y (BUFX20)                                   0.06      0.10       2.52 f
+  n6371 (net)                    6         0.17                0.00       2.52 f
+  U7001/A (INVX16)                                   0.06      0.00       2.52 f
+  U7001/Y (INVX16)                                   0.06      0.05       2.57 r
+  n6010 (net)                    3         0.10                0.00       2.57 r
+  U6575/A (INVX20)                                   0.06      0.00       2.57 r
+  U6575/Y (INVX20)                                   0.03      0.03       2.60 f
+  n5390 (net)                    2         0.06                0.00       2.60 f
+  U8045/A (NOR2X8)                                   0.03      0.00       2.60 f
+  U8045/Y (NOR2X8)                                   0.10      0.06       2.67 r
+  n5383 (net)                    2         0.04                0.00       2.67 r
+  U8593/A (NAND2X6)                                  0.10      0.00       2.67 r
+  U8593/Y (NAND2X6)                                  0.08      0.06       2.73 f
+  n5793 (net)                    1         0.05                0.00       2.73 f
+  U7046/A (INVX16)                                   0.08      0.00       2.73 f
+  U7046/Y (INVX16)                                   0.07      0.07       2.79 r
+  icache0_n88 (net)              4         0.12                0.00       2.79 r
+  U8575/A (NAND2X8)                                  0.07      0.00       2.79 r
+  U8575/Y (NAND2X8)                                  0.08      0.05       2.84 f
+  icache0_n2028 (net)            1         0.05                0.00       2.84 f
+  U8130/A (CLKINVX12)                                0.08      0.00       2.84 f
+  U8130/Y (CLKINVX12)                                0.04      0.04       2.89 r
+  n5402 (net)                    1         0.08                0.00       2.89 r
+  U8131/A (CLKINVX20)                                0.04      0.00       2.89 r
+  U8131/Y (CLKINVX20)                                0.08      0.06       2.95 f
+  n5403 (net)                   11         0.30                0.00       2.95 f
+  U6580/A (BUFX20)                                   0.08      0.00       2.95 f
+  U6580/Y (BUFX20)                                   0.07      0.11       3.06 f
+  n5186 (net)                   14         0.24                0.00       3.06 f
+  icache0_U4796/S0 (MX2X4)                           0.07      0.00       3.06 f
+  icache0_U4796/Y (MX2X4)                            0.05      0.12       3.18 f
+  icache0_n6339 (net)            1         0.01                0.00       3.18 f
+  icache0_data_reg_10__93_/D (DFFX1)                 0.05      0.00       3.18 f
+  data arrival time                                                       3.18
+
+  clock CLK (rise edge)                                        3.00       3.00
+  clock network delay (ideal)                                  0.50       3.50
+  clock uncertainty                                           -0.15       3.35
+  icache0_data_reg_10__93_/CK (DFFX1)                          0.00       3.35 r
+  library setup time                                          -0.17       3.18
+  data required time                                                      3.18
+  -------------------------------------------------------------------------------
+  data required time                                                      3.18
+  data arrival time                                                      -3.18
+  -------------------------------------------------------------------------------
+  slack (MET)                                                             0.00
+
+
+1
