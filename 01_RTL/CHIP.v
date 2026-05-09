@@ -140,7 +140,11 @@ localparam WB_IMM = 2'd3;
 reg done_r;
 
 wire        if_stall;
-wire        branch_predict_taken;
+wire        id_predict_taken;
+wire        id_predict_redirect;
+wire [31:0] id_predict_pc;
+wire        if_redirect;
+wire [31:0] if_redirect_pc;
 wire [31:0] if_pc;
 wire [31:0] if_inst;
 
@@ -188,6 +192,8 @@ reg        idex_branch;
 reg        idex_jal;
 reg        idex_jalr;
 reg        idex_flush_instr;
+reg        idex_pred_taken;
+reg [31:0] idex_pred_pc;
 reg [1:0]  idex_wb_sel;
 
 wire [31:0] exmem_forward_data;
@@ -223,7 +229,6 @@ wire global_stall;
 wire idex_insert_bubble;
 wire ex_redirect_valid;
 
-assign branch_predict_taken = 1'b0;
 assign mem_busy = exmem_valid & (exmem_mem_read | exmem_mem_write) & ~dmem_ready;
 assign global_stall = (~done_r & ~imem_ready) | mem_busy;
 assign load_use_stall = ifid_valid & idex_valid & idex_mem_read & (idex_rd != 5'b0) &
@@ -231,6 +236,11 @@ assign load_use_stall = ifid_valid & idex_valid & idex_mem_read & (idex_rd != 5'
                          (id_use_rs2 & (id_rs2 == idex_rd)));
 assign ex_redirect_valid = idex_valid & ex_redirect;
 assign idex_insert_bubble = ex_redirect_valid | load_use_stall;
+assign id_predict_taken = ifid_valid & id_branch & ifid_inst[31];
+assign id_predict_pc = ifid_pc + id_imm_aux;
+assign id_predict_redirect = id_predict_taken & ~global_stall & ~load_use_stall & ~ex_redirect_valid;
+assign if_redirect = ex_redirect_valid | id_predict_redirect;
+assign if_redirect_pc = ex_redirect_valid ? ex_redirect_pc : id_predict_pc;
 assign o_flush = done_r;
 assign o_done = done_r;
 
@@ -238,10 +248,8 @@ if_stage if_stage0 (
     .clk            (clk),
     .rst_n          (rst_n),
     .stall          (if_stall),
-    .redirect       (ex_redirect_valid),
-    .redirect_pc    (ex_redirect_pc),
-    .predict_taken  (branch_predict_taken),
-    .predict_pc     (32'b0),
+    .redirect       (if_redirect),
+    .redirect_pc    (if_redirect_pc),
     .imem_ready     (imem_ready),
     .imem_rdata     (imem_rdata),
     .done           (done_r),
@@ -295,6 +303,8 @@ ex_stage ex_stage0 (
     .branch         (idex_branch),
     .jal            (idex_jal),
     .jalr           (idex_jalr),
+    .pred_taken     (idex_pred_taken),
+    .pred_pc        (idex_pred_pc),
     .wb_sel         (idex_wb_sel),
     .exmem_wen      (exmem_valid & exmem_reg_wen & ~exmem_mem_read),
     .exmem_rd       (exmem_rd),
@@ -360,6 +370,8 @@ always @(posedge clk) begin
         idex_jal <= 1'b0;
         idex_jalr <= 1'b0;
         idex_flush_instr <= 1'b0;
+        idex_pred_taken <= 1'b0;
+        idex_pred_pc <= 32'b0;
         idex_wb_sel <= WB_ALU;
         exmem_valid <= 1'b0;
         exmem_result <= 32'b0;
@@ -375,7 +387,7 @@ always @(posedge clk) begin
         memwb_reg_wen <= 1'b0;
         memwb_flush_instr <= 1'b0;
     end else begin
-        if (ex_redirect_valid) begin
+        if (if_redirect) begin
             ifid_valid <= 1'b0;
         end
 
@@ -408,6 +420,8 @@ always @(posedge clk) begin
                 idex_jal <= 1'b0;
                 idex_jalr <= 1'b0;
                 idex_flush_instr <= 1'b0;
+                idex_pred_taken <= 1'b0;
+                idex_pred_pc <= 32'b0;
             end else begin
                 idex_valid <= ifid_valid;
                 idex_pc <= ifid_pc;
@@ -428,10 +442,12 @@ always @(posedge clk) begin
                 idex_jal <= id_jal;
                 idex_jalr <= id_jalr;
                 idex_flush_instr <= id_flush_instr;
+                idex_pred_taken <= id_predict_taken;
+                idex_pred_pc <= id_predict_pc;
                 idex_wb_sel <= id_wb_sel;
             end
 
-            if (ex_redirect_valid) begin
+            if (if_redirect) begin
                 ifid_valid <= 1'b0;
             end else if (!load_use_stall) begin
                 ifid_valid <= imem_ready & ~done_r;
@@ -450,8 +466,6 @@ module if_stage(
     input         stall,
     input         redirect,
     input  [31:0] redirect_pc,
-    input         predict_taken,
-    input  [31:0] predict_pc,
     input         imem_ready,
     input  [31:0] imem_rdata,
     input         done,
@@ -461,10 +475,8 @@ module if_stage(
 );
 reg [31:0] pc;
 wire [31:0] pc4;
-wire [31:0] seq_pc;
 
 assign pc4 = pc + 32'd4;
-assign seq_pc = predict_taken ? predict_pc : pc4;
 assign imem_addr = pc;
 assign if_pc = pc;
 assign if_inst = {imem_rdata[7:0], imem_rdata[15:8], imem_rdata[23:16], imem_rdata[31:24]};
@@ -473,7 +485,7 @@ always @(posedge clk) begin
     if (!rst_n) begin
         pc <= 32'b0;
     end else if (!stall && imem_ready && !done) begin
-        pc <= redirect ? redirect_pc : seq_pc;
+        pc <= redirect ? redirect_pc : pc4;
     end
 end
 endmodule
@@ -600,6 +612,8 @@ module ex_stage(
     input         branch,
     input         jal,
     input         jalr,
+    input         pred_taken,
+    input  [31:0] pred_pc,
     input  [1:0]  wb_sel,
     input         exmem_wen,
     input  [4:0]  exmem_rd,
@@ -622,7 +636,10 @@ wire [31:0] fwd_rs2;
 wire [31:0] alu_input2;
 wire [31:0] alu_result;
 wire [31:0] pc4;
+wire [31:0] branch_target;
+wire [31:0] branch_next_pc;
 wire branch_taken;
+wire branch_mispredict;
 
 assign fwd_rs1 = (exmem_wen && exmem_rd != 5'b0 && exmem_rd == rs1) ? exmem_wdata :
                  (memwb_wen && memwb_rd != 5'b0 && memwb_rd == rs1) ? memwb_wdata :
@@ -636,10 +653,15 @@ assign store_data = fwd_rs2;
 assign branch_taken = branch &&
                       ((funct3 == 3'b000 && fwd_rs1 == fwd_rs2) ||
                        (funct3 == 3'b001 && fwd_rs1 != fwd_rs2));
-assign redirect = jal | jalr | branch_taken;
+assign branch_target = pc + imm_aux;
+assign branch_next_pc = branch_taken ? branch_target : pc4;
+assign branch_mispredict = branch &&
+                           ((branch_taken != pred_taken) ||
+                            (branch_taken && (pred_pc != branch_target)));
+assign redirect = jal | jalr | branch_mispredict;
 assign redirect_pc = jal ? (pc + imm_aux) :
                      jalr ? ((fwd_rs1 + imm_alu) & 32'hffff_fffe) :
-                     (pc + imm_aux);
+                     branch_next_pc;
 assign result = (wb_sel == WB_PC4) ? pc4 :
                 (wb_sel == WB_IMM) ? imm_aux :
                 alu_result;

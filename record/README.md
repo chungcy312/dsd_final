@@ -12,6 +12,8 @@
   - synthesis constraint、gate simulation timing violation、reset/input delay、critical path 觀察。
 - `pipeline_and_hazard.md`
   - pipeline stage、hazard/debug pattern、之前遇到的 hazard 問題和處理方向。
+- `future_test_plan.md`
+  - 後續 cache block/way 與 branch prediction 實驗計畫。
 
 ## Current Baseline Notes
 
