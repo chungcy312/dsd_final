@@ -3,13 +3,15 @@ sh mkdir -p Report
 
 set DESIGN "CHIP"
 
-# Area-first synthesis target. Gate simulation effectively uses the
-# testbench `CYCLE value from tb_define.v, which is 10 ns in this project.
+# Area-first synthesis target. Gate simulation overrides `CYCLE from the
+# filelist; keep this value matched with the intended gate-sim period.
 set cycle             3.0
 set clk_uncertainty    0.10
 set clk_latency        0.50
-set input_delay       [expr $cycle * 0.5]
-set output_delay      [expr $cycle * 0.5]
+set mem_input_delay   [expr $cycle * 0.5]
+set mem_output_delay  [expr $cycle * 0.5]
+set reset_input_delay [expr $cycle * 0.6]
+set done_output_delay  0.0
 
 remove_design -all
 
@@ -33,8 +35,23 @@ set_drive 1 [all_inputs]
 set_load  1 [all_outputs]
 set_max_fanout 6 [all_inputs]
 
-set_input_delay  $input_delay  -clock CLK [remove_from_collection [all_inputs] [get_ports clk]]
-set_output_delay $output_delay -clock CLK [all_outputs]
+set mem_input_ports  [get_ports {mem_ready_D mem_ready_I mem_rdata_D[*] mem_rdata_I[*]}]
+set reset_input_port [get_ports rst_n]
+set mem_output_ports [get_ports {mem_read_D mem_write_D mem_addr_D[*] mem_wdata_D[*] mem_read_I mem_write_I mem_addr_I[*] mem_wdata_I[*]}]
+set done_output_port [get_ports o_done]
+
+# slow_memory samples CHIP outputs on negedge and drives CHIP inputs from
+# negedge registers.  Relative to CHIP's posedge domain, these are half-cycle
+# interfaces.  rst_n is driven by the testbench at 0.6 cycle, so budget it
+# separately; otherwise synchronous-reset mux paths are under-constrained.
+set_input_delay  -max $mem_input_delay   -clock CLK $mem_input_ports
+set_input_delay  -min 0.0                -clock CLK $mem_input_ports
+set_input_delay  -max $reset_input_delay -clock CLK $reset_input_port
+set_input_delay  -min 0.0                -clock CLK $reset_input_port
+set_output_delay -max $mem_output_delay  -clock CLK $mem_output_ports
+set_output_delay -min 0.0                -clock CLK $mem_output_ports
+set_output_delay -max $done_output_delay -clock CLK $done_output_port
+set_output_delay -min 0.0                -clock CLK $done_output_port
 
 # Push area down after timing is constrained. DC still treats timing as the
 # hard constraint; max_area 0 asks it to keep reducing area where legal.

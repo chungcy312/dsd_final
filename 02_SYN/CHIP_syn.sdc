@@ -26,8 +26,22 @@ set_load         1     [all_outputs]
 # TODO: You NEED to modify the constraints to pass gate-level simulation correctly (check TB and slow_memory)
 # Note: You may also add more constraints for your design (but do not overwrite the existing ones in above section)
 #####################################################
-set t_in   [expr $cycle * 0.5]
-set t_out  [expr $cycle * 0.5]
-set_input_delay  $t_in  -clock CLK [remove_from_collection [all_inputs] [get_ports clk]]
-set_output_delay $t_out -clock CLK [all_outputs]
+set mem_input_delay   [expr $cycle * 0.5]
+set mem_output_delay  [expr $cycle * 0.5]
+set reset_input_delay [expr $cycle * 0.6]
+set done_output_delay  0.0
+
+set mem_input_ports  [get_ports {mem_ready_D mem_ready_I mem_rdata_D[*] mem_rdata_I[*]}]
+set reset_input_port [get_ports rst_n]
+set mem_output_ports [get_ports {mem_read_D mem_write_D mem_addr_D[*] mem_wdata_D[*] mem_read_I mem_write_I mem_addr_I[*] mem_wdata_I[*]}]
+set done_output_port [get_ports o_done]
+
+set_input_delay  -max $mem_input_delay   -clock CLK $mem_input_ports
+set_input_delay  -min 0.0                -clock CLK $mem_input_ports
+set_input_delay  -max $reset_input_delay -clock CLK $reset_input_port
+set_input_delay  -min 0.0                -clock CLK $reset_input_port
+set_output_delay -max $mem_output_delay  -clock CLK $mem_output_ports
+set_output_delay -min 0.0                -clock CLK $mem_output_ports
+set_output_delay -max $done_output_delay -clock CLK $done_output_port
+set_output_delay -min 0.0                -clock CLK $done_output_port
 #####################################################

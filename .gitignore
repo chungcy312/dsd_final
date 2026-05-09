@@ -3,4 +3,6 @@ docs/
 # 00_TESTBED/pattern/Haz_*/
 # 00_TESTBED/pattern/CustomHazard/
 02_SYN/Report/
-checkpoint*/
+checkpoint/
+*/output.log
+tools/
