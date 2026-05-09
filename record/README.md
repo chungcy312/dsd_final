@@ -14,6 +14,8 @@
   - pipeline stage、hazard/debug pattern、之前遇到的 hazard 問題和處理方向。
 - `future_test_plan.md`
   - 後續 cache block/way 與 branch prediction 實驗計畫。
+- `compressed_support.md`
+  - RV32C compressed instruction support 的 IF aligner、decompressor、pc increment 設計。
 
 ## Current Baseline Notes
 

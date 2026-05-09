@@ -147,10 +147,13 @@ wire        if_redirect;
 wire [31:0] if_redirect_pc;
 wire [31:0] if_pc;
 wire [31:0] if_inst;
+wire [31:0] if_pc_inc;
+wire        if_ready;
 
 reg        ifid_valid;
 reg [31:0] ifid_pc;
 reg [31:0] ifid_inst;
+reg [31:0] ifid_pc_inc;
 
 wire [4:0]  id_rs1;
 wire [4:0]  id_rs2;
@@ -175,6 +178,7 @@ wire [1:0]  id_wb_sel;
 
 reg        idex_valid;
 reg [31:0] idex_pc;
+reg [31:0] idex_pc_inc;
 reg [31:0] idex_rdata1;
 reg [31:0] idex_rdata2;
 reg [31:0] idex_imm_alu;
@@ -230,7 +234,7 @@ wire idex_insert_bubble;
 wire ex_redirect_valid;
 
 assign mem_busy = exmem_valid & (exmem_mem_read | exmem_mem_write) & ~dmem_ready;
-assign global_stall = (~done_r & ~imem_ready) | mem_busy;
+assign global_stall = (~done_r & ~if_ready) | mem_busy;
 assign load_use_stall = ifid_valid & idex_valid & idex_mem_read & (idex_rd != 5'b0) &
                         ((id_use_rs1 & (id_rs1 == idex_rd)) |
                          (id_use_rs2 & (id_rs2 == idex_rd)));
@@ -254,11 +258,13 @@ if_stage if_stage0 (
     .imem_rdata     (imem_rdata),
     .done           (done_r),
     .imem_addr      (imem_addr),
+    .if_ready       (if_ready),
     .if_pc          (if_pc),
+    .if_pc_inc      (if_pc_inc),
     .if_inst        (if_inst)
 );
 
-assign if_stall = global_stall | load_use_stall;
+assign if_stall = mem_busy | load_use_stall;
 
 id_stage id_stage0 (
     .inst           (ifid_inst),
@@ -291,6 +297,7 @@ id_stage id_stage0 (
 
 ex_stage ex_stage0 (
     .pc             (idex_pc),
+    .pc_inc         (idex_pc_inc),
     .rdata1         (idex_rdata1),
     .rdata2         (idex_rdata2),
     .imm_alu        (idex_imm_alu),
@@ -351,8 +358,10 @@ always @(posedge clk) begin
         ifid_valid <= 1'b0;
         ifid_pc <= 32'b0;
         ifid_inst <= 32'b0;
+        ifid_pc_inc <= 32'd4;
         idex_valid <= 1'b0;
         idex_pc <= 32'b0;
+        idex_pc_inc <= 32'd4;
         idex_rdata1 <= 32'b0;
         idex_rdata2 <= 32'b0;
         idex_imm_alu <= 32'b0;
@@ -425,6 +434,7 @@ always @(posedge clk) begin
             end else begin
                 idex_valid <= ifid_valid;
                 idex_pc <= ifid_pc;
+                idex_pc_inc <= ifid_pc_inc;
                 idex_rdata1 <= id_rdata1;
                 idex_rdata2 <= id_rdata2;
                 idex_imm_alu <= id_imm_alu;
@@ -450,8 +460,9 @@ always @(posedge clk) begin
             if (if_redirect) begin
                 ifid_valid <= 1'b0;
             end else if (!load_use_stall) begin
-                ifid_valid <= imem_ready & ~done_r;
+                ifid_valid <= if_ready & ~done_r;
                 ifid_pc <= if_pc;
+                ifid_pc_inc <= if_pc_inc;
                 ifid_inst <= if_inst;
             end
         end
@@ -470,23 +481,203 @@ module if_stage(
     input  [31:0] imem_rdata,
     input         done,
     output [31:0] imem_addr,
+    output        if_ready,
     output [31:0] if_pc,
+    output [31:0] if_pc_inc,
     output [31:0] if_inst
 );
+localparam S_FETCH0 = 1'b0;
+localparam S_FETCH1 = 1'b1;
+
 reg [31:0] pc;
+reg        state;
+reg [15:0] saved_upper_half;
+reg [31:0] saved_pc;
 wire [31:0] pc4;
+wire [31:0] pc2;
+wire [31:0] fetch_word;
+wire [15:0] first_half;
+wire        first_is_32;
+wire        need_second_word;
+wire [31:0] compressed_inst;
+wire [31:0] aligned_inst;
+wire [31:0] aligned_pc;
+wire [31:0] aligned_pc_inc;
 
 assign pc4 = pc + 32'd4;
-assign imem_addr = pc;
-assign if_pc = pc;
-assign if_inst = {imem_rdata[7:0], imem_rdata[15:8], imem_rdata[23:16], imem_rdata[31:24]};
+assign pc2 = pc + 32'd2;
+assign imem_addr = (state == S_FETCH1) ? pc2 : pc;
+assign fetch_word = {imem_rdata[7:0], imem_rdata[15:8], imem_rdata[23:16], imem_rdata[31:24]};
+assign first_half = pc[1] ? fetch_word[31:16] : fetch_word[15:0];
+assign first_is_32 = (first_half[1:0] == 2'b11);
+assign need_second_word = (state == S_FETCH0) & imem_ready & pc[1] & first_is_32;
+assign if_ready = imem_ready & ~need_second_word;
+assign aligned_inst = (state == S_FETCH1) ? {fetch_word[15:0], saved_upper_half} :
+                      first_is_32 ? fetch_word : compressed_inst;
+assign aligned_pc = (state == S_FETCH1) ? saved_pc : pc;
+assign aligned_pc_inc = (state == S_FETCH1 || first_is_32) ? 32'd4 : 32'd2;
+assign if_pc = aligned_pc;
+assign if_pc_inc = aligned_pc_inc;
+assign if_inst = aligned_inst;
+
+compressed_decoder compressed_decoder0 (
+    .cinst      (first_half),
+    .inst       (compressed_inst)
+);
 
 always @(posedge clk) begin
     if (!rst_n) begin
         pc <= 32'b0;
-    end else if (!stall && imem_ready && !done) begin
-        pc <= redirect ? redirect_pc : pc4;
+        state <= S_FETCH0;
+        saved_upper_half <= 16'b0;
+        saved_pc <= 32'b0;
+    end else if (!done) begin
+        if (state == S_FETCH0) begin
+            if (!stall && imem_ready && redirect) begin
+                pc <= redirect_pc;
+                state <= S_FETCH0;
+            end else if (imem_ready && pc[1] && first_is_32) begin
+                saved_upper_half <= first_half;
+                saved_pc <= pc;
+                state <= S_FETCH1;
+            end else if (!stall && imem_ready) begin
+                pc <= redirect ? redirect_pc :
+                      first_is_32 ? pc4 : pc2;
+            end
+        end else begin
+            if (!stall && imem_ready) begin
+                pc <= redirect ? redirect_pc : (saved_pc + 32'd4);
+                state <= S_FETCH0;
+            end
+        end
     end
+end
+endmodule
+
+module compressed_decoder(
+    input  [15:0] cinst,
+    output reg [31:0] inst
+);
+wire [1:0] op;
+wire [2:0] funct3;
+wire [4:0] rd_rs1;
+wire [4:0] rs2;
+wire [4:0] rd_rs1_p;
+wire [4:0] rs2_p;
+wire [5:0] ci_imm;
+wire [5:0] ci_shamt;
+wire [6:0] clw_uimm;
+wire [12:0] cb_imm;
+wire [20:0] cj_imm;
+
+assign op = cinst[1:0];
+assign funct3 = cinst[15:13];
+assign rd_rs1 = cinst[11:7];
+assign rs2 = cinst[6:2];
+assign rd_rs1_p = {2'b01, cinst[9:7]};
+assign rs2_p = {2'b01, cinst[4:2]};
+assign ci_imm = {cinst[12], cinst[6:2]};
+assign ci_shamt = {cinst[12], cinst[6:2]};
+assign clw_uimm = {cinst[5], cinst[12:10], cinst[6], 2'b00};
+assign cb_imm = {{4{cinst[12]}}, cinst[12], cinst[6:5], cinst[2],
+                 cinst[11:10], cinst[4:3], 1'b0};
+assign cj_imm = {{9{cinst[12]}}, cinst[12], cinst[8], cinst[10:9],
+                 cinst[6], cinst[7], cinst[2], cinst[11], cinst[5:3], 1'b0};
+
+function [31:0] enc_i;
+    input [6:0] opcode;
+    input [2:0] f3;
+    input [4:0] rd;
+    input [4:0] rs1;
+    input [11:0] imm;
+    begin
+        enc_i = {imm, rs1, f3, rd, opcode};
+    end
+endfunction
+
+function [31:0] enc_r;
+    input [6:0] f7;
+    input [2:0] f3;
+    input [4:0] rd;
+    input [4:0] rs1;
+    input [4:0] rs2_i;
+    begin
+        enc_r = {f7, rs2_i, rs1, f3, rd, 7'b0110011};
+    end
+endfunction
+
+function [31:0] enc_s;
+    input [2:0] f3;
+    input [4:0] rs1;
+    input [4:0] rs2_i;
+    input [11:0] imm;
+    begin
+        enc_s = {imm[11:5], rs2_i, rs1, f3, imm[4:0], 7'b0100011};
+    end
+endfunction
+
+function [31:0] enc_b;
+    input [2:0] f3;
+    input [4:0] rs1;
+    input [4:0] rs2_i;
+    input [12:0] imm;
+    begin
+        enc_b = {imm[12], imm[10:5], rs2_i, rs1, f3, imm[4:1], imm[11], 7'b1100011};
+    end
+endfunction
+
+function [31:0] enc_j;
+    input [4:0] rd;
+    input [20:0] imm;
+    begin
+        enc_j = {imm[20], imm[10:1], imm[11], imm[19:12], rd, 7'b1101111};
+    end
+endfunction
+
+always @(*) begin
+    inst = 32'h00000013;
+    case (op)
+        2'b00: begin
+            case (funct3)
+                3'b010: inst = enc_i(7'b0000011, 3'b010, rs2_p, rd_rs1_p, {5'b0, clw_uimm});
+                3'b110: inst = enc_s(3'b010, rd_rs1_p, rs2_p, {5'b0, clw_uimm});
+            endcase
+        end
+        2'b01: begin
+            case (funct3)
+                3'b000: inst = enc_i(7'b0010011, 3'b000, rd_rs1, rd_rs1, {{6{ci_imm[5]}}, ci_imm});
+                3'b001: inst = enc_j(5'd1, cj_imm);
+                3'b100: begin
+                    if (cinst[11:10] == 2'b00) begin
+                        inst = enc_i(7'b0010011, 3'b101, rd_rs1_p, rd_rs1_p, {6'b000000, ci_shamt});
+                    end else if (cinst[11:10] == 2'b01) begin
+                        inst = enc_i(7'b0010011, 3'b101, rd_rs1_p, rd_rs1_p, {6'b010000, ci_shamt});
+                    end else if (cinst[11:10] == 2'b10) begin
+                        inst = enc_i(7'b0010011, 3'b111, rd_rs1_p, rd_rs1_p, {{6{ci_imm[5]}}, ci_imm});
+                    end
+                end
+                3'b101: inst = enc_j(5'd0, cj_imm);
+                3'b110: inst = enc_b(3'b000, rd_rs1_p, 5'd0, cb_imm);
+                3'b111: inst = enc_b(3'b001, rd_rs1_p, 5'd0, cb_imm);
+            endcase
+        end
+        2'b10: begin
+            case (funct3)
+                3'b000: inst = enc_i(7'b0010011, 3'b001, rd_rs1, rd_rs1, {6'b000000, ci_shamt});
+                3'b100: begin
+                    if (!cinst[12] && rs2 != 5'b0) begin
+                        inst = enc_r(7'b0000000, 3'b000, rd_rs1, 5'd0, rs2);
+                    end else if (!cinst[12]) begin
+                        inst = enc_i(7'b1100111, 3'b000, 5'd0, rd_rs1, 12'b0);
+                    end else if (rs2 != 5'b0) begin
+                        inst = enc_r(7'b0000000, 3'b000, rd_rs1, rd_rs1, rs2);
+                    end else begin
+                        inst = enc_i(7'b1100111, 3'b000, 5'd1, rd_rs1, 12'b0);
+                    end
+                end
+            endcase
+        end
+    endcase
 end
 endmodule
 
@@ -600,6 +791,7 @@ endmodule
 
 module ex_stage(
     input  [31:0] pc,
+    input  [31:0] pc_inc,
     input  [31:0] rdata1,
     input  [31:0] rdata2,
     input  [31:0] imm_alu,
@@ -647,7 +839,7 @@ assign fwd_rs1 = (exmem_wen && exmem_rd != 5'b0 && exmem_rd == rs1) ? exmem_wdat
 assign fwd_rs2 = (exmem_wen && exmem_rd != 5'b0 && exmem_rd == rs2) ? exmem_wdata :
                  (memwb_wen && memwb_rd != 5'b0 && memwb_rd == rs2) ? memwb_wdata :
                  rdata2;
-assign pc4 = pc + 32'd4;
+assign pc4 = pc + pc_inc;
 assign alu_input2 = alu_src_imm ? imm_alu : fwd_rs2;
 assign store_data = fwd_rs2;
 assign branch_taken = branch &&
