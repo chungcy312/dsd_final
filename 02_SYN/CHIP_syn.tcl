@@ -3,16 +3,6 @@ sh mkdir -p Report
 
 set DESIGN "CHIP"
 
-# Area-first synthesis target. Gate simulation overrides `CYCLE from the
-# filelist; keep this value matched with the intended gate-sim period.
-set cycle             3.0
-set clk_uncertainty    0.10
-set clk_latency        0.50
-set mem_input_delay   [expr $cycle * 0.5]
-set mem_output_delay  [expr $cycle * 0.5]
-set reset_input_delay [expr $cycle * 0.6]
-set done_output_delay  0.0
-
 remove_design -all
 
 analyze -format verilog {../01_RTL/CHIP.v}
@@ -21,37 +11,8 @@ current_design $DESIGN
 link
 uniquify
 
-create_clock -name CLK -period $cycle [get_ports clk]
-set_fix_hold [get_clocks CLK]
-set_dont_touch_network [get_clocks CLK]
-set_ideal_network [get_ports clk]
-set_clock_uncertainty $clk_uncertainty [get_clocks CLK]
-set_clock_latency $clk_latency [get_clocks CLK]
-
-set_operating_conditions -min_library fast -min fast -max_library slow -max slow
-set_wire_load_model -name tsmc13_wl10 -library slow
-
-set_drive 1 [all_inputs]
-set_load  1 [all_outputs]
-set_max_fanout 6 [all_inputs]
-
-set mem_input_ports  [get_ports {mem_ready_D mem_ready_I mem_rdata_D[*] mem_rdata_I[*]}]
-set reset_input_port [get_ports rst_n]
-set mem_output_ports [get_ports {mem_read_D mem_write_D mem_addr_D[*] mem_wdata_D[*] mem_read_I mem_write_I mem_addr_I[*] mem_wdata_I[*]}]
-set done_output_port [get_ports o_done]
-
-# slow_memory samples CHIP outputs on negedge and drives CHIP inputs from
-# negedge registers.  Relative to CHIP's posedge domain, these are half-cycle
-# interfaces.  rst_n is driven by the testbench at 0.6 cycle, so budget it
-# separately; otherwise synchronous-reset mux paths are under-constrained.
-set_input_delay  -max $mem_input_delay   -clock CLK $mem_input_ports
-set_input_delay  -min 0.0                -clock CLK $mem_input_ports
-set_input_delay  -max $reset_input_delay -clock CLK $reset_input_port
-set_input_delay  -min 0.0                -clock CLK $reset_input_port
-set_output_delay -max $mem_output_delay  -clock CLK $mem_output_ports
-set_output_delay -min 0.0                -clock CLK $mem_output_ports
-set_output_delay -max $done_output_delay -clock CLK $done_output_port
-set_output_delay -min 0.0                -clock CLK $done_output_port
+# Keep all timing/design constraints in one place.
+read_sdc ./CHIP_syn.sdc
 
 # Push area down after timing is constrained. DC still treats timing as the
 # hard constraint; max_area 0 asks it to keep reducing area where legal.

@@ -1,6 +1,6 @@
 # TODO: You may modified the clock constraints or add more constraints for your design
 ####################################################
-set cycle  3       
+set cycle 3.0      
 ####################################################
 
 
@@ -11,7 +11,7 @@ create_clock -name CLK -period $cycle [get_ports clk]
 set_fix_hold                          [get_clocks CLK]
 set_dont_touch_network                [get_clocks CLK]
 set_ideal_network                     [get_ports clk]
-set_clock_uncertainty            0.1  [get_clocks CLK] 
+set_clock_uncertainty            0.15 [get_clocks CLK] 
 set_clock_latency                0.5  [get_clocks CLK] 
 
 set_max_fanout 6 [all_inputs] 
