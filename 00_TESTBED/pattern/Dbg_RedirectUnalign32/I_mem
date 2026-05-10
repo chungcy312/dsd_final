@@ -1,0 +1,6 @@
+29_A0_01_00 // 0x00 c.j +10 | c.nop
+23_20_00_00 // 0x04 wrong sw x0,0(x0)
+01_00_13_07 // 0x08 c.nop | addi a4,x0,7 low
+70_00_23_20 // 0x0C addi high | sw a4,0(x0) low
+E0_00_07_20 // 0x10 sw high | flush low
+20_00_01_00 // 0x14 flush high | c.nop

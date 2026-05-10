@@ -175,6 +175,28 @@ module Final_tb;
 			$display("[INFO]: Testing with pattern <Conv_uncompressed>");
 		`elsif Mul
 			$display("[INFO]: Testing with pattern <Mul>");
+		`elsif dbgCJalReturn
+			$display("[INFO]: Testing with pattern <dbgCJalReturn>");
+		`elsif dbgCBranch
+			$display("[INFO]: Testing with pattern <dbgCBranch>");
+		`elsif dbgCrossLoadUse
+			$display("[INFO]: Testing with pattern <dbgCrossLoadUse>");
+		`elsif dbgQSortCallShape
+			$display("[INFO]: Testing with pattern <dbgQSortCallShape>");
+		`elsif dbgNestedCall
+			$display("[INFO]: Testing with pattern <dbgNestedCall>");
+		`elsif dbgCSlliLoadAddr
+			$display("[INFO]: Testing with pattern <dbgCSlliLoadAddr>");
+		`elsif dbgCLoadStoreForward
+			$display("[INFO]: Testing with pattern <dbgCLoadStoreForward>");
+		`elsif dbgSltCBranchForward
+			$display("[INFO]: Testing with pattern <dbgSltCBranchForward>");
+		`elsif dbgCSwapMini
+			$display("[INFO]: Testing with pattern <dbgCSwapMini>");
+		`elsif dbgCBackwardLoop
+			$display("[INFO]: Testing with pattern <dbgCBackwardLoop>");
+		`elsif dbgRedirectUnalign32
+			$display("[INFO]: Testing with pattern <dbgRedirectUnalign32>");
 		`elsif LFSR_HIST
 			$display("[INFO]: Testing with pattern <LFSR_HIST>");
 		`elsif LFSR_HIST_short

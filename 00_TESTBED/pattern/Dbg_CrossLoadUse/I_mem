@@ -1,0 +1,5 @@
+01_00_83_20 // 0x00 c.nop | lw x1,0(x0) low
+00_00_33_81 // 0x04 lw x1,0(x0) high | add x2,x1,x1 low
+10_00_23_20 // 0x08 add high | sw x2,0(x0) low
+20_00_07_20 // 0x0C sw high | flush low
+20_00_01_00 // 0x10 flush high | c.nop

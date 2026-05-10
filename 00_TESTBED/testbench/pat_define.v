@@ -234,6 +234,83 @@
 	`define GOLDEN          "../00_TESTBED/pattern/Mul/D_gold"
 `endif
 
+`ifdef dbgCJalReturn
+	`define N_MEM_CHECK 	16
+	`define IMEM_INIT       "../00_TESTBED/pattern/Dbg_CJalReturn/I_mem"
+	`define DMEM_INIT       "../00_TESTBED/pattern/Dbg_CJalReturn/D_mem"
+	`define GOLDEN          "../00_TESTBED/pattern/Dbg_CJalReturn/D_gold"
+`endif
+
+`ifdef dbgCBranch
+	`define N_MEM_CHECK 	16
+	`define IMEM_INIT       "../00_TESTBED/pattern/Dbg_CBranch/I_mem"
+	`define DMEM_INIT       "../00_TESTBED/pattern/Dbg_CBranch/D_mem"
+	`define GOLDEN          "../00_TESTBED/pattern/Dbg_CBranch/D_gold"
+`endif
+
+`ifdef dbgCrossLoadUse
+	`define N_MEM_CHECK 	16
+	`define IMEM_INIT       "../00_TESTBED/pattern/Dbg_CrossLoadUse/I_mem"
+	`define DMEM_INIT       "../00_TESTBED/pattern/Dbg_CrossLoadUse/D_mem"
+	`define GOLDEN          "../00_TESTBED/pattern/Dbg_CrossLoadUse/D_gold"
+`endif
+
+`ifdef dbgQSortCallShape
+	`define N_MEM_CHECK 	16
+	`define IMEM_INIT       "../00_TESTBED/pattern/Dbg_QSortCallShape/I_mem"
+	`define DMEM_INIT       "../00_TESTBED/pattern/Dbg_QSortCallShape/D_mem"
+	`define GOLDEN          "../00_TESTBED/pattern/Dbg_QSortCallShape/D_gold"
+`endif
+
+`ifdef dbgNestedCall
+	`define N_MEM_CHECK 	16
+	`define IMEM_INIT       "../00_TESTBED/pattern/Dbg_NestedCall/I_mem"
+	`define DMEM_INIT       "../00_TESTBED/pattern/Dbg_NestedCall/D_mem"
+	`define GOLDEN          "../00_TESTBED/pattern/Dbg_NestedCall/D_gold"
+`endif
+
+`ifdef dbgCSlliLoadAddr
+	`define N_MEM_CHECK 	16
+	`define IMEM_INIT       "../00_TESTBED/pattern/Dbg_CSlliLoadAddr/I_mem"
+	`define DMEM_INIT       "../00_TESTBED/pattern/Dbg_CSlliLoadAddr/D_mem"
+	`define GOLDEN          "../00_TESTBED/pattern/Dbg_CSlliLoadAddr/D_gold"
+`endif
+
+`ifdef dbgCLoadStoreForward
+	`define N_MEM_CHECK 	16
+	`define IMEM_INIT       "../00_TESTBED/pattern/Dbg_CLoadStoreForward/I_mem"
+	`define DMEM_INIT       "../00_TESTBED/pattern/Dbg_CLoadStoreForward/D_mem"
+	`define GOLDEN          "../00_TESTBED/pattern/Dbg_CLoadStoreForward/D_gold"
+`endif
+
+`ifdef dbgSltCBranchForward
+	`define N_MEM_CHECK 	16
+	`define IMEM_INIT       "../00_TESTBED/pattern/Dbg_SltCBranchForward/I_mem"
+	`define DMEM_INIT       "../00_TESTBED/pattern/Dbg_SltCBranchForward/D_mem"
+	`define GOLDEN          "../00_TESTBED/pattern/Dbg_SltCBranchForward/D_gold"
+`endif
+
+`ifdef dbgCSwapMini
+	`define N_MEM_CHECK 	16
+	`define IMEM_INIT       "../00_TESTBED/pattern/Dbg_CSwapMini/I_mem"
+	`define DMEM_INIT       "../00_TESTBED/pattern/Dbg_CSwapMini/D_mem"
+	`define GOLDEN          "../00_TESTBED/pattern/Dbg_CSwapMini/D_gold"
+`endif
+
+`ifdef dbgCBackwardLoop
+	`define N_MEM_CHECK 	16
+	`define IMEM_INIT       "../00_TESTBED/pattern/Dbg_CBackwardLoop/I_mem"
+	`define DMEM_INIT       "../00_TESTBED/pattern/Dbg_CBackwardLoop/D_mem"
+	`define GOLDEN          "../00_TESTBED/pattern/Dbg_CBackwardLoop/D_gold"
+`endif
+
+`ifdef dbgRedirectUnalign32
+	`define N_MEM_CHECK 	16
+	`define IMEM_INIT       "../00_TESTBED/pattern/Dbg_RedirectUnalign32/I_mem"
+	`define DMEM_INIT       "../00_TESTBED/pattern/Dbg_RedirectUnalign32/D_mem"
+	`define GOLDEN          "../00_TESTBED/pattern/Dbg_RedirectUnalign32/D_gold"
+`endif
+
 `ifdef QSort
 	`define N_MEM_CHECK 	256
 	`define IMEM_INIT 		"../00_TESTBED/pattern/Q_Sort/I_mem_compression"

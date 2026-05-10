@@ -1,24 +1,17 @@
 # Future Test Plan
 
-這份紀錄整理後續要做的實驗，用來比較 cache 參數與 branch prediction 方法對 area、timing、cycle count 的影響。
+This file records experiments to run later for cache, branch prediction, and
+MUL support.  It is written in ASCII so it can be safely opened by different
+editors and terminals.
 
 ## 1. Cache Experiments
 
-### Goal
+Goal:
 
-比較不同 I-cache / D-cache 組合在以下指標的 tradeoff：
+- Compare miss rate, total simulation time, synthesis area, and timing.
+- Keep the normal final patterns in the loop: QSort, Conv, LFSR_HIST.
 
-- miss rate
-- total simulation time
-- synthesis area
-- critical path / minimum clock period
-- gate-level simulation 是否有 timing violation
-
-### Cache Parameters
-
-目前 slow memory interface 固定為 128-bit，所以 cache line 固定是 4 words。
-
-要測的參數：
+Parameters:
 
 ```text
 I-cache blocks: 16, 32
@@ -26,37 +19,22 @@ D-cache blocks: 16, 32, 64
 ways: 1, 2
 ```
 
-因為之前 sweep 顯示 `ways >= 4` 幾乎沒有明顯改善，所以暫時不測 4-way 以上。
+Do not prioritize ways >= 4 for now.  Previous sweep results showed little
+benefit, and higher associativity increases tag compare and way mux cost.
 
-### Suggested Test Matrix
-
-先從 area/timing 較小的組合開始：
+Suggested cache cases:
 
 | Case | I-cache | D-cache | Purpose |
 | --- | --- | --- | --- |
-| C0 | 1-way, 16 blocks | 1-way, 16 blocks | fair baseline, same line count as old cache |
-| C1 | 1-way, 32 blocks | 1-way, 16 blocks | test larger I-cache only |
-| C2 | 1-way, 16 blocks | 1-way, 32 blocks | test larger D-cache only |
+| C0 | 1-way, 16 blocks | 1-way, 16 blocks | fair small baseline |
+| C1 | 1-way, 32 blocks | 1-way, 16 blocks | larger I-cache only |
+| C2 | 1-way, 16 blocks | 1-way, 32 blocks | larger D-cache only |
 | C3 | 1-way, 32 blocks | 1-way, 32 blocks | balanced small/mid cache |
-| C4 | 1-way, 32 blocks | 1-way, 64 blocks | higher hit-rate candidate |
-| C5 | 1-way, 32 blocks | 2-way, 32 blocks | test D-cache associativity |
+| C4 | 1-way, 32 blocks | 1-way, 64 blocks | higher D hit-rate candidate |
+| C5 | 1-way, 32 blocks | 2-way, 32 blocks | D-cache associativity test |
 | C6 | 1-way, 32 blocks | 2-way, 64 blocks | high D-cache hit-rate candidate |
 
-如果 synthesis timing 壓力很大，優先保留：
-
-```text
-C0, C1, C2, C3
-```
-
-如果 timing 有餘裕，再測：
-
-```text
-C4, C5, C6
-```
-
-### Patterns
-
-必測：
+Patterns to run:
 
 ```text
 noHazard
@@ -67,32 +45,7 @@ Conv
 LFSR_HIST
 ```
 
-其中：
-
-- `noHazard` / `hasHazard`: correctness baseline
-- `BrPred`: branch prediction behavior
-- `QSort`, `Conv`, `LFSR_HIST`: final performance patterns
-
-### Data to Record
-
-每個 cache case 記錄：
-
-```text
-case name
-ICACHE_BLOCKS
-DCACHE_BLOCKS
-I-cache way
-D-cache way
-RTL sim pass/fail
-gate sim pass/fail
-clock cycle
-total cell area
-critical path start/end
-WNS/TNS
-pattern simulation time
-```
-
-建議整理成 CSV：
+Suggested CSV columns:
 
 ```text
 cache_case,ic_way,ic_blocks,dc_way,dc_blocks,pattern,cycle_ns,sim_time_ns,total_cell_area,wns,pass
@@ -100,133 +53,154 @@ cache_case,ic_way,ic_blocks,dc_way,dc_blocks,pattern,cycle_ns,sim_time_ns,total_
 
 ## 2. Branch Prediction Experiments
 
-### Goal
+Goal:
 
-比較 baseline `always not taken` 與新加入的 `BTFNT` 對 cycle count / simulation time 的影響。
+- Compare baseline always-not-taken with BTFNT.
+- Keep hardware cost very small before trying predictor tables.
 
-### Methods
-
-#### Always Not Taken
-
-Baseline:
-
-```text
-predict branch not taken
-next PC = PC + 4
-```
-
-優點：
-
-- 0 extra predictor hardware
-- control 最簡單
-
-缺點：
-
-- backward loop branch 通常會 mispredict
-
-#### BTFNT
-
-Backward Taken, Forward Not Taken:
-
-```verilog
-predict_taken = is_branch && inst[31];
-```
-
-因為 RISC-V branch immediate 的 sign bit 直接是 `inst[31]`：
-
-```text
-inst[31] = 1 -> negative offset -> backward branch -> predict taken
-inst[31] = 0 -> positive offset -> forward branch -> predict not taken
-```
-
-優點：
-
-- 幾乎不需要 predictor FF
-- 對 loop branch 有幫助
-
-代價：
-
-- 需要在 ID stage decode branch immediate
-- 若預測 taken，需要 ID stage 提前產生 branch target
-
-### Suggested Branch Prediction Test Matrix
+Cases:
 
 | Case | Predictor | Description |
 | --- | --- | --- |
 | B0 | always not taken | original baseline |
 | B1 | BTFNT | ID-stage backward branch redirect |
 
-先不要混入 bimodal/gshare，以免 register 數和 update control 增加太多。
+BTFNT rule:
 
-### Patterns
+```verilog
+predict_taken = is_branch && inst[31];
+```
 
-必測：
+For normal 32-bit B-type branches, `inst[31]` is the branch immediate sign bit.
+For compressed branches, the decompressor produces a 32-bit equivalent branch,
+so the same ID-stage rule can still use `ifid_inst[31]`.
+
+Patterns to run:
 
 ```text
+noHazard
+hasHazard
 BrPred
 QSort
 Conv
 LFSR_HIST
 ```
 
-另外也要跑：
-
-```text
-noHazard
-hasHazard
-```
-
-確認 BTFNT 沒有破壞 control hazard / flush correctness。
-
-### Data to Record
-
-每個 branch predictor case 記錄：
-
-```text
-predictor
-pattern
-RTL sim pass/fail
-gate sim pass/fail
-cycle count or total simulation time
-total cell area
-critical path
-```
-
-建議 CSV：
+Suggested CSV columns:
 
 ```text
 predictor,pattern,cycle_ns,sim_time_ns,total_cell_area,critical_path,pass
 ```
 
-## 3. Combined Experiments
+## 3. Compressed Instruction Experiments
 
-等 cache 和 branch prediction 分別穩定後，再做組合實驗。
+Goal:
 
-建議先測：
+- Verify RV32C correctness without hurting normal 32-bit aligned fast path.
 
-| Case | Cache | Predictor |
-| --- | --- | --- |
-| F0 | best small-area cache | always not taken |
-| F1 | best small-area cache | BTFNT |
-| F2 | best performance cache | always not taken |
-| F3 | best performance cache | BTFNT |
+Patterns to run:
 
-目的：
+```text
+compression
+compression_uncompressed
+noHazard
+hasHazard
+QSort
+Conv
+LFSR_HIST
+```
 
-- 分清楚 performance improvement 來自 cache 還是 branch prediction。
-- 避免一次改太多導致 debug 不知道問題來源。
+Things to check:
 
-## 4. Expected Decision Criteria
+- 16-bit instruction at lower halfword.
+- 16-bit instruction at upper halfword.
+- 32-bit instruction crossing a 32-bit word boundary.
+- 32-bit instruction crossing a 128-bit cache block boundary.
+- `c.jal` / `c.jalr` link address must be `pc + 2`.
 
-最後選 design 時，不只看 hit rate 或 branch accuracy，要同時看：
+## 4. MUL Multicycle Experiments
+
+Current plan:
+
+```text
+mul_a_reg / mul_b_reg -> multiplier -> mul_result_reg
+```
+
+The multiplier block latches EX-stage forwarded operands:
+
+```verilog
+mul_a_reg <= fwd_rs1;
+mul_b_reg <= fwd_rs2;
+```
+
+This preserves RAW hazard behavior because the original forwarding muxes are
+still used before the MUL operands are captured.
+
+Tunable parameter:
+
+```text
+MUL_CYCLES = 2, 3, 4
+```
+
+When changing this value, update both:
+
+```text
+01_RTL/CHIP.v       parameter MUL_CYCLES
+02_SYN/CHIP_syn.sdc set mul_cycles
+```
+
+Patterns to run:
+
+```text
+Mul
+Conv
+noHazard
+hasHazard
+QSort
+LFSR_HIST
+```
+
+Expected behavior:
+
+- MUL instruction stays in EX while `mul_stall` is high.
+- IF/ID/IDEX are held.
+- EX/MEM and MEM/WB are allowed to drain so previous memory operations are not
+  repeated.
+- When `mul_result_reg` is ready, the MUL instruction advances to EX/MEM like
+  a normal ALU instruction.
+
+Future area optimization to try:
+
+```text
+Share ALU operand/input registers with the multiplier.
+```
+
+Notes:
+
+- Functionally, ALU inputs are already hazard-resolved by forwarding, so sharing
+  can work.
+- Timing-wise, sharing ALU input/output registers makes SDC multicycle
+  constraints harder.  A broad register-to-register multicycle constraint could
+  accidentally relax normal ALU paths.
+- A safer future compromise is to share the forwarded operand muxes but keep an
+  independent `mul_result_reg`.
+
+## 5. Combined Final Experiments
+
+After each feature is verified independently, run combined cases:
+
+| Case | Cache | Predictor | MUL |
+| --- | --- | --- | --- |
+| F0 | best small-area cache | always not taken | disabled |
+| F1 | best small-area cache | BTFNT | disabled |
+| F2 | best performance cache | BTFNT | disabled |
+| F3 | best performance cache | BTFNT | multicycle MUL |
+
+Decision criteria:
 
 ```text
 score impact = area impact + simulation time impact + timing feasibility
 ```
 
-可能的選擇策略：
-
-- 如果 area penalty 很敏感：選 1-way small cache + BTFNT。
-- 如果 timing 最敏感：選 1-way cache，避免 2-way way mux。
-- 如果 runtime 最敏感：考慮 larger D-cache 或 2-way D-cache，再確認 timing。
-- 如果 BrPred pattern 權重很高：BTFNT 應該比 always not taken 更值得保留。
+Keep changes isolated when debugging.  Do not tune cache, prediction, and MUL
+at the same time unless each feature already passes its own regression.

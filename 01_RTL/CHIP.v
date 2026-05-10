@@ -1,6 +1,7 @@
 module CHIP #(
     parameter ICACHE_BLOCKS = 16,
-    parameter DCACHE_BLOCKS = 16
+    parameter DCACHE_BLOCKS = 16,
+    parameter MUL_CYCLES    = 3
 ) (
     clk,
     rst_n,
@@ -56,7 +57,9 @@ wire        core_done;
 
 assign o_done = core_done & dcache_flush_done;
 
-core core0 (
+core #(
+    .MUL_CYCLES     (MUL_CYCLES)
+) core0 (
     .clk            (clk),
     .rst_n          (rst_n),
     .imem_ready     (core_i_ready),
@@ -114,7 +117,9 @@ dcache_1way #(
 
 endmodule
 
-module core (
+module core #(
+    parameter MUL_CYCLES = 3
+) (
     input         clk,
     input         rst_n,
 
@@ -173,6 +178,7 @@ wire        id_reg_wen;
 wire        id_branch;
 wire        id_jal;
 wire        id_jalr;
+wire        id_is_mul;
 wire        id_flush_instr;
 wire [1:0]  id_wb_sel;
 
@@ -195,6 +201,7 @@ reg        idex_reg_wen;
 reg        idex_branch;
 reg        idex_jal;
 reg        idex_jalr;
+reg        idex_is_mul;
 reg        idex_flush_instr;
 reg        idex_pred_taken;
 reg [31:0] idex_pred_pc;
@@ -229,6 +236,7 @@ wire [4:0] wb_rd;
 wire [31:0] wb_wdata;
 wire load_use_stall;
 wire mem_busy;
+wire mul_stall;
 wire global_stall;
 wire idex_insert_bubble;
 wire ex_redirect_valid;
@@ -242,7 +250,7 @@ assign ex_redirect_valid = idex_valid & ex_redirect;
 assign idex_insert_bubble = ex_redirect_valid | load_use_stall;
 assign id_predict_taken = ifid_valid & id_branch & ifid_inst[31];
 assign id_predict_pc = ifid_pc + id_imm_aux;
-assign id_predict_redirect = id_predict_taken & ~global_stall & ~load_use_stall & ~ex_redirect_valid;
+assign id_predict_redirect = id_predict_taken & ~global_stall & ~load_use_stall & ~mul_stall & ~ex_redirect_valid;
 assign if_redirect = ex_redirect_valid | id_predict_redirect;
 assign if_redirect_pc = ex_redirect_valid ? ex_redirect_pc : id_predict_pc;
 assign o_flush = done_r;
@@ -264,7 +272,7 @@ if_stage if_stage0 (
     .if_inst        (if_inst)
 );
 
-assign if_stall = mem_busy | load_use_stall;
+assign if_stall = mem_busy | load_use_stall | mul_stall;
 
 id_stage id_stage0 (
     .inst           (ifid_inst),
@@ -291,11 +299,18 @@ id_stage id_stage0 (
     .branch         (id_branch),
     .jal            (id_jal),
     .jalr           (id_jalr),
+    .is_mul         (id_is_mul),
     .flush_instr    (id_flush_instr),
     .wb_sel         (id_wb_sel)
 );
 
-ex_stage ex_stage0 (
+ex_stage #(
+    .MUL_CYCLES     (MUL_CYCLES)
+) ex_stage0 (
+    .clk            (clk),
+    .rst_n          (rst_n),
+    .valid          (idex_valid),
+    .advance        (~global_stall),
     .pc             (idex_pc),
     .pc_inc         (idex_pc_inc),
     .rdata1         (idex_rdata1),
@@ -310,6 +325,7 @@ ex_stage ex_stage0 (
     .branch         (idex_branch),
     .jal            (idex_jal),
     .jalr           (idex_jalr),
+    .is_mul         (idex_is_mul),
     .pred_taken     (idex_pred_taken),
     .pred_pc        (idex_pred_pc),
     .wb_sel         (idex_wb_sel),
@@ -321,6 +337,7 @@ ex_stage ex_stage0 (
     .memwb_wdata    (memwb_forward_data),
     .redirect       (ex_redirect),
     .redirect_pc    (ex_redirect_pc),
+    .mul_stall      (mul_stall),
     .result         (ex_result),
     .store_data     (ex_store_data)
 );
@@ -378,6 +395,7 @@ always @(posedge clk) begin
         idex_branch <= 1'b0;
         idex_jal <= 1'b0;
         idex_jalr <= 1'b0;
+        idex_is_mul <= 1'b0;
         idex_flush_instr <= 1'b0;
         idex_pred_taken <= 1'b0;
         idex_pred_pc <= 32'b0;
@@ -411,16 +429,29 @@ always @(posedge clk) begin
             memwb_reg_wen <= exmem_reg_wen;
             memwb_flush_instr <= exmem_flush_instr;
 
-            exmem_valid <= idex_valid;
-            exmem_result <= ex_result;
-            exmem_store_data <= ex_store_data;
-            exmem_rd <= idex_rd;
-            exmem_mem_read <= idex_mem_read;
-            exmem_mem_write <= idex_mem_write;
-            exmem_reg_wen <= idex_reg_wen;
-            exmem_flush_instr <= idex_flush_instr;
+            if (mul_stall) begin
+                exmem_valid <= 1'b0;
+                exmem_result <= 32'b0;
+                exmem_store_data <= 32'b0;
+                exmem_rd <= 5'b0;
+                exmem_mem_read <= 1'b0;
+                exmem_mem_write <= 1'b0;
+                exmem_reg_wen <= 1'b0;
+                exmem_flush_instr <= 1'b0;
+            end else begin
+                exmem_valid <= idex_valid;
+                exmem_result <= ex_result;
+                exmem_store_data <= ex_store_data;
+                exmem_rd <= idex_rd;
+                exmem_mem_read <= idex_mem_read;
+                exmem_mem_write <= idex_mem_write;
+                exmem_reg_wen <= idex_reg_wen;
+                exmem_flush_instr <= idex_flush_instr;
+            end
 
-            if (idex_insert_bubble) begin
+            if (mul_stall) begin
+                // Hold ID/EX while the independent MUL block finishes.
+            end else if (idex_insert_bubble) begin
                 idex_valid <= 1'b0;
                 idex_mem_read <= 1'b0;
                 idex_mem_write <= 1'b0;
@@ -428,6 +459,7 @@ always @(posedge clk) begin
                 idex_branch <= 1'b0;
                 idex_jal <= 1'b0;
                 idex_jalr <= 1'b0;
+                idex_is_mul <= 1'b0;
                 idex_flush_instr <= 1'b0;
                 idex_pred_taken <= 1'b0;
                 idex_pred_pc <= 32'b0;
@@ -451,6 +483,7 @@ always @(posedge clk) begin
                 idex_branch <= id_branch;
                 idex_jal <= id_jal;
                 idex_jalr <= id_jalr;
+                idex_is_mul <= id_is_mul;
                 idex_flush_instr <= id_flush_instr;
                 idex_pred_taken <= id_predict_taken;
                 idex_pred_pc <= id_predict_pc;
@@ -459,7 +492,7 @@ always @(posedge clk) begin
 
             if (if_redirect) begin
                 ifid_valid <= 1'b0;
-            end else if (!load_use_stall) begin
+            end else if (!load_use_stall && !mul_stall) begin
                 ifid_valid <= if_ready & ~done_r;
                 ifid_pc <= if_pc;
                 ifid_pc_inc <= if_pc_inc;
@@ -510,7 +543,7 @@ assign imem_addr = (state == S_FETCH1) ? pc2 : pc;
 assign fetch_word = {imem_rdata[7:0], imem_rdata[15:8], imem_rdata[23:16], imem_rdata[31:24]};
 assign first_half = pc[1] ? fetch_word[31:16] : fetch_word[15:0];
 assign first_is_32 = (first_half[1:0] == 2'b11);
-assign need_second_word = (state == S_FETCH0) & imem_ready & pc[1] & first_is_32;
+assign need_second_word = (state == S_FETCH0) & ~stall & imem_ready & pc[1] & first_is_32;
 assign if_ready = imem_ready & ~need_second_word;
 assign aligned_inst = (state == S_FETCH1) ? {fetch_word[15:0], saved_upper_half} :
                       first_is_32 ? fetch_word : compressed_inst;
@@ -533,10 +566,10 @@ always @(posedge clk) begin
         saved_pc <= 32'b0;
     end else if (!done) begin
         if (state == S_FETCH0) begin
-            if (!stall && imem_ready && redirect) begin
+            if (!stall && imem_ready && redirect && (redirect_pc != pc)) begin
                 pc <= redirect_pc;
                 state <= S_FETCH0;
-            end else if (imem_ready && pc[1] && first_is_32) begin
+            end else if (!stall && imem_ready && pc[1] && first_is_32) begin
                 saved_upper_half <= first_half;
                 saved_pc <= pc;
                 state <= S_FETCH1;
@@ -552,6 +585,21 @@ always @(posedge clk) begin
         end
     end
 end
+
+`ifdef DEBUG_IF_OUT
+always @(posedge clk) begin
+    if (rst_n && !done) begin
+        if (!stall && imem_ready && if_ready) begin
+            $display("[IF_OUT] t=%0t pc=%h inc=%0d inst=%h state=%0d word=%h half=%h is32=%0b",
+                     $time, if_pc, if_pc_inc, if_inst, state, fetch_word, first_half, first_is_32);
+        end
+        if (!stall && imem_ready && (state == S_FETCH0) && pc[1] && first_is_32) begin
+            $display("[IF_CROSS] t=%0t pc=%h upper=%h next_addr=%h",
+                     $time, pc, first_half, pc + 32'd2);
+        end
+    end
+end
+`endif
 endmodule
 
 module compressed_decoder(
@@ -706,6 +754,7 @@ module id_stage(
     output        branch,
     output        jal,
     output        jalr,
+    output        is_mul,
     output        flush_instr,
     output [1:0]  wb_sel
 );
@@ -724,6 +773,7 @@ wire is_branch;
 wire is_jal;
 wire is_jalr;
 wire is_lui;
+wire is_mul_inst;
 wire [31:0] imm_i;
 wire [31:0] imm_s;
 wire [31:0] imm_b;
@@ -745,6 +795,7 @@ assign is_branch = (opcode == 7'b1100011);
 assign is_jal    = (opcode == 7'b1101111);
 assign is_jalr   = (opcode == 7'b1100111);
 assign is_lui    = (opcode == 7'b0110111);
+assign is_mul_inst = is_rtype & (funct7 == 7'b0000001) & (funct3 == 3'b000);
 
 assign imm_i = {{20{inst[31]}}, inst[31:20]};
 assign imm_s = {{20{inst[31]}}, inst[31:25], inst[11:7]};
@@ -763,6 +814,7 @@ assign mem_write = is_store;
 assign branch = is_branch;
 assign jal = is_jal;
 assign jalr = is_jalr;
+assign is_mul = is_mul_inst;
 assign flush_instr = (inst == 32'h00202007);
 assign reg_wen = (is_rtype | is_itype | is_load | is_jal | is_jalr | is_lui) & ~flush_instr;
 assign wb_sel = is_load ? WB_MEM :
@@ -789,7 +841,13 @@ alu_ctrl_gen alu_ctrl_gen0 (
 );
 endmodule
 
-module ex_stage(
+module ex_stage #(
+    parameter MUL_CYCLES = 3
+) (
+    input         clk,
+    input         rst_n,
+    input         valid,
+    input         advance,
     input  [31:0] pc,
     input  [31:0] pc_inc,
     input  [31:0] rdata1,
@@ -804,6 +862,7 @@ module ex_stage(
     input         branch,
     input         jal,
     input         jalr,
+    input         is_mul,
     input         pred_taken,
     input  [31:0] pred_pc,
     input  [1:0]  wb_sel,
@@ -815,6 +874,7 @@ module ex_stage(
     input  [31:0] memwb_wdata,
     output        redirect,
     output [31:0] redirect_pc,
+    output        mul_stall,
     output [31:0] result,
     output [31:0] store_data
 );
@@ -822,6 +882,7 @@ localparam WB_ALU = 2'd0;
 localparam WB_MEM = 2'd1;
 localparam WB_PC4 = 2'd2;
 localparam WB_IMM = 2'd3;
+localparam [3:0] MUL_CYCLES_4 = MUL_CYCLES;
 
 wire [31:0] fwd_rs1;
 wire [31:0] fwd_rs2;
@@ -832,6 +893,15 @@ wire [31:0] branch_target;
 wire [31:0] branch_next_pc;
 wire branch_taken;
 wire branch_mispredict;
+wire mul_active;
+wire mul_done;
+wire [31:0] mul_product;
+reg [31:0] mul_a_reg;
+reg [31:0] mul_b_reg;
+reg [31:0] mul_result_reg;
+reg [3:0]  mul_count;
+reg        mul_busy;
+reg        mul_done_r;
 
 assign fwd_rs1 = (exmem_wen && exmem_rd != 5'b0 && exmem_rd == rs1) ? exmem_wdata :
                  (memwb_wen && memwb_rd != 5'b0 && memwb_rd == rs1) ? memwb_wdata :
@@ -854,9 +924,48 @@ assign redirect = jal | jalr | branch_mispredict;
 assign redirect_pc = jal ? (pc + imm_aux) :
                      jalr ? ((fwd_rs1 + imm_alu) & 32'hffff_fffe) :
                      branch_next_pc;
+assign mul_active = valid & is_mul;
+assign mul_done = mul_done_r;
+assign mul_stall = mul_active & ~mul_done;
+assign mul_product = mul_a_reg * mul_b_reg;
 assign result = (wb_sel == WB_PC4) ? pc4 :
                 (wb_sel == WB_IMM) ? imm_aux :
+                is_mul ? mul_result_reg :
                 alu_result;
+
+always @(posedge clk) begin
+    if (!rst_n) begin
+        mul_a_reg <= 32'b0;
+        mul_b_reg <= 32'b0;
+        mul_result_reg <= 32'b0;
+        mul_count <= 4'b0;
+        mul_busy <= 1'b0;
+        mul_done_r <= 1'b0;
+    end else begin
+        if (mul_done_r) begin
+            if (advance) begin
+                mul_done_r <= 1'b0;
+                mul_count <= 4'b0;
+            end
+        end else if (!mul_active) begin
+            mul_busy <= 1'b0;
+            mul_count <= 4'b0;
+        end else if (!mul_busy) begin
+            mul_a_reg <= fwd_rs1;
+            mul_b_reg <= fwd_rs2;
+            mul_busy <= 1'b1;
+            mul_count <= 4'd1;
+        end else if (mul_busy) begin
+            if (mul_count >= MUL_CYCLES_4) begin
+                mul_result_reg <= mul_product;
+                mul_busy <= 1'b0;
+                mul_done_r <= 1'b1;
+            end else begin
+                mul_count <= mul_count + 1'b1;
+            end
+        end
+    end
+end
 
 alu alu0 (
     .input1     (fwd_rs1),
@@ -864,6 +973,16 @@ alu alu0 (
     .alu_ctrl   (alu_ctrl),
     .result     (alu_result)
 );
+
+`ifdef DEBUG_PC
+always @(posedge clk) begin
+    if (rst_n && redirect) begin
+        $display("[EX_REDIRECT] t=%0t pc=%h target=%h jal=%0b jalr=%0b branch=%0b taken=%0b pred_taken=%0b pred_pc=%h rs1=%h rs2=%h imm_alu=%h imm_aux=%h",
+                 $time, pc, redirect_pc, jal, jalr, branch, branch_taken,
+                 pred_taken, pred_pc, fwd_rs1, fwd_rs2, imm_alu, imm_aux);
+    end
+end
+`endif
 endmodule
 
 module mem_stage(

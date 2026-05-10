@@ -1,0 +1,5 @@
+01_28_23_20 // 0x00 c.jal +16 | sw x1,0(x0) low
+10_00_07_20 // 0x04 sw x1,0(x0) high | flush low
+20_00_01_00 // 0x08 flush high | c.nop
+01_00_01_00 // 0x0C c.nop | c.nop
+82_80_01_00 // 0x10 c.jr ra | c.nop

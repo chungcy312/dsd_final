@@ -1,4 +1,24 @@
 ########################################################
+# Active Defines                                       #
+########################################################
+// +define+DEBUG_PC
+// +define+DEBUG_IF_OUT
+//pattern need to check, no mod
+// +define+noHazard
+//+define+hasHazard
+// +define+BrPred
+// +define+Scaling
+// +define+compression
+// +define+compression_uncompressed
+// +define+QSort_uncompressed
+// +define+QSort
+// +define+Conv
+// +define+Conv_uncompressed
+// +define+Mul
+
++define+LFSR_HIST
+// +define+LFSR_HIST_short
+########################################################
 # TESTBED                                              #
 ########################################################
 ../00_TESTBED/testbench/Final_tb.v
@@ -41,7 +61,7 @@ CHIP.v
 # Pattern Definition                                   #
 ########################################################
 // +define+noHazard
-+define+hasHazard
+//+define+hasHazard
 // +define+customHazard
 // +define+hazEXMEMForward
 // +define+hazMEMWBForward
@@ -66,12 +86,29 @@ CHIP.v
 // +define+hazFibInitBodyNoGap
 // +define+hazBranchFlushJalr
 // +define+hazStoreBranchFlushJalr
+// +define+dbgRedirectUnalign32
+// +define+QSort
+// +define+dbgCLoadStoreForward
+// +define+dbgSltCBranchForward
+// +define+dbgCSwapMini
+// +define+dbgCBackwardLoop
 
 // +define+BrPred
 // +define+Scaling
 // +define+compression
 // +define+compression_uncompressed
-
+// +define+DEBUG_PC
+// +define+dbgCJalReturn
+// +define+dbgCBranch
+// +define+dbgCrossLoadUse
+// +define+dbgQSortCallShape
+// +define+dbgNestedCall
+// +define+dbgCSlliLoadAddr
+// +define+dbgCLoadStoreForward
+// +define+dbgSltCBranchForward
+// +define+dbgCSwapMini
+// +define+dbgCBackwardLoop
+// +define+dbgRedirectUnalign32
 // +define+QSort_uncompressed
 // +define+QSort
 // +define+Conv

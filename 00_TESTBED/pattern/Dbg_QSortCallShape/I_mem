@@ -1,0 +1,7 @@
+01_28_93_02 // 0x00 c.jal +16 | addi x5,x0,9 low
+90_00_23_20 // 0x04 addi high | sw x5,0(x0) low
+50_00_07_20 // 0x08 sw high | flush low
+20_00_01_00 // 0x0C flush high | c.nop
+23_22_10_00 // 0x10 sw ra,4(x0)
+83_20_40_00 // 0x14 lw ra,4(x0)
+82_80_01_00 // 0x18 c.jr ra | c.nop

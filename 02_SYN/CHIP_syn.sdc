@@ -45,3 +45,13 @@ set_output_delay -min 0.0                -clock CLK $mem_output_ports
 set_output_delay -max $done_output_delay -clock CLK $done_output_port
 set_output_delay -min 0.0                -clock CLK $done_output_port
 #####################################################
+
+# Multicycle MUL block.
+# RTL default CHIP.MUL_CYCLES must match this value.  The independent
+# mul_a_reg/mul_b_reg launch registers capture forwarded operands, and
+# mul_result_reg captures the multiplier output after multiple cycles.
+set mul_cycles 3
+set mul_from_regs [concat [get_registers -hier *mul_a_reg*] [get_registers -hier *mul_b_reg*]]
+set mul_to_regs   [get_registers -hier *mul_result_reg*]
+set_multicycle_path $mul_cycles -setup -from $mul_from_regs -to $mul_to_regs
+set_multicycle_path [expr $mul_cycles - 1] -hold -from $mul_from_regs -to $mul_to_regs

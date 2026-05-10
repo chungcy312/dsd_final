@@ -1,0 +1,6 @@
+13_07_10_00 // 0x00 addi x14,x0,1
+01_E7_23_20 // 0x04 c.bnez x14,+8 | wrong sw x0,0(x0) low
+00_00_07_20 // 0x08 wrong sw high | flush low for fall-through failure
+23_20_E0_00 // 0x0C sw x14,0(x0)
+07_20_20_00 // 0x10 flush
+01_00_01_00 // 0x14 c.nop | c.nop
