@@ -2,28 +2,29 @@
 ****************************************
 check_design summary:
 Version:     U-2022.12
-Date:        Sat May  9 23:24:54 2026
+Date:        Mon May 11 23:38:31 2026
 ****************************************
 
                    Name                                            Total
 --------------------------------------------------------------------------------
-Inputs/Outputs                                                    496
+Inputs/Outputs                                                    494
     Unconnected ports (LINT-28)                                     4
-    Feedthrough (LINT-29)                                         180
-    Shorted outputs (LINT-31)                                     182
-    Constant outputs (LINT-52)                                    130
+    Feedthrough (LINT-29)                                         148
+    Shorted outputs (LINT-31)                                     180
+    Constant outputs (LINT-52)                                    162
 
-Cells                                                              42
-    Cells do not drive (LINT-1)                                     8
-    Connected to power or ground (LINT-32)                         33
-    Nets connected to multiple pins on same cell (LINT-33)          1
+Cells                                                              11
+    Cells do not drive (LINT-1)                                    11
 --------------------------------------------------------------------------------
 
 Warning: In design 'dcache_1way_BLOCKS16', cell 'C30669' does not drive any nets. (LINT-1)
 Warning: In design 'dcache_1way_BLOCKS16', cell 'C30674' does not drive any nets. (LINT-1)
-Warning: In design 'ex_stage', cell 'B_8' does not drive any nets. (LINT-1)
-Warning: In design 'ex_stage', cell 'B_10' does not drive any nets. (LINT-1)
-Warning: In design 'ex_stage', cell 'C300' does not drive any nets. (LINT-1)
+Warning: In design 'if_stage', cell 'C840' does not drive any nets. (LINT-1)
+Warning: In design 'if_stage', cell 'C856' does not drive any nets. (LINT-1)
+Warning: In design 'ex_stage_MUL_CYCLES3', cell 'B_9' does not drive any nets. (LINT-1)
+Warning: In design 'ex_stage_MUL_CYCLES3', cell 'C704' does not drive any nets. (LINT-1)
+Warning: In design 'ex_stage_MUL_CYCLES3', cell 'C736' does not drive any nets. (LINT-1)
+Warning: In design 'ex_stage_MUL_CYCLES3', cell 'C748' does not drive any nets. (LINT-1)
 Warning: In design 'alu', cell 'B_2' does not drive any nets. (LINT-1)
 Warning: In design 'alu', cell 'B_3' does not drive any nets. (LINT-1)
 Warning: In design 'alu', cell 'B_4' does not drive any nets. (LINT-1)
@@ -31,38 +32,6 @@ Warning: In design 'icache_1way_BLOCKS16', port 'addr[1]' is not connected to an
 Warning: In design 'icache_1way_BLOCKS16', port 'addr[0]' is not connected to any nets. (LINT-28)
 Warning: In design 'dcache_1way_BLOCKS16', port 'addr[1]' is not connected to any nets. (LINT-28)
 Warning: In design 'dcache_1way_BLOCKS16', port 'addr[0]' is not connected to any nets. (LINT-28)
-Warning: In design 'if_stage', input port 'imem_rdata[31]' is connected directly to output port 'if_inst[7]'. (LINT-29)
-Warning: In design 'if_stage', input port 'imem_rdata[30]' is connected directly to output port 'if_inst[6]'. (LINT-29)
-Warning: In design 'if_stage', input port 'imem_rdata[29]' is connected directly to output port 'if_inst[5]'. (LINT-29)
-Warning: In design 'if_stage', input port 'imem_rdata[28]' is connected directly to output port 'if_inst[4]'. (LINT-29)
-Warning: In design 'if_stage', input port 'imem_rdata[27]' is connected directly to output port 'if_inst[3]'. (LINT-29)
-Warning: In design 'if_stage', input port 'imem_rdata[26]' is connected directly to output port 'if_inst[2]'. (LINT-29)
-Warning: In design 'if_stage', input port 'imem_rdata[25]' is connected directly to output port 'if_inst[1]'. (LINT-29)
-Warning: In design 'if_stage', input port 'imem_rdata[24]' is connected directly to output port 'if_inst[0]'. (LINT-29)
-Warning: In design 'if_stage', input port 'imem_rdata[23]' is connected directly to output port 'if_inst[15]'. (LINT-29)
-Warning: In design 'if_stage', input port 'imem_rdata[22]' is connected directly to output port 'if_inst[14]'. (LINT-29)
-Warning: In design 'if_stage', input port 'imem_rdata[21]' is connected directly to output port 'if_inst[13]'. (LINT-29)
-Warning: In design 'if_stage', input port 'imem_rdata[20]' is connected directly to output port 'if_inst[12]'. (LINT-29)
-Warning: In design 'if_stage', input port 'imem_rdata[19]' is connected directly to output port 'if_inst[11]'. (LINT-29)
-Warning: In design 'if_stage', input port 'imem_rdata[18]' is connected directly to output port 'if_inst[10]'. (LINT-29)
-Warning: In design 'if_stage', input port 'imem_rdata[17]' is connected directly to output port 'if_inst[9]'. (LINT-29)
-Warning: In design 'if_stage', input port 'imem_rdata[16]' is connected directly to output port 'if_inst[8]'. (LINT-29)
-Warning: In design 'if_stage', input port 'imem_rdata[15]' is connected directly to output port 'if_inst[23]'. (LINT-29)
-Warning: In design 'if_stage', input port 'imem_rdata[14]' is connected directly to output port 'if_inst[22]'. (LINT-29)
-Warning: In design 'if_stage', input port 'imem_rdata[13]' is connected directly to output port 'if_inst[21]'. (LINT-29)
-Warning: In design 'if_stage', input port 'imem_rdata[12]' is connected directly to output port 'if_inst[20]'. (LINT-29)
-Warning: In design 'if_stage', input port 'imem_rdata[11]' is connected directly to output port 'if_inst[19]'. (LINT-29)
-Warning: In design 'if_stage', input port 'imem_rdata[10]' is connected directly to output port 'if_inst[18]'. (LINT-29)
-Warning: In design 'if_stage', input port 'imem_rdata[9]' is connected directly to output port 'if_inst[17]'. (LINT-29)
-Warning: In design 'if_stage', input port 'imem_rdata[8]' is connected directly to output port 'if_inst[16]'. (LINT-29)
-Warning: In design 'if_stage', input port 'imem_rdata[7]' is connected directly to output port 'if_inst[31]'. (LINT-29)
-Warning: In design 'if_stage', input port 'imem_rdata[6]' is connected directly to output port 'if_inst[30]'. (LINT-29)
-Warning: In design 'if_stage', input port 'imem_rdata[5]' is connected directly to output port 'if_inst[29]'. (LINT-29)
-Warning: In design 'if_stage', input port 'imem_rdata[4]' is connected directly to output port 'if_inst[28]'. (LINT-29)
-Warning: In design 'if_stage', input port 'imem_rdata[3]' is connected directly to output port 'if_inst[27]'. (LINT-29)
-Warning: In design 'if_stage', input port 'imem_rdata[2]' is connected directly to output port 'if_inst[26]'. (LINT-29)
-Warning: In design 'if_stage', input port 'imem_rdata[1]' is connected directly to output port 'if_inst[25]'. (LINT-29)
-Warning: In design 'if_stage', input port 'imem_rdata[0]' is connected directly to output port 'if_inst[24]'. (LINT-29)
 Warning: In design 'id_stage', input port 'inst[31]' is connected directly to output port 'imm_aux[31]'. (LINT-29)
 Warning: In design 'id_stage', input port 'inst[31]' is connected directly to output port 'imm_alu[31]'. (LINT-29)
 Warning: In design 'id_stage', input port 'inst[31]' is connected directly to output port 'imm_alu[30]'. (LINT-29)
@@ -211,7 +180,7 @@ Warning: In design 'wb_stage', input port 'wb_data[3]' is connected directly to 
 Warning: In design 'wb_stage', input port 'wb_data[2]' is connected directly to output port 'wb_wdata[2]'. (LINT-29)
 Warning: In design 'wb_stage', input port 'wb_data[1]' is connected directly to output port 'wb_wdata[1]'. (LINT-29)
 Warning: In design 'wb_stage', input port 'wb_data[0]' is connected directly to output port 'wb_wdata[0]'. (LINT-29)
-Warning: In design 'core', output port 'o_flush' is connected directly to output port 'o_done'. (LINT-31)
+Warning: In design 'core_MUL_CYCLES3', output port 'o_flush' is connected directly to output port 'o_done'. (LINT-31)
 Warning: In design 'icache_1way_BLOCKS16', output port 'mem_write' is connected directly to output port 'mem_wdata[0]'. (LINT-31)
 Warning: In design 'icache_1way_BLOCKS16', output port 'mem_write' is connected directly to output port 'mem_wdata[1]'. (LINT-31)
 Warning: In design 'icache_1way_BLOCKS16', output port 'mem_write' is connected directly to output port 'mem_wdata[2]'. (LINT-31)
@@ -340,38 +309,35 @@ Warning: In design 'icache_1way_BLOCKS16', output port 'mem_write' is connected 
 Warning: In design 'icache_1way_BLOCKS16', output port 'mem_write' is connected directly to output port 'mem_wdata[125]'. (LINT-31)
 Warning: In design 'icache_1way_BLOCKS16', output port 'mem_write' is connected directly to output port 'mem_wdata[126]'. (LINT-31)
 Warning: In design 'icache_1way_BLOCKS16', output port 'mem_write' is connected directly to output port 'mem_wdata[127]'. (LINT-31)
-Warning: In design 'if_stage', output port 'imem_addr[31]' is connected directly to output port 'if_pc[31]'. (LINT-31)
-Warning: In design 'if_stage', output port 'imem_addr[30]' is connected directly to output port 'if_pc[30]'. (LINT-31)
-Warning: In design 'if_stage', output port 'imem_addr[29]' is connected directly to output port 'if_pc[29]'. (LINT-31)
-Warning: In design 'if_stage', output port 'imem_addr[28]' is connected directly to output port 'if_pc[28]'. (LINT-31)
-Warning: In design 'if_stage', output port 'imem_addr[27]' is connected directly to output port 'if_pc[27]'. (LINT-31)
-Warning: In design 'if_stage', output port 'imem_addr[26]' is connected directly to output port 'if_pc[26]'. (LINT-31)
-Warning: In design 'if_stage', output port 'imem_addr[25]' is connected directly to output port 'if_pc[25]'. (LINT-31)
-Warning: In design 'if_stage', output port 'imem_addr[24]' is connected directly to output port 'if_pc[24]'. (LINT-31)
-Warning: In design 'if_stage', output port 'imem_addr[23]' is connected directly to output port 'if_pc[23]'. (LINT-31)
-Warning: In design 'if_stage', output port 'imem_addr[22]' is connected directly to output port 'if_pc[22]'. (LINT-31)
-Warning: In design 'if_stage', output port 'imem_addr[21]' is connected directly to output port 'if_pc[21]'. (LINT-31)
-Warning: In design 'if_stage', output port 'imem_addr[20]' is connected directly to output port 'if_pc[20]'. (LINT-31)
-Warning: In design 'if_stage', output port 'imem_addr[19]' is connected directly to output port 'if_pc[19]'. (LINT-31)
-Warning: In design 'if_stage', output port 'imem_addr[18]' is connected directly to output port 'if_pc[18]'. (LINT-31)
-Warning: In design 'if_stage', output port 'imem_addr[17]' is connected directly to output port 'if_pc[17]'. (LINT-31)
-Warning: In design 'if_stage', output port 'imem_addr[16]' is connected directly to output port 'if_pc[16]'. (LINT-31)
-Warning: In design 'if_stage', output port 'imem_addr[15]' is connected directly to output port 'if_pc[15]'. (LINT-31)
-Warning: In design 'if_stage', output port 'imem_addr[14]' is connected directly to output port 'if_pc[14]'. (LINT-31)
-Warning: In design 'if_stage', output port 'imem_addr[13]' is connected directly to output port 'if_pc[13]'. (LINT-31)
-Warning: In design 'if_stage', output port 'imem_addr[12]' is connected directly to output port 'if_pc[12]'. (LINT-31)
-Warning: In design 'if_stage', output port 'imem_addr[11]' is connected directly to output port 'if_pc[11]'. (LINT-31)
-Warning: In design 'if_stage', output port 'imem_addr[10]' is connected directly to output port 'if_pc[10]'. (LINT-31)
-Warning: In design 'if_stage', output port 'imem_addr[9]' is connected directly to output port 'if_pc[9]'. (LINT-31)
-Warning: In design 'if_stage', output port 'imem_addr[8]' is connected directly to output port 'if_pc[8]'. (LINT-31)
-Warning: In design 'if_stage', output port 'imem_addr[7]' is connected directly to output port 'if_pc[7]'. (LINT-31)
-Warning: In design 'if_stage', output port 'imem_addr[6]' is connected directly to output port 'if_pc[6]'. (LINT-31)
-Warning: In design 'if_stage', output port 'imem_addr[5]' is connected directly to output port 'if_pc[5]'. (LINT-31)
-Warning: In design 'if_stage', output port 'imem_addr[4]' is connected directly to output port 'if_pc[4]'. (LINT-31)
-Warning: In design 'if_stage', output port 'imem_addr[3]' is connected directly to output port 'if_pc[3]'. (LINT-31)
-Warning: In design 'if_stage', output port 'imem_addr[2]' is connected directly to output port 'if_pc[2]'. (LINT-31)
-Warning: In design 'if_stage', output port 'imem_addr[1]' is connected directly to output port 'if_pc[1]'. (LINT-31)
-Warning: In design 'if_stage', output port 'imem_addr[0]' is connected directly to output port 'if_pc[0]'. (LINT-31)
+Warning: In design 'if_stage', output port 'if_pc_inc[31]' is connected directly to output port 'if_pc_inc[0]'. (LINT-31)
+Warning: In design 'if_stage', output port 'if_pc_inc[31]' is connected directly to output port 'if_pc_inc[3]'. (LINT-31)
+Warning: In design 'if_stage', output port 'if_pc_inc[31]' is connected directly to output port 'if_pc_inc[4]'. (LINT-31)
+Warning: In design 'if_stage', output port 'if_pc_inc[31]' is connected directly to output port 'if_pc_inc[5]'. (LINT-31)
+Warning: In design 'if_stage', output port 'if_pc_inc[31]' is connected directly to output port 'if_pc_inc[6]'. (LINT-31)
+Warning: In design 'if_stage', output port 'if_pc_inc[31]' is connected directly to output port 'if_pc_inc[7]'. (LINT-31)
+Warning: In design 'if_stage', output port 'if_pc_inc[31]' is connected directly to output port 'if_pc_inc[8]'. (LINT-31)
+Warning: In design 'if_stage', output port 'if_pc_inc[31]' is connected directly to output port 'if_pc_inc[9]'. (LINT-31)
+Warning: In design 'if_stage', output port 'if_pc_inc[31]' is connected directly to output port 'if_pc_inc[10]'. (LINT-31)
+Warning: In design 'if_stage', output port 'if_pc_inc[31]' is connected directly to output port 'if_pc_inc[11]'. (LINT-31)
+Warning: In design 'if_stage', output port 'if_pc_inc[31]' is connected directly to output port 'if_pc_inc[12]'. (LINT-31)
+Warning: In design 'if_stage', output port 'if_pc_inc[31]' is connected directly to output port 'if_pc_inc[13]'. (LINT-31)
+Warning: In design 'if_stage', output port 'if_pc_inc[31]' is connected directly to output port 'if_pc_inc[14]'. (LINT-31)
+Warning: In design 'if_stage', output port 'if_pc_inc[31]' is connected directly to output port 'if_pc_inc[15]'. (LINT-31)
+Warning: In design 'if_stage', output port 'if_pc_inc[31]' is connected directly to output port 'if_pc_inc[16]'. (LINT-31)
+Warning: In design 'if_stage', output port 'if_pc_inc[31]' is connected directly to output port 'if_pc_inc[17]'. (LINT-31)
+Warning: In design 'if_stage', output port 'if_pc_inc[31]' is connected directly to output port 'if_pc_inc[18]'. (LINT-31)
+Warning: In design 'if_stage', output port 'if_pc_inc[31]' is connected directly to output port 'if_pc_inc[19]'. (LINT-31)
+Warning: In design 'if_stage', output port 'if_pc_inc[31]' is connected directly to output port 'if_pc_inc[20]'. (LINT-31)
+Warning: In design 'if_stage', output port 'if_pc_inc[31]' is connected directly to output port 'if_pc_inc[21]'. (LINT-31)
+Warning: In design 'if_stage', output port 'if_pc_inc[31]' is connected directly to output port 'if_pc_inc[22]'. (LINT-31)
+Warning: In design 'if_stage', output port 'if_pc_inc[31]' is connected directly to output port 'if_pc_inc[23]'. (LINT-31)
+Warning: In design 'if_stage', output port 'if_pc_inc[31]' is connected directly to output port 'if_pc_inc[24]'. (LINT-31)
+Warning: In design 'if_stage', output port 'if_pc_inc[31]' is connected directly to output port 'if_pc_inc[25]'. (LINT-31)
+Warning: In design 'if_stage', output port 'if_pc_inc[31]' is connected directly to output port 'if_pc_inc[26]'. (LINT-31)
+Warning: In design 'if_stage', output port 'if_pc_inc[31]' is connected directly to output port 'if_pc_inc[27]'. (LINT-31)
+Warning: In design 'if_stage', output port 'if_pc_inc[31]' is connected directly to output port 'if_pc_inc[28]'. (LINT-31)
+Warning: In design 'if_stage', output port 'if_pc_inc[31]' is connected directly to output port 'if_pc_inc[29]'. (LINT-31)
+Warning: In design 'if_stage', output port 'if_pc_inc[31]' is connected directly to output port 'if_pc_inc[30]'. (LINT-31)
 Warning: In design 'id_stage', output port 'imm_alu[31]' is connected directly to output port 'imm_aux[31]'. (LINT-31)
 Warning: In design 'id_stage', output port 'imm_alu[31]' is connected directly to output port 'imm_alu[30]'. (LINT-31)
 Warning: In design 'id_stage', output port 'imm_alu[31]' is connected directly to output port 'imm_alu[29]'. (LINT-31)
@@ -393,74 +359,7 @@ Warning: In design 'id_stage', output port 'imm_alu[31]' is connected directly t
 Warning: In design 'id_stage', output port 'imm_alu[31]' is connected directly to output port 'imm_alu[13]'. (LINT-31)
 Warning: In design 'id_stage', output port 'imm_alu[31]' is connected directly to output port 'imm_alu[12]'. (LINT-31)
 Warning: In design 'id_stage', output port 'imm_alu[31]' is connected directly to output port 'imm_alu[11]'. (LINT-31)
-Warning: In design 'core', a pin on submodule 'if_stage0' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'predict_taken' is connected to logic 0. 
-Warning: In design 'core', a pin on submodule 'if_stage0' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'predict_pc[31]' is connected to logic 0. 
-Warning: In design 'core', a pin on submodule 'if_stage0' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'predict_pc[30]' is connected to logic 0. 
-Warning: In design 'core', a pin on submodule 'if_stage0' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'predict_pc[29]' is connected to logic 0. 
-Warning: In design 'core', a pin on submodule 'if_stage0' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'predict_pc[28]' is connected to logic 0. 
-Warning: In design 'core', a pin on submodule 'if_stage0' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'predict_pc[27]' is connected to logic 0. 
-Warning: In design 'core', a pin on submodule 'if_stage0' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'predict_pc[26]' is connected to logic 0. 
-Warning: In design 'core', a pin on submodule 'if_stage0' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'predict_pc[25]' is connected to logic 0. 
-Warning: In design 'core', a pin on submodule 'if_stage0' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'predict_pc[24]' is connected to logic 0. 
-Warning: In design 'core', a pin on submodule 'if_stage0' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'predict_pc[23]' is connected to logic 0. 
-Warning: In design 'core', a pin on submodule 'if_stage0' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'predict_pc[22]' is connected to logic 0. 
-Warning: In design 'core', a pin on submodule 'if_stage0' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'predict_pc[21]' is connected to logic 0. 
-Warning: In design 'core', a pin on submodule 'if_stage0' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'predict_pc[20]' is connected to logic 0. 
-Warning: In design 'core', a pin on submodule 'if_stage0' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'predict_pc[19]' is connected to logic 0. 
-Warning: In design 'core', a pin on submodule 'if_stage0' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'predict_pc[18]' is connected to logic 0. 
-Warning: In design 'core', a pin on submodule 'if_stage0' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'predict_pc[17]' is connected to logic 0. 
-Warning: In design 'core', a pin on submodule 'if_stage0' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'predict_pc[16]' is connected to logic 0. 
-Warning: In design 'core', a pin on submodule 'if_stage0' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'predict_pc[15]' is connected to logic 0. 
-Warning: In design 'core', a pin on submodule 'if_stage0' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'predict_pc[14]' is connected to logic 0. 
-Warning: In design 'core', a pin on submodule 'if_stage0' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'predict_pc[13]' is connected to logic 0. 
-Warning: In design 'core', a pin on submodule 'if_stage0' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'predict_pc[12]' is connected to logic 0. 
-Warning: In design 'core', a pin on submodule 'if_stage0' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'predict_pc[11]' is connected to logic 0. 
-Warning: In design 'core', a pin on submodule 'if_stage0' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'predict_pc[10]' is connected to logic 0. 
-Warning: In design 'core', a pin on submodule 'if_stage0' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'predict_pc[9]' is connected to logic 0. 
-Warning: In design 'core', a pin on submodule 'if_stage0' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'predict_pc[8]' is connected to logic 0. 
-Warning: In design 'core', a pin on submodule 'if_stage0' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'predict_pc[7]' is connected to logic 0. 
-Warning: In design 'core', a pin on submodule 'if_stage0' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'predict_pc[6]' is connected to logic 0. 
-Warning: In design 'core', a pin on submodule 'if_stage0' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'predict_pc[5]' is connected to logic 0. 
-Warning: In design 'core', a pin on submodule 'if_stage0' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'predict_pc[4]' is connected to logic 0. 
-Warning: In design 'core', a pin on submodule 'if_stage0' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'predict_pc[3]' is connected to logic 0. 
-Warning: In design 'core', a pin on submodule 'if_stage0' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'predict_pc[2]' is connected to logic 0. 
-Warning: In design 'core', a pin on submodule 'if_stage0' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'predict_pc[1]' is connected to logic 0. 
-Warning: In design 'core', a pin on submodule 'if_stage0' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'predict_pc[0]' is connected to logic 0. 
-Warning: In design 'core', the same net is connected to more than one pin on submodule 'if_stage0'. (LINT-33)
-   Net '*Logic0*' is connected to pins 'predict_taken', 'predict_pc[31]'', 'predict_pc[30]', 'predict_pc[29]', 'predict_pc[28]', 'predict_pc[27]', 'predict_pc[26]', 'predict_pc[25]', 'predict_pc[24]', 'predict_pc[23]', 'predict_pc[22]', 'predict_pc[21]', 'predict_pc[20]', 'predict_pc[19]', 'predict_pc[18]', 'predict_pc[17]', 'predict_pc[16]', 'predict_pc[15]', 'predict_pc[14]', 'predict_pc[13]', 'predict_pc[12]', 'predict_pc[11]', 'predict_pc[10]', 'predict_pc[9]', 'predict_pc[8]', 'predict_pc[7]', 'predict_pc[6]', 'predict_pc[5]', 'predict_pc[4]', 'predict_pc[3]', 'predict_pc[2]', 'predict_pc[1]', 'predict_pc[0]'.
+Warning: In design 'compressed_decoder', output port 'inst[1]' is connected directly to output port 'inst[0]'. (LINT-31)
 Warning: In design 'icache_1way_BLOCKS16', output port 'mem_write' is connected directly to 'logic 0'. (LINT-52)
 Warning: In design 'icache_1way_BLOCKS16', output port 'mem_wdata[127]' is connected directly to 'logic 0'. (LINT-52)
 Warning: In design 'icache_1way_BLOCKS16', output port 'mem_wdata[126]' is connected directly to 'logic 0'. (LINT-52)
@@ -590,5 +489,37 @@ Warning: In design 'icache_1way_BLOCKS16', output port 'mem_wdata[3]' is connect
 Warning: In design 'icache_1way_BLOCKS16', output port 'mem_wdata[2]' is connected directly to 'logic 0'. (LINT-52)
 Warning: In design 'icache_1way_BLOCKS16', output port 'mem_wdata[1]' is connected directly to 'logic 0'. (LINT-52)
 Warning: In design 'icache_1way_BLOCKS16', output port 'mem_wdata[0]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'if_stage', output port 'if_pc_inc[31]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'if_stage', output port 'if_pc_inc[30]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'if_stage', output port 'if_pc_inc[29]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'if_stage', output port 'if_pc_inc[28]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'if_stage', output port 'if_pc_inc[27]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'if_stage', output port 'if_pc_inc[26]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'if_stage', output port 'if_pc_inc[25]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'if_stage', output port 'if_pc_inc[24]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'if_stage', output port 'if_pc_inc[23]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'if_stage', output port 'if_pc_inc[22]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'if_stage', output port 'if_pc_inc[21]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'if_stage', output port 'if_pc_inc[20]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'if_stage', output port 'if_pc_inc[19]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'if_stage', output port 'if_pc_inc[18]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'if_stage', output port 'if_pc_inc[17]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'if_stage', output port 'if_pc_inc[16]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'if_stage', output port 'if_pc_inc[15]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'if_stage', output port 'if_pc_inc[14]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'if_stage', output port 'if_pc_inc[13]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'if_stage', output port 'if_pc_inc[12]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'if_stage', output port 'if_pc_inc[11]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'if_stage', output port 'if_pc_inc[10]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'if_stage', output port 'if_pc_inc[9]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'if_stage', output port 'if_pc_inc[8]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'if_stage', output port 'if_pc_inc[7]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'if_stage', output port 'if_pc_inc[6]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'if_stage', output port 'if_pc_inc[5]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'if_stage', output port 'if_pc_inc[4]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'if_stage', output port 'if_pc_inc[3]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'if_stage', output port 'if_pc_inc[0]' is connected directly to 'logic 0'. (LINT-52)
 Warning: In design 'id_stage', output port 'imm_aux[0]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'compressed_decoder', output port 'inst[1]' is connected directly to 'logic 1'. (LINT-52)
+Warning: In design 'compressed_decoder', output port 'inst[0]' is connected directly to 'logic 1'. (LINT-52)
 1

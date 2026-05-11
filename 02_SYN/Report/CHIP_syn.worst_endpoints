@@ -7,7 +7,7 @@ Report : timing
         -max_paths 10
 Design : CHIP
 Version: U-2022.12
-Date   : Sat May  9 23:51:30 2026
+Date   : Tue May 12 00:20:19 2026
 ****************************************
 
  # A fanout number of 1000 was used for high fanout net computations.
@@ -17,25 +17,25 @@ Wire Load Model Mode: top
 
 Endpoint                         Path Delay     Path Required     Slack
 ------------------------------------------------------------------------
-icache0_data_reg_10__93_/D (DFFX1)
-                                    3.18 f            3.18         0.00
-dcache0_data_reg_14__18_/D (DFFX1)
-                                    3.17 f            3.17         0.00
-dcache0_mem_addr_r_reg_23_/D (DFFHQX4)
-                                    3.24 f            3.25         0.00
-dcache0_mem_addr_r_reg_25_/D (DFFHQX4)
-                                    3.24 f            3.25         0.00
-dcache0_mem_addr_r_reg_27_/D (DFFHQX4)
-                                    3.24 f            3.25         0.00
-dcache0_mem_addr_r_reg_28_/D (DFFHQX4)
-                                    3.24 f            3.25         0.00
-icache0_data_reg_10__127_/D (DFFX1)
-                                    3.18 f            3.18         0.00
-dcache0_data_reg_7__23_/D (DFFQX1)
-                                    3.18 f            3.18         0.00
-icache0_data_reg_6__79_/D (DFFHQX2)
-                                    3.24 f            3.24         0.00
-core0_id_stage0_register_file0_data_r_reg_25__23_/D (DFFQX1)
-                                    3.18 f            3.18         0.00
+dcache0_mem_wdata_r_reg_106_/D (DFFHQX4)
+                                    3.26 f            3.25        -0.01
+dcache0_mem_wdata_r_reg_112_/D (DFFHQX4)
+                                    3.27 f            3.25        -0.01
+core0_exmem_result_reg_30_/D (DFFHQX2)
+                                    3.25 f            3.24        -0.01
+icache0_addr_r_reg_30_/D (DFFQX2)
+                                    3.16 f            3.15        -0.01
+dcache0_mem_wdata_r_reg_106_/D (DFFHQX4)
+                                    3.28 r            3.27        -0.01
+dcache0_mem_wdata_r_reg_34_/D (DFFHQX4)
+                                    3.26 f            3.25        -0.01
+core0_exmem_result_reg_0_/D (DFFHQX4)
+                                    3.27 f            3.26        -0.01
+dcache0_mem_wdata_r_reg_46_/D (DFFHQX4)
+                                    3.26 f            3.25        -0.01
+dcache0_mem_wdata_r_reg_106_/D (DFFHQX4)
+                                    3.28 r            3.27        -0.01
+core0_ifid_inst_reg_30_/D (DFFHQX4)
+                                    3.28 r            3.27        -0.01
 
 1

@@ -4,27 +4,764 @@ Report : constraint
         -all_violators
 Design : CHIP
 Version: U-2022.12
-Date   : Sat May  9 23:51:28 2026
+Date   : Tue May 12 00:20:17 2026
 ****************************************
 
 
-   max_capacitance
+   max_delay/setup ('CLK' group)
 
                              Required        Actual
-   Net                      Capacitance    Capacitance       Slack
+   Endpoint                 Path Delay     Path Delay        Slack
    -----------------------------------------------------------------
-   core0_id_stage0_register_file0_n180
-                                0.09           0.09           0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_wdata_r_reg_106_/D
+                                3.25           3.26 f        -0.01  (VIOLATED)
+   dcache0_mem_wdata_r_reg_112_/D
+                                3.25           3.27 f        -0.01  (VIOLATED)
+   core0_exmem_result_reg_30_/D
+                                3.24           3.25 f        -0.01  (VIOLATED)
+   icache0_addr_r_reg_30_/D     3.15           3.16 f        -0.01  (VIOLATED)
+   dcache0_mem_wdata_r_reg_34_/D
+                                3.25           3.26 f        -0.01  (VIOLATED)
+   core0_exmem_result_reg_0_/D
+                                3.26           3.27 f        -0.01  (VIOLATED)
+   dcache0_mem_wdata_r_reg_46_/D
+                                3.25           3.26 f        -0.01  (VIOLATED)
+   core0_ifid_inst_reg_30_/D
+                                3.27           3.28 r        -0.01  (VIOLATED)
+   dcache0_mem_wdata_r_reg_113_/D
+                                3.26           3.27 f        -0.01  (VIOLATED)
+   dcache0_mem_wdata_r_reg_66_/D
+                                3.21           3.22 f        -0.01  (VIOLATED)
+   dcache0_data_reg_7__79_/D
+                                3.18           3.19 f        -0.01  (VIOLATED)
+   dcache0_mem_wdata_r_reg_90_/D
+                                3.25           3.26 f        -0.01  (VIOLATED)
+   dcache0_mem_addr_r_reg_19_/D
+                                3.26           3.27 f        -0.01  (VIOLATED)
+   dcache0_mem_wdata_r_reg_119_/D
+                                3.21           3.22 f        -0.01  (VIOLATED)
+   dcache0_data_reg_7__75_/D
+                                3.19           3.19 f        -0.01  (VIOLATED)
+   dcache0_mem_wdata_r_reg_23_/D
+                                3.22           3.22 f        -0.01  (VIOLATED)
+   dcache0_mem_wdata_r_reg_27_/D
+                                3.27           3.28 r        -0.01  (VIOLATED)
+   dcache0_mem_wdata_r_reg_61_/D
+                                3.26           3.26 f        -0.01  (VIOLATED)
+   dcache0_mem_wdata_r_reg_7_/D
+                                3.25           3.26 f        -0.01  (VIOLATED)
+   dcache0_mem_wdata_r_reg_105_/D
+                                3.25           3.26 f        -0.01  (VIOLATED)
+   icache0_addr_r_reg_31_/D     3.16           3.16 f        -0.01  (VIOLATED)
+   dcache0_mem_wdata_r_reg_62_/D
+                                3.21           3.22 f        -0.01  (VIOLATED)
+   core0_ifid_inst_reg_29_/D
+                                3.26           3.27 r        -0.01  (VIOLATED)
+   dcache0_mem_wdata_r_reg_49_/D
+                                3.25           3.26 f        -0.01  (VIOLATED)
+   core0_idex_rdata1_reg_28_/D
+                                3.20           3.20 f        -0.01  (VIOLATED)
+   core0_idex_rdata1_reg_30_/D
+                                3.20           3.20 f        -0.01  (VIOLATED)
+   core0_ifid_inst_reg_18_/D
+                                3.27           3.28 r        -0.01  (VIOLATED)
+   dcache0_mem_wdata_r_reg_104_/D
+                                3.25           3.26 f        -0.01  (VIOLATED)
+   dcache0_mem_wdata_r_reg_121_/D
+                                3.25           3.26 f        -0.01  (VIOLATED)
+   core0_ifid_inst_reg_28_/D
+                                3.26           3.27 r        -0.01  (VIOLATED)
+   core0_ifid_inst_reg_15_/D
+                                3.27           3.28 r        -0.01  (VIOLATED)
+   dcache0_mem_wdata_r_reg_87_/D
+                                3.25           3.26 f        -0.01  (VIOLATED)
+   core0_ifid_inst_reg_17_/D
+                                3.27           3.28 r        -0.01  (VIOLATED)
+   dcache0_mem_wdata_r_reg_16_/D
+                                3.27           3.27 r        -0.01  (VIOLATED)
+   core0_ifid_inst_reg_16_/D
+                                3.27           3.28 r        -0.01  (VIOLATED)
+   dcache0_mem_wdata_r_reg_39_/D
+                                3.25           3.26 f        -0.01  (VIOLATED)
+   dcache0_mem_wdata_r_reg_47_/D
+                                3.21           3.22 f        -0.01  (VIOLATED)
+   dcache0_mem_wdata_r_reg_2_/D
+                                3.21           3.22 f        -0.01  (VIOLATED)
+   dcache0_data_reg_12__84_/D
+                                3.17           3.18 f        -0.01  (VIOLATED)
+   dcache0_mem_wdata_r_reg_117_/D
+                                3.26           3.26 f        -0.01  (VIOLATED)
+   dcache0_mem_wdata_r_reg_94_/D
+                                3.27           3.27 r        -0.01  (VIOLATED)
+   core0_exmem_result_reg_19_/D
+                                3.27           3.27 r        -0.01  (VIOLATED)
+   dcache0_mem_wdata_r_reg_3_/D
+                                3.27           3.27 r        -0.01  (VIOLATED)
+   core0_if_stage0_pc_reg_8_/D
+                                3.26           3.27 f        -0.01  (VIOLATED)
+   dcache0_mem_wdata_r_reg_14_/D
+                                3.26           3.26 f        -0.01  (VIOLATED)
+   dcache0_mem_wdata_r_reg_86_/D
+                                3.27           3.28 r        -0.01  (VIOLATED)
+   dcache0_mem_wdata_r_reg_79_/D
+                                3.25           3.26 f        -0.01  (VIOLATED)
+   dcache0_mem_wdata_r_reg_88_/D
+                                3.25           3.26 f        -0.01  (VIOLATED)
+   dcache0_mem_wdata_r_reg_38_/D
+                                3.26           3.27 f         0.00  (VIOLATED: increase significant digits)
+   core0_idex_rdata1_reg_27_/D
+                                3.20           3.20 f         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_wdata_r_reg_56_/D
+                                3.27           3.27 r         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_wdata_r_reg_57_/D
+                                3.25           3.26 f         0.00  (VIOLATED: increase significant digits)
+   icache0_data_reg_4__4_/D     3.16           3.17 f         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_wdata_r_reg_17_/D
+                                3.27           3.27 r         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_wdata_r_reg_32_/D
+                                3.21           3.22 f         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_wdata_r_reg_28_/D
+                                3.25           3.26 f         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_wdata_r_reg_51_/D
+                                3.25           3.26 f         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_wdata_r_reg_98_/D
+                                3.25           3.26 f         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_wdata_r_reg_69_/D
+                                3.26           3.26 f         0.00  (VIOLATED: increase significant digits)
+   core0_ex_stage0_mul_result_reg_reg_31_/D
+                                3.26           3.27 r         0.00  (VIOLATED: increase significant digits)
+   core0_ifid_inst_reg_7_/D     3.27           3.27 r         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_wdata_r_reg_26_/D
+                                3.27           3.27 r         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_wdata_r_reg_84_/D
+                                3.27           3.27 r         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_wdata_r_reg_31_/D
+                                3.25           3.26 f         0.00  (VIOLATED: increase significant digits)
+   dcache0_data_reg_7__87_/D
+                                3.18           3.18 f         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_wdata_r_reg_6_/D
+                                3.25           3.26 f         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_addr_r_reg_8_/D
+                                3.27           3.27 r         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_wdata_r_reg_65_/D
+                                3.29           3.29 r         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_wdata_r_reg_114_/D
+                                3.27           3.27 r         0.00  (VIOLATED: increase significant digits)
+   dcache0_data_reg_4__78_/D
+                                3.17           3.17 f         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_wdata_r_reg_111_/D
+                                3.25           3.26 f         0.00  (VIOLATED: increase significant digits)
+   core0_ex_stage0_mul_result_reg_reg_28_/D
+                                3.27           3.27 r         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_wdata_r_reg_45_/D
+                                3.27           3.27 r         0.00  (VIOLATED: increase significant digits)
+   icache0_addr_r_reg_7_/D      3.16           3.16 f         0.00  (VIOLATED: increase significant digits)
+   core0_if_stage0_pc_reg_1_/D
+                                3.25           3.25 f         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_wdata_r_reg_19_/D
+                                3.27           3.27 r         0.00  (VIOLATED: increase significant digits)
+   icache0_addr_r_reg_4_/D      3.16           3.16 f         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_wdata_r_reg_115_/D
+                                3.26           3.26 f         0.00  (VIOLATED: increase significant digits)
+   core0_if_stage0_pc_reg_15_/D
+                                3.25           3.25 f         0.00  (VIOLATED: increase significant digits)
+   core0_if_stage0_pc_reg_22_/D
+                                3.25           3.25 f         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_wdata_r_reg_74_/D
+                                3.26           3.26 f         0.00  (VIOLATED: increase significant digits)
+   core0_ex_stage0_mul_result_reg_reg_18_/D
+                                3.20           3.20 f         0.00  (VIOLATED: increase significant digits)
+   core0_if_stage0_pc_reg_6_/D
+                                3.25           3.25 f         0.00  (VIOLATED: increase significant digits)
+   core0_if_stage0_pc_reg_2_/D
+                                3.25           3.25 f         0.00  (VIOLATED: increase significant digits)
+   core0_if_stage0_pc_reg_3_/D
+                                3.25           3.25 f         0.00  (VIOLATED: increase significant digits)
+   core0_if_stage0_pc_reg_13_/D
+                                3.25           3.25 f         0.00  (VIOLATED: increase significant digits)
+   core0_if_stage0_pc_reg_27_/D
+                                3.25           3.25 f         0.00  (VIOLATED: increase significant digits)
+   core0_if_stage0_pc_reg_16_/D
+                                3.25           3.25 f         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_wdata_r_reg_43_/D
+                                3.21           3.22 f         0.00  (VIOLATED: increase significant digits)
+   core0_if_stage0_pc_reg_20_/D
+                                3.25           3.25 f         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_wdata_r_reg_123_/D
+                                3.25           3.25 f         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_wdata_r_reg_75_/D
+                                3.26           3.26 f         0.00  (VIOLATED: increase significant digits)
+   core0_if_stage0_pc_reg_25_/D
+                                3.25           3.25 f         0.00  (VIOLATED: increase significant digits)
+   core0_if_stage0_pc_reg_31_/D
+                                3.25           3.25 f         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_wdata_r_reg_25_/D
+                                3.25           3.26 f         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_wdata_r_reg_24_/D
+                                3.25           3.26 f         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_wdata_r_reg_93_/D
+                                3.25           3.25 f         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_wdata_r_reg_124_/D
+                                3.27           3.27 r         0.00  (VIOLATED: increase significant digits)
+   core0_ex_stage0_mul_result_reg_reg_26_/D
+                                3.26           3.26 r         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_wdata_r_reg_55_/D
+                                3.25           3.26 f         0.00  (VIOLATED: increase significant digits)
+   dcache0_data_reg_12__65_/D
+                                3.18           3.19 f         0.00  (VIOLATED: increase significant digits)
+   dcache0_data_reg_12__88_/D
+                                3.18           3.19 f         0.00  (VIOLATED: increase significant digits)
+   core0_if_stage0_saved_pc_reg_14_/D
+                                3.23           3.24 f         0.00  (VIOLATED: increase significant digits)
+   core0_if_stage0_pc_reg_12_/D
+                                3.25           3.25 f         0.00  (VIOLATED: increase significant digits)
+   core0_if_stage0_saved_pc_reg_12_/D
+                                3.23           3.24 f         0.00  (VIOLATED: increase significant digits)
+   core0_if_stage0_saved_pc_reg_16_/D
+                                3.23           3.24 f         0.00  (VIOLATED: increase significant digits)
+   core0_if_stage0_saved_pc_reg_18_/D
+                                3.23           3.24 f         0.00  (VIOLATED: increase significant digits)
+   core0_ex_stage0_mul_result_reg_reg_30_/D
+                                3.26           3.26 r         0.00  (VIOLATED: increase significant digits)
+   core0_if_stage0_pc_reg_24_/D
+                                3.25           3.26 f         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_wdata_r_reg_4_/D
+                                3.27           3.27 r         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_wdata_r_reg_44_/D
+                                3.21           3.22 f         0.00  (VIOLATED: increase significant digits)
+   core0_ifid_inst_reg_23_/D
+                                3.25           3.25 f         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_wdata_r_reg_21_/D
+                                3.25           3.26 f         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_wdata_r_reg_42_/D
+                                3.21           3.22 f         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_wdata_r_reg_48_/D
+                                3.24           3.25 f         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_addr_r_reg_25_/D
+                                3.27           3.28 r         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_addr_r_reg_16_/D
+                                3.25           3.25 f         0.00  (VIOLATED: increase significant digits)
+   icache0_data_reg_4__41_/D
+                                3.17           3.17 f         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_wdata_r_reg_70_/D
+                                3.27           3.27 r         0.00  (VIOLATED: increase significant digits)
+   core0_if_stage0_pc_reg_19_/D
+                                3.26           3.26 f         0.00  (VIOLATED: increase significant digits)
+   core0_if_stage0_pc_reg_11_/D
+                                3.26           3.26 f         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_wdata_r_reg_22_/D
+                                3.25           3.26 f         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_wdata_r_reg_20_/D
+                                3.25           3.25 f         0.00  (VIOLATED: increase significant digits)
+   core0_if_stage0_pc_reg_26_/D
+                                3.26           3.26 f         0.00  (VIOLATED: increase significant digits)
+   core0_exmem_result_reg_23_/D
+                                3.25           3.25 f         0.00  (VIOLATED: increase significant digits)
+   core0_if_stage0_pc_reg_21_/D
+                                3.26           3.26 f         0.00  (VIOLATED: increase significant digits)
+   icache0_data_reg_12__49_/D
+                                3.16           3.17 f         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_wdata_r_reg_59_/D
+                                3.25           3.26 f         0.00  (VIOLATED: increase significant digits)
+   icache0_data_reg_12__56_/D
+                                3.26           3.27 r         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_wdata_r_reg_107_/D
+                                3.21           3.21 f         0.00  (VIOLATED: increase significant digits)
+   dcache0_data_reg_0__79_/D
+                                3.18           3.18 f         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_wdata_r_reg_118_/D
+                                3.27           3.27 r         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_wdata_r_reg_96_/D
+                                3.25           3.25 f         0.00  (VIOLATED: increase significant digits)
+   core0_idex_rdata2_reg_19_/D
+                                3.20           3.20 f         0.00  (VIOLATED: increase significant digits)
+   dcache0_data_reg_13__80_/D
+                                3.17           3.18 f         0.00  (VIOLATED: increase significant digits)
+   dcache0_data_reg_7__64_/D
+                                3.18           3.18 f         0.00  (VIOLATED: increase significant digits)
+   core0_exmem_result_reg_7_/D
+                                3.25           3.26 r         0.00  (VIOLATED: increase significant digits)
+   dcache0_data_reg_0__33_/D
+                                3.18           3.18 f         0.00  (VIOLATED: increase significant digits)
+   dcache0_data_reg_0__34_/D
+                                3.18           3.18 f         0.00  (VIOLATED: increase significant digits)
+   dcache0_data_reg_0__37_/D
+                                3.18           3.18 f         0.00  (VIOLATED: increase significant digits)
+   core0_if_stage0_saved_pc_reg_19_/D
+                                3.25           3.25 r         0.00  (VIOLATED: increase significant digits)
+   core0_if_stage0_saved_pc_reg_11_/D
+                                3.25           3.25 r         0.00  (VIOLATED: increase significant digits)
+   icache0_addr_r_reg_8_/D      3.16           3.16 f         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_wdata_r_reg_54_/D
+                                3.25           3.25 f         0.00  (VIOLATED: increase significant digits)
+   core0_if_stage0_saved_pc_reg_3_/D
+                                3.25           3.25 r         0.00  (VIOLATED: increase significant digits)
+   core0_ifid_inst_reg_8_/D     3.27           3.27 r         0.00  (VIOLATED: increase significant digits)
+   core0_ifid_inst_reg_24_/D
+                                3.27           3.27 r         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_wdata_r_reg_8_/D
+                                3.21           3.21 f         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_addr_r_reg_28_/D
+                                3.25           3.25 f         0.00  (VIOLATED: increase significant digits)
+   dcache0_data_reg_13__26_/D
+                                3.18           3.19 f         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_wdata_r_reg_12_/D
+                                3.25           3.26 f         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_wdata_r_reg_53_/D
+                                3.27           3.27 r         0.00  (VIOLATED: increase significant digits)
+   icache0_data_reg_12__19_/D
+                                3.16           3.16 f         0.00  (VIOLATED: increase significant digits)
+   dcache0_data_reg_0__47_/D
+                                3.16           3.16 f         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_wdata_r_reg_13_/D
+                                3.27           3.28 r         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_addr_r_reg_21_/D
+                                3.27           3.27 r         0.00  (VIOLATED: increase significant digits)
+   core0_if_stage0_saved_pc_reg_30_/D
+                                3.25           3.25 r         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_wdata_r_reg_92_/D
+                                3.25           3.25 f         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_wdata_r_reg_52_/D
+                                3.27           3.27 r         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_wdata_r_reg_78_/D
+                                3.25           3.25 f         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_wdata_r_reg_81_/D
+                                3.26           3.26 f         0.00  (VIOLATED: increase significant digits)
+   icache0_data_reg_12__113_/D
+                                3.16           3.16 f         0.00  (VIOLATED: increase significant digits)
+   icache0_addr_r_reg_13_/D     3.16           3.16 f         0.00  (VIOLATED: increase significant digits)
+   core0_ifid_inst_reg_27_/D
+                                3.26           3.26 f         0.00  (VIOLATED: increase significant digits)
+   dcache0_data_reg_4__60_/D
+                                3.17           3.17 f         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_wdata_r_reg_50_/D
+                                3.27           3.27 r         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_addr_r_reg_17_/D
+                                3.25           3.25 f         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_wdata_r_reg_91_/D
+                                3.25           3.25 f         0.00  (VIOLATED: increase significant digits)
+   icache0_tag_reg_0__22_/D     3.16           3.16 f         0.00  (VIOLATED: increase significant digits)
+   core0_ifid_inst_reg_21_/D
+                                3.28           3.28 r         0.00  (VIOLATED: increase significant digits)
+   core0_memwb_wb_data_reg_5_/D
+                                3.20           3.20 f         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_wdata_r_reg_64_/D
+                                3.27           3.27 r         0.00  (VIOLATED: increase significant digits)
+   icache0_tag_reg_12__18_/D
+                                3.16           3.17 f         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_wdata_r_reg_18_/D
+                                3.25           3.25 f         0.00  (VIOLATED: increase significant digits)
+   core0_idex_imm_aux_reg_7_/D
+                                3.24           3.24 r         0.00  (VIOLATED: increase significant digits)
+   icache0_addr_r_reg_9_/D      3.16           3.16 f         0.00  (VIOLATED: increase significant digits)
+   icache0_tag_reg_0__8_/D      3.16           3.16 f         0.00  (VIOLATED: increase significant digits)
+   core0_ex_stage0_mul_result_reg_reg_20_/D
+                                3.18           3.18 f         0.00  (VIOLATED: increase significant digits)
+   dcache0_data_reg_11__71_/D
+                                3.19           3.19 f         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_wdata_r_reg_100_/D
+                                3.25           3.25 f         0.00  (VIOLATED: increase significant digits)
+   dcache0_data_reg_7__109_/D
+                                3.19           3.19 f         0.00  (VIOLATED: increase significant digits)
+   core0_ifid_inst_reg_26_/D
+                                3.27           3.27 r         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_addr_r_reg_26_/D
+                                3.27           3.27 r         0.00  (VIOLATED: increase significant digits)
+   icache0_tag_reg_9__22_/D     3.15           3.15 f         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_wdata_r_reg_63_/D
+                                3.25           3.25 f         0.00  (VIOLATED: increase significant digits)
+   core0_ifid_inst_reg_13_/D
+                                3.20           3.20 f         0.00  (VIOLATED: increase significant digits)
+   core0_if_stage0_saved_upper_half_reg_4_/D
+                                3.25           3.25 r         0.00  (VIOLATED: increase significant digits)
+   core0_if_stage0_saved_upper_half_reg_5_/D
+                                3.25           3.25 r         0.00  (VIOLATED: increase significant digits)
+   core0_if_stage0_saved_upper_half_reg_7_/D
+                                3.25           3.25 r         0.00  (VIOLATED: increase significant digits)
+   icache0_tag_reg_9__8_/D      3.15           3.15 f         0.00  (VIOLATED: increase significant digits)
+   icache0_data_reg_7__56_/D
+                                3.16           3.16 f         0.00  (VIOLATED: increase significant digits)
+   dcache0_mem_wdata_r_reg_1_/D
+                                3.26           3.26 f         0.00  (VIOLATED: increase significant digits)
+   icache0_addr_r_reg_16_/D     3.16           3.16 f         0.00  (VIOLATED: increase significant digits)
 
+
+   min_delay/hold ('CLK' group)
+
+                             Required        Actual
+   Endpoint                 Path Delay     Path Delay        Slack
    -----------------------------------------------------------------
-   Total                      1                  -0.00  
+   icache0_data_reg_4__49_/D
+                                0.59           0.54 r        -0.05  (VIOLATED)
+   icache0_data_reg_0__50_/D
+                                0.58           0.54 r        -0.04  (VIOLATED)
+   icache0_data_reg_0__82_/D
+                                0.58           0.54 r        -0.04  (VIOLATED)
+   icache0_data_reg_1__63_/D
+                                0.58           0.54 r        -0.04  (VIOLATED)
+   icache0_data_reg_1__74_/D
+                                0.58           0.54 r        -0.04  (VIOLATED)
+   icache0_data_reg_5__53_/D
+                                0.58           0.54 r        -0.04  (VIOLATED)
+   icache0_data_reg_5__85_/D
+                                0.58           0.54 r        -0.04  (VIOLATED)
+   icache0_data_reg_8__35_/D
+                                0.58           0.54 r        -0.04  (VIOLATED)
+   icache0_data_reg_12__66_/D
+                                0.58           0.54 r        -0.04  (VIOLATED)
+   icache0_data_reg_0__17_/D
+                                0.58           0.54 r        -0.04  (VIOLATED)
+   icache0_data_reg_2__10_/D
+                                0.58           0.54 r        -0.04  (VIOLATED)
+   icache0_data_reg_8__4_/D     0.58           0.54 r        -0.04  (VIOLATED)
+   icache0_data_reg_4__113_/D
+                                0.59           0.55 r        -0.04  (VIOLATED)
+   icache0_data_reg_4__120_/D
+                                0.59           0.55 r        -0.04  (VIOLATED)
+   icache0_data_reg_5__22_/D
+                                0.58           0.54 r        -0.04  (VIOLATED)
+   icache0_data_reg_4__18_/D
+                                0.59           0.56 r        -0.03  (VIOLATED)
+   icache0_data_reg_5__118_/D
+                                0.58           0.55 r        -0.03  (VIOLATED)
+   icache0_data_reg_2__47_/D
+                                0.58           0.55 r        -0.03  (VIOLATED)
+   icache0_data_reg_11__47_/D
+                                0.58           0.55 r        -0.03  (VIOLATED)
+   icache0_data_reg_0__60_/D
+                                0.58           0.55 r        -0.03  (VIOLATED)
+   icache0_data_reg_1__44_/D
+                                0.58           0.55 r        -0.03  (VIOLATED)
+   icache0_data_reg_1__45_/D
+                                0.58           0.55 r        -0.03  (VIOLATED)
+   icache0_data_reg_2__48_/D
+                                0.58           0.55 r        -0.03  (VIOLATED)
+   icache0_data_reg_2__60_/D
+                                0.58           0.55 r        -0.03  (VIOLATED)
+   icache0_data_reg_5__75_/D
+                                0.58           0.55 r        -0.03  (VIOLATED)
+   icache0_data_reg_7__78_/D
+                                0.58           0.55 r        -0.03  (VIOLATED)
+   icache0_data_reg_8__44_/D
+                                0.58           0.55 r        -0.03  (VIOLATED)
+   icache0_data_reg_8__45_/D
+                                0.58           0.55 r        -0.03  (VIOLATED)
+   icache0_data_reg_11__48_/D
+                                0.58           0.55 r        -0.03  (VIOLATED)
+   icache0_data_reg_11__78_/D
+                                0.58           0.55 r        -0.03  (VIOLATED)
+   icache0_data_reg_12__75_/D
+                                0.58           0.55 r        -0.03  (VIOLATED)
+   icache0_data_reg_0__113_/D
+                                0.58           0.55 r        -0.03  (VIOLATED)
+   icache0_data_reg_10__93_/D
+                                0.58           0.55 r        -0.03  (VIOLATED)
+   icache0_data_reg_12__77_/D
+                                0.58           0.55 r        -0.03  (VIOLATED)
+   icache0_data_reg_0__20_/D
+                                0.58           0.55 r        -0.03  (VIOLATED)
+   icache0_data_reg_0__123_/D
+                                0.58           0.55 r        -0.03  (VIOLATED)
+   icache0_data_reg_1__12_/D
+                                0.58           0.55 r        -0.03  (VIOLATED)
+   icache0_data_reg_1__107_/D
+                                0.58           0.55 r        -0.03  (VIOLATED)
+   icache0_data_reg_1__109_/D
+                                0.58           0.55 r        -0.03  (VIOLATED)
+   icache0_data_reg_2__16_/D
+                                0.58           0.55 r        -0.03  (VIOLATED)
+   icache0_data_reg_2__123_/D
+                                0.58           0.55 r        -0.03  (VIOLATED)
+   icache0_data_reg_5__20_/D
+                                0.58           0.55 r        -0.03  (VIOLATED)
+   icache0_data_reg_5__116_/D
+                                0.58           0.55 r        -0.03  (VIOLATED)
+   icache0_data_reg_7__116_/D
+                                0.58           0.55 r        -0.03  (VIOLATED)
+   icache0_data_reg_8__12_/D
+                                0.58           0.55 r        -0.03  (VIOLATED)
+   icache0_data_reg_8__108_/D
+                                0.58           0.55 r        -0.03  (VIOLATED)
+   icache0_data_reg_8__109_/D
+                                0.58           0.55 r        -0.03  (VIOLATED)
+   icache0_data_reg_11__16_/D
+                                0.58           0.55 r        -0.03  (VIOLATED)
+   icache0_data_reg_11__108_/D
+                                0.58           0.55 r        -0.03  (VIOLATED)
+   icache0_data_reg_13__107_/D
+                                0.58           0.55 r        -0.03  (VIOLATED)
+   icache0_data_reg_10__125_/D
+                                0.58           0.55 r        -0.03  (VIOLATED)
+   icache0_data_reg_11__117_/D
+                                0.58           0.55 r        -0.03  (VIOLATED)
+   icache0_data_reg_15__115_/D
+                                0.58           0.55 r        -0.03  (VIOLATED)
+   icache0_data_reg_10__64_/D
+                                0.58           0.55 r        -0.02  (VIOLATED)
+   icache0_data_reg_14__77_/D
+                                0.58           0.55 r        -0.02  (VIOLATED)
+   icache0_data_reg_15__93_/D
+                                0.58           0.55 r        -0.02  (VIOLATED)
+   icache0_data_reg_0__125_/D
+                                0.58           0.55 r        -0.02  (VIOLATED)
+   icache0_data_reg_14__115_/D
+                                0.58           0.55 r        -0.02  (VIOLATED)
+   icache0_data_reg_15__117_/D
+                                0.58           0.55 r        -0.02  (VIOLATED)
+   icache0_data_reg_0__119_/D
+                                0.58           0.55 r        -0.02  (VIOLATED)
+   icache0_data_reg_14__119_/D
+                                0.58           0.55 r        -0.02  (VIOLATED)
+   icache0_data_reg_4__61_/D
+                                0.59           0.57 r        -0.02  (VIOLATED)
+   icache0_data_reg_4__56_/D
+                                0.59           0.57 r        -0.02  (VIOLATED)
+   icache0_data_reg_4__55_/D
+                                0.59           0.57 r        -0.02  (VIOLATED)
+   icache0_data_reg_4__87_/D
+                                0.59           0.57 r        -0.02  (VIOLATED)
+   icache0_data_reg_4__57_/D
+                                0.59           0.57 r        -0.02  (VIOLATED)
+   icache0_data_reg_8__83_/D
+                                0.58           0.56 r        -0.02  (VIOLATED)
+   icache0_data_reg_1__13_/D
+                                0.58           0.56 r        -0.02  (VIOLATED)
+   icache0_data_reg_2__110_/D
+                                0.58           0.56 r        -0.02  (VIOLATED)
+   icache0_data_reg_8__13_/D
+                                0.58           0.56 r        -0.02  (VIOLATED)
+   icache0_data_reg_11__110_/D
+                                0.58           0.56 r        -0.02  (VIOLATED)
+   icache0_data_reg_4__23_/D
+                                0.59           0.57 r        -0.02  (VIOLATED)
+   icache0_data_reg_0__19_/D
+                                0.58           0.56 r        -0.02  (VIOLATED)
+   icache0_data_reg_5__86_/D
+                                0.58           0.56 r        -0.02  (VIOLATED)
+   icache0_data_reg_8__86_/D
+                                0.58           0.56 r        -0.02  (VIOLATED)
+   icache0_data_reg_0__120_/D
+                                0.58           0.55 r        -0.02  (VIOLATED)
+   icache0_data_reg_14__32_/D
+                                0.58           0.55 r        -0.02  (VIOLATED)
+   icache0_data_reg_0__18_/D
+                                0.58           0.56 r        -0.02  (VIOLATED)
+   icache0_data_reg_15__83_/D
+                                0.58           0.56 r        -0.02  (VIOLATED)
+   icache0_data_reg_4__24_/D
+                                0.59           0.57 r        -0.02  (VIOLATED)
+   icache0_data_reg_7__40_/D
+                                0.58           0.56 r        -0.02  (VIOLATED)
+   icache0_data_reg_11__40_/D
+                                0.58           0.56 r        -0.02  (VIOLATED)
+   icache0_data_reg_4__88_/D
+                                0.59           0.57 r        -0.02  (VIOLATED)
+   icache0_data_reg_2__36_/D
+                                0.58           0.56 r        -0.01  (VIOLATED)
+   icache0_data_reg_4__36_/D
+                                0.58           0.56 r        -0.01  (VIOLATED)
+   icache0_data_reg_8__36_/D
+                                0.58           0.56 r        -0.01  (VIOLATED)
+   icache0_data_reg_11__104_/D
+                                0.58           0.56 r        -0.01  (VIOLATED)
+   icache0_data_reg_1__43_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_2__42_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_5__42_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_5__43_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_11__42_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_13__43_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_0__95_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_2__67_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_5__95_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_8__67_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_10__95_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_12__67_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_0__52_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_5__52_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_6__51_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_8__51_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_2__11_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_2__127_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_5__11_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_5__127_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_10__127_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_11__11_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_2__106_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_7__106_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_2__15_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_11__15_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_1__9_/D     0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_0__91_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_1__62_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_2__79_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_2__91_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_10__62_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_11__79_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_10__61_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_11__70_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_7__1_/D     0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_10__1_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_8__56_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_15__56_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_7__57_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_7__97_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_9__96_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_9__114_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_0__58_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_2__58_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_15__51_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_15__52_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_2__112_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_7__14_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_11__14_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_11__112_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_14__15_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_5__21_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_1__99_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_0__90_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_2__90_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_4__94_/D
+                                0.59           0.58 r        -0.01  (VIOLATED)
+   icache0_data_reg_15__61_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_12__70_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_4__25_/D
+                                0.59           0.58 r        -0.01  (VIOLATED)
+   icache0_data_reg_4__89_/D
+                                0.59           0.58 r        -0.01  (VIOLATED)
+   icache0_data_reg_0__55_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_0__87_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_14__55_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_14__87_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_14__57_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_14__96_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_14__97_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_15__114_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_4__121_/D
+                                0.59           0.58 r        -0.01  (VIOLATED)
+   icache0_data_reg_0__23_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_14__23_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_12__103_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_14__103_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_0__54_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_8__54_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_15__54_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_0__21_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_15__33_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_11__6_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_10__65_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_3__90_/D
+                                0.58           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_14__33_/D
+                                0.57           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_4__81_/D
+                                0.59           0.58 r        -0.01  (VIOLATED)
+   icache0_data_reg_12__6_/D
+                                0.57           0.57 r        -0.01  (VIOLATED)
+   icache0_data_reg_0__24_/D
+                                0.57           0.57 r         0.00  (VIOLATED: increase significant digits)
+   icache0_data_reg_14__24_/D
+                                0.57           0.57 r         0.00  (VIOLATED: increase significant digits)
+   icache0_data_reg_0__88_/D
+                                0.57           0.57 r         0.00  (VIOLATED: increase significant digits)
+   icache0_data_reg_14__88_/D
+                                0.57           0.57 r         0.00  (VIOLATED: increase significant digits)
+   icache0_data_reg_1__100_/D
+                                0.58           0.58 r         0.00  (VIOLATED: increase significant digits)
+   icache0_data_reg_2__100_/D
+                                0.58           0.58 r         0.00  (VIOLATED: increase significant digits)
+   icache0_data_reg_8__100_/D
+                                0.58           0.58 r         0.00  (VIOLATED: increase significant digits)
+   icache0_data_reg_12__100_/D
+                                0.58           0.58 r         0.00  (VIOLATED: increase significant digits)
+   icache0_data_reg_2__111_/D
+                                0.58           0.58 r         0.00  (VIOLATED: increase significant digits)
+   icache0_data_reg_7__111_/D
+                                0.58           0.58 r         0.00  (VIOLATED: increase significant digits)
+   icache0_data_reg_11__111_/D
+                                0.58           0.58 r         0.00  (VIOLATED: increase significant digits)
+
 
    max_area
 
                              Required        Actual
    Design                      Area           Area           Slack
    -----------------------------------------------------------------
-   CHIP                         0.00       3922278.75     -3922278.75
+   CHIP                         0.00       4308346.00     -4308346.00
                                                                     (VIOLATED)
 
 
@@ -33,7 +770,7 @@ Date   : Sat May  9 23:51:28 2026
                              Required        Actual
    Design                   Leakage Power  Leakage Power     Slack
    -----------------------------------------------------------------
-   CHIP                         0.00       79005688.00    -79005688.00
+   CHIP                         0.00       83291920.00    -83291920.00
                                                                     (VIOLATED)
 
 

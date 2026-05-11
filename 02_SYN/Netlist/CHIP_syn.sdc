@@ -1,6 +1,6 @@
 ###################################################################
 
-# Created by write_sdc on Sat May  9 17:37:58 2026
+# Created by write_sdc on Tue May 12 00:20:36 2026
 
 ###################################################################
 set sdc_version 1.8
@@ -590,7 +590,7 @@ set_max_fanout 6 [get_ports mem_ready_I]
 set_ideal_network [get_ports clk]
 create_clock [get_ports clk]  -name CLK  -period 3  -waveform {0 1.5}
 set_clock_latency 0.5  [get_clocks CLK]
-set_clock_uncertainty 0.1  [get_clocks CLK]
+set_clock_uncertainty 0.15  [get_clocks CLK]
 set_input_delay -clock CLK  -max 1.5  [get_ports mem_ready_D]
 set_input_delay -clock CLK  -min 0  [get_ports mem_ready_D]
 set_input_delay -clock CLK  -max 1.5  [get_ports mem_ready_I]

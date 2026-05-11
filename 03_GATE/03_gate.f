@@ -1,3 +1,19 @@
+// +define+noHazard
+// +define+hasHazard
+// +define+BrPred
+// +define+Scaling
+// +define+compression
+// +define+compression_uncompressed
+
+// +define+QSort_uncompressed
+// +define+QSort
+// +define+Conv
+// +define+Conv_uncompressed
+// +define+Mul
+
+// +define+LFSR_HIST
+// +define+LFSR_HIST_short
+
 ########################################################
 # TESTBED                                              #
 ########################################################
@@ -49,8 +65,7 @@
 ########################################################
 # Pattern Definition                                   #
 ########################################################
-+define+noHazard
-// +define+hasHazard
+
 // +define+customHazard
 // +define+hazEXMEMForward
 // +define+hazMEMWBForward
@@ -76,16 +91,4 @@
 // +define+hazBranchFlushJalr
 // +define+hazStoreBranchFlushJalr
 
-// +define+BrPred
-// +define+Scaling
-// +define+compression
-// +define+compression_uncompressed
 
-// +define+QSort_uncompressed
-// +define+QSort
-// +define+Conv
-// +define+Conv_uncompressed
-// +define+Mul
-
-// +define+LFSR_HIST
-// +define+LFSR_HIST_short

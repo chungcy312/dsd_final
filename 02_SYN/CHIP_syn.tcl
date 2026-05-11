@@ -30,6 +30,9 @@ compile_ultra
 ungroup -all -flatten
 compile_ultra -incremental
 optimize_netlist -area
+# Area recovery can disturb short-path padding.  Run one final incremental
+# timing pass with set_fix_hold still active before writing the gate netlist.
+compile_ultra -incremental
 
 set bus_inference_style {%s[%d]}
 set bus_naming_style    {%s[%d]}
