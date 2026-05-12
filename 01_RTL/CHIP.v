@@ -206,6 +206,8 @@ reg        idex_flush_instr;
 reg        idex_pred_taken;
 reg [31:0] idex_pred_pc;
 reg [1:0]  idex_wb_sel;
+reg        idex_fwd_rs1_exmem;
+reg        idex_fwd_rs2_exmem;
 
 wire [31:0] exmem_forward_data;
 wire [31:0] memwb_forward_data;
@@ -329,9 +331,9 @@ ex_stage #(
     .pred_taken     (idex_pred_taken),
     .pred_pc        (idex_pred_pc),
     .wb_sel         (idex_wb_sel),
-    .exmem_wen      (exmem_valid & exmem_reg_wen & ~exmem_mem_read),
-    .exmem_rd       (exmem_rd),
     .exmem_wdata    (exmem_forward_data),
+    .exmem_fwd_rs1  (idex_fwd_rs1_exmem),
+    .exmem_fwd_rs2  (idex_fwd_rs2_exmem),
     .memwb_wen      (memwb_valid & memwb_reg_wen),
     .memwb_rd       (memwb_rd),
     .memwb_wdata    (memwb_forward_data),
@@ -373,21 +375,7 @@ always @(posedge clk) begin
     if (!rst_n) begin
         done_r <= 1'b0;
         ifid_valid <= 1'b0;
-        ifid_pc <= 32'b0;
-        ifid_inst <= 32'b0;
-        ifid_pc_inc <= 32'd4;
         idex_valid <= 1'b0;
-        idex_pc <= 32'b0;
-        idex_pc_inc <= 32'd4;
-        idex_rdata1 <= 32'b0;
-        idex_rdata2 <= 32'b0;
-        idex_imm_alu <= 32'b0;
-        idex_imm_aux <= 32'b0;
-        idex_rs1 <= 5'b0;
-        idex_rs2 <= 5'b0;
-        idex_rd <= 5'b0;
-        idex_funct3 <= 3'b0;
-        idex_alu_ctrl <= 4'b0;
         idex_alu_src_imm <= 1'b0;
         idex_mem_read <= 1'b0;
         idex_mem_write <= 1'b0;
@@ -398,19 +386,15 @@ always @(posedge clk) begin
         idex_is_mul <= 1'b0;
         idex_flush_instr <= 1'b0;
         idex_pred_taken <= 1'b0;
-        idex_pred_pc <= 32'b0;
         idex_wb_sel <= WB_ALU;
+        idex_fwd_rs1_exmem <= 1'b0;
+        idex_fwd_rs2_exmem <= 1'b0;
         exmem_valid <= 1'b0;
-        exmem_result <= 32'b0;
-        exmem_store_data <= 32'b0;
-        exmem_rd <= 5'b0;
         exmem_mem_read <= 1'b0;
         exmem_mem_write <= 1'b0;
         exmem_reg_wen <= 1'b0;
         exmem_flush_instr <= 1'b0;
         memwb_valid <= 1'b0;
-        memwb_wb_data <= 32'b0;
-        memwb_rd <= 5'b0;
         memwb_reg_wen <= 1'b0;
         memwb_flush_instr <= 1'b0;
     end else begin
@@ -463,6 +447,8 @@ always @(posedge clk) begin
                 idex_flush_instr <= 1'b0;
                 idex_pred_taken <= 1'b0;
                 idex_pred_pc <= 32'b0;
+                idex_fwd_rs1_exmem <= 1'b0;
+                idex_fwd_rs2_exmem <= 1'b0;
             end else begin
                 idex_valid <= ifid_valid;
                 idex_pc <= ifid_pc;
@@ -488,6 +474,12 @@ always @(posedge clk) begin
                 idex_pred_taken <= id_predict_taken;
                 idex_pred_pc <= id_predict_pc;
                 idex_wb_sel <= id_wb_sel;
+                idex_fwd_rs1_exmem <= ifid_valid & id_use_rs1 & idex_valid &
+                                      idex_reg_wen & ~idex_mem_read &
+                                      (idex_rd != 5'b0) & (id_rs1 == idex_rd);
+                idex_fwd_rs2_exmem <= ifid_valid & id_use_rs2 & idex_valid &
+                                      idex_reg_wen & ~idex_mem_read &
+                                      (idex_rd != 5'b0) & (id_rs2 == idex_rd);
             end
 
             if (if_redirect) begin
@@ -562,8 +554,6 @@ always @(posedge clk) begin
     if (!rst_n) begin
         pc <= 32'b0;
         state <= S_FETCH0;
-        saved_upper_half <= 16'b0;
-        saved_pc <= 32'b0;
     end else if (!done) begin
         if (state == S_FETCH0) begin
             if (!stall && imem_ready && redirect && (redirect_pc != pc)) begin
@@ -866,9 +856,9 @@ module ex_stage #(
     input         pred_taken,
     input  [31:0] pred_pc,
     input  [1:0]  wb_sel,
-    input         exmem_wen,
-    input  [4:0]  exmem_rd,
     input  [31:0] exmem_wdata,
+    input         exmem_fwd_rs1,
+    input         exmem_fwd_rs2,
     input         memwb_wen,
     input  [4:0]  memwb_rd,
     input  [31:0] memwb_wdata,
@@ -903,10 +893,10 @@ reg [3:0]  mul_count;
 reg        mul_busy;
 reg        mul_done_r;
 
-assign fwd_rs1 = (exmem_wen && exmem_rd != 5'b0 && exmem_rd == rs1) ? exmem_wdata :
+assign fwd_rs1 = exmem_fwd_rs1 ? exmem_wdata :
                  (memwb_wen && memwb_rd != 5'b0 && memwb_rd == rs1) ? memwb_wdata :
                  rdata1;
-assign fwd_rs2 = (exmem_wen && exmem_rd != 5'b0 && exmem_rd == rs2) ? exmem_wdata :
+assign fwd_rs2 = exmem_fwd_rs2 ? exmem_wdata :
                  (memwb_wen && memwb_rd != 5'b0 && memwb_rd == rs2) ? memwb_wdata :
                  rdata2;
 assign pc4 = pc + pc_inc;
@@ -935,9 +925,6 @@ assign result = (wb_sel == WB_PC4) ? pc4 :
 
 always @(posedge clk) begin
     if (!rst_n) begin
-        mul_a_reg <= 32'b0;
-        mul_b_reg <= 32'b0;
-        mul_result_reg <= 32'b0;
         mul_count <= 4'b0;
         mul_busy <= 1'b0;
         mul_done_r <= 1'b0;
@@ -1220,8 +1207,6 @@ assign mem_wdata = 128'b0;
 always @(posedge clk) begin
     if (!rst_n) begin
         state <= S_IDLE;
-        addr_r <= 32'b0;
-        mem_addr_r <= 28'b0;
         for (si = 0; si < BLOCKS; si = si + 1) begin
             valid[si] <= 1'b0;
         end
@@ -1333,9 +1318,7 @@ assign mem_wdata = 128'b0;
 always @(posedge clk) begin
     if (!rst_n) begin
         state <= S_IDLE;
-        addr_r <= 32'b0;
         victim_way_r <= 1'b0;
-        mem_addr_r <= 28'b0;
         for (si = 0; si < SETS; si = si + 1) begin
             replace_way[si] <= 1'b0;
             valid0[si] <= 1'b0;
@@ -1479,11 +1462,7 @@ assign mem_wdata = mem_wdata_r;
 always @(posedge clk) begin
     if (!rst_n) begin
         state <= S_IDLE;
-        addr_r <= 32'b0;
-        wdata_r <= 32'b0;
         wen_r <= 1'b0;
-        mem_addr_r <= 28'b0;
-        mem_wdata_r <= 128'b0;
         flush_set <= {SET_BITS{1'b0}};
         flush_done_r <= 1'b0;
         for (si = 0; si < BLOCKS; si = si + 1) begin
@@ -1694,13 +1673,9 @@ assign mem_wdata = mem_wdata_r;
 always @(posedge clk) begin
     if (!rst_n) begin
         state <= S_IDLE;
-        addr_r <= 32'b0;
-        wdata_r <= 32'b0;
         wen_r <= 1'b0;
         victim_way_r <= 1'b0;
         victim_set_r <= {SET_BITS{1'b0}};
-        mem_addr_r <= 28'b0;
-        mem_wdata_r <= 128'b0;
         flush_way <= 1'b0;
         flush_set <= {SET_BITS{1'b0}};
         flush_done_r <= 1'b0;
@@ -1925,10 +1900,8 @@ end
 always @(posedge clk) begin
     if (!rst_n) begin
         state <= S_IDLE;
-        addr_r <= 32'b0;
         victim_way_r <= {WAY_BITS{1'b0}};
         victim_set_r <= {SET_BITS{1'b0}};
-        mem_addr_r <= 28'b0;
         for (si = 0; si < SETS; si = si + 1) begin
             replace_way[si] <= {WAY_BITS{1'b0}};
             for (wi = 0; wi < WAYS; wi = wi + 1) begin
@@ -2115,13 +2088,9 @@ end
 always @(posedge clk) begin
     if (!rst_n) begin
         state <= S_IDLE;
-        addr_r <= 32'b0;
-        wdata_r <= 32'b0;
         wen_r <= 1'b0;
         victim_way_r <= {WAY_BITS{1'b0}};
         victim_set_r <= {SET_BITS{1'b0}};
-        mem_addr_r <= 28'b0;
-        mem_wdata_r <= 128'b0;
         flush_way <= {WAY_BITS{1'b0}};
         flush_set <= {SET_BITS{1'b0}};
         flush_done_r <= 1'b0;

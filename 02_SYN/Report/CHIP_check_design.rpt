@@ -2,7 +2,7 @@
 ****************************************
 check_design summary:
 Version:     U-2022.12
-Date:        Mon May 11 23:38:31 2026
+Date:        Tue May 12 16:51:21 2026
 ****************************************
 
                    Name                                            Total
@@ -13,18 +13,19 @@ Inputs/Outputs                                                    494
     Shorted outputs (LINT-31)                                     180
     Constant outputs (LINT-52)                                    162
 
-Cells                                                              11
-    Cells do not drive (LINT-1)                                    11
+Cells                                                              12
+    Cells do not drive (LINT-1)                                    12
 --------------------------------------------------------------------------------
 
-Warning: In design 'dcache_1way_BLOCKS16', cell 'C30669' does not drive any nets. (LINT-1)
-Warning: In design 'dcache_1way_BLOCKS16', cell 'C30674' does not drive any nets. (LINT-1)
-Warning: In design 'if_stage', cell 'C840' does not drive any nets. (LINT-1)
-Warning: In design 'if_stage', cell 'C856' does not drive any nets. (LINT-1)
+Warning: In design 'core_MUL_CYCLES3', cell 'C2968' does not drive any nets. (LINT-1)
+Warning: In design 'dcache_1way_BLOCKS16', cell 'C30666' does not drive any nets. (LINT-1)
+Warning: In design 'dcache_1way_BLOCKS16', cell 'C30672' does not drive any nets. (LINT-1)
+Warning: In design 'if_stage', cell 'C838' does not drive any nets. (LINT-1)
+Warning: In design 'if_stage', cell 'C854' does not drive any nets. (LINT-1)
 Warning: In design 'ex_stage_MUL_CYCLES3', cell 'B_9' does not drive any nets. (LINT-1)
-Warning: In design 'ex_stage_MUL_CYCLES3', cell 'C704' does not drive any nets. (LINT-1)
-Warning: In design 'ex_stage_MUL_CYCLES3', cell 'C736' does not drive any nets. (LINT-1)
-Warning: In design 'ex_stage_MUL_CYCLES3', cell 'C748' does not drive any nets. (LINT-1)
+Warning: In design 'ex_stage_MUL_CYCLES3', cell 'C683' does not drive any nets. (LINT-1)
+Warning: In design 'ex_stage_MUL_CYCLES3', cell 'C715' does not drive any nets. (LINT-1)
+Warning: In design 'ex_stage_MUL_CYCLES3', cell 'C727' does not drive any nets. (LINT-1)
 Warning: In design 'alu', cell 'B_2' does not drive any nets. (LINT-1)
 Warning: In design 'alu', cell 'B_3' does not drive any nets. (LINT-1)
 Warning: In design 'alu', cell 'B_4' does not drive any nets. (LINT-1)

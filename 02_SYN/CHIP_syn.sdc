@@ -1,6 +1,6 @@
 # TODO: You may modified the clock constraints or add more constraints for your design
 ####################################################
-set cycle 3.0      
+set cycle 2.5   
 ####################################################
 
 

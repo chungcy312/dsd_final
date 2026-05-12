@@ -9,7 +9,7 @@ Report : timing
         -capacitance
 Design : CHIP
 Version: U-2022.12
-Date   : Tue May 12 00:20:19 2026
+Date   : Tue May 12 17:34:25 2026
 ****************************************
 
  # A fanout number of 1000 was used for high fanout net computations.
@@ -17,9 +17,9 @@ Date   : Tue May 12 00:20:19 2026
 Operating Conditions: fast   Library: fast
 Wire Load Model Mode: top
 
-  Startpoint: mem_rdata_I[49]
+  Startpoint: mem_rdata_I[77]
               (input port clocked by CLK)
-  Endpoint: icache0_data_reg_4__49_
+  Endpoint: icache0_data_reg_7__77_
             (rising edge-triggered flip-flop clocked by CLK)
   Path Group: CLK
   Path Type: min
@@ -33,27 +33,95 @@ Wire Load Model Mode: top
   clock CLK (rise edge)                                                       0.00       0.00
   clock network delay (ideal)                                                 0.50       0.50
   input external delay                                                        0.00       0.50 r
-  mem_rdata_I[49] (in)                                              0.04      0.04       0.54 r
-  mem_rdata_I[49] (net)                         3         0.04                0.00       0.54 r
-  icache0_data_reg_4__49_/D (EDFFHQX2)                              0.04      0.00       0.54 r
+  mem_rdata_I[77] (in)                                              0.05      0.05       0.55 r
+  mem_rdata_I[77] (net)                         3         0.05                0.00       0.55 r
+  icache0_data_reg_7__77_/D (EDFFHQX2)                              0.05      0.00       0.55 r
+  data arrival time                                                                      0.55
+
+  clock CLK (rise edge)                                                       0.00       0.00
+  clock network delay (ideal)                                                 0.50       0.50
+  clock uncertainty                                                           0.15       0.65
+  icache0_data_reg_7__77_/CK (EDFFHQX2)                                       0.00       0.65 r
+  library hold time                                                          -0.06       0.59
+  data required time                                                                     0.59
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                     0.59
+  data arrival time                                                                     -0.55
+  ----------------------------------------------------------------------------------------------
+  slack (VIOLATED)                                                                      -0.04
+
+
+  Startpoint: mem_rdata_I[96]
+              (input port clocked by CLK)
+  Endpoint: icache0_data_reg_12__96_
+            (rising edge-triggered flip-flop clocked by CLK)
+  Path Group: CLK
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  CHIP               tsmc13_wl10           slow
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock CLK (rise edge)                                                       0.00       0.00
+  clock network delay (ideal)                                                 0.50       0.50
+  input external delay                                                        0.00       0.50 r
+  mem_rdata_I[96] (in)                                              0.04      0.04       0.54 r
+  mem_rdata_I[96] (net)                         3         0.04                0.00       0.54 r
+  icache0_data_reg_12__96_/D (EDFFHQX1)                             0.04      0.00       0.54 r
   data arrival time                                                                      0.54
 
   clock CLK (rise edge)                                                       0.00       0.00
   clock network delay (ideal)                                                 0.50       0.50
   clock uncertainty                                                           0.15       0.65
-  icache0_data_reg_4__49_/CK (EDFFHQX2)                                       0.00       0.65 r
-  library hold time                                                          -0.06       0.59
-  data required time                                                                     0.59
+  icache0_data_reg_12__96_/CK (EDFFHQX1)                                      0.00       0.65 r
+  library hold time                                                          -0.07       0.58
+  data required time                                                                     0.58
   ----------------------------------------------------------------------------------------------
-  data required time                                                                     0.59
+  data required time                                                                     0.58
   data arrival time                                                                     -0.54
   ----------------------------------------------------------------------------------------------
-  slack (VIOLATED)                                                                      -0.05
+  slack (VIOLATED)                                                                      -0.04
 
 
-  Startpoint: mem_rdata_I[53]
+  Startpoint: mem_rdata_I[75]
               (input port clocked by CLK)
-  Endpoint: icache0_data_reg_5__53_
+  Endpoint: icache0_data_reg_7__75_
+            (rising edge-triggered flip-flop clocked by CLK)
+  Path Group: CLK
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  CHIP               tsmc13_wl10           slow
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock CLK (rise edge)                                                       0.00       0.00
+  clock network delay (ideal)                                                 0.50       0.50
+  input external delay                                                        0.00       0.50 r
+  mem_rdata_I[75] (in)                                              0.04      0.04       0.54 r
+  mem_rdata_I[75] (net)                         3         0.04                0.00       0.54 r
+  icache0_data_reg_7__75_/D (EDFFHQX1)                              0.04      0.00       0.54 r
+  data arrival time                                                                      0.54
+
+  clock CLK (rise edge)                                                       0.00       0.00
+  clock network delay (ideal)                                                 0.50       0.50
+  clock uncertainty                                                           0.15       0.65
+  icache0_data_reg_7__75_/CK (EDFFHQX1)                                       0.00       0.65 r
+  library hold time                                                          -0.07       0.58
+  data required time                                                                     0.58
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                     0.58
+  data arrival time                                                                     -0.54
+  ----------------------------------------------------------------------------------------------
+  slack (VIOLATED)                                                                      -0.04
+
+
+  Startpoint: mem_rdata_I[54]
+              (input port clocked by CLK)
+  Endpoint: icache0_data_reg_3__54_
             (rising edge-triggered flip-flop clocked by CLK)
   Path Group: CLK
   Path Type: min
@@ -67,367 +135,129 @@ Wire Load Model Mode: top
   clock CLK (rise edge)                                        0.00       0.00
   clock network delay (ideal)                                  0.50       0.50
   input external delay                                         0.00       0.50 r
-  mem_rdata_I[53] (in)                               0.04      0.04       0.54 r
-  mem_rdata_I[53] (net)          3         0.04                0.00       0.54 r
-  icache0_data_reg_5__53_/D (EDFFXL)                 0.04      0.00       0.54 r
-  data arrival time                                                       0.54
+  mem_rdata_I[54] (in)                               0.05      0.05       0.55 r
+  mem_rdata_I[54] (net)          3         0.05                0.00       0.55 r
+  icache0_data_reg_3__54_/D (EDFFXL)                 0.05      0.00       0.55 r
+  data arrival time                                                       0.55
 
   clock CLK (rise edge)                                        0.00       0.00
   clock network delay (ideal)                                  0.50       0.50
   clock uncertainty                                            0.15       0.65
-  icache0_data_reg_5__53_/CK (EDFFXL)                          0.00       0.65 r
+  icache0_data_reg_3__54_/CK (EDFFXL)                          0.00       0.65 r
   library hold time                                           -0.07       0.58
   data required time                                                      0.58
   -------------------------------------------------------------------------------
   data required time                                                      0.58
-  data arrival time                                                      -0.54
+  data arrival time                                                      -0.55
   -------------------------------------------------------------------------------
-  slack (VIOLATED)                                                       -0.04
+  slack (VIOLATED)                                                       -0.03
+
+
+  Startpoint: mem_rdata_I[125]
+              (input port clocked by CLK)
+  Endpoint: icache0_data_reg_3__125_
+            (rising edge-triggered flip-flop clocked by CLK)
+  Path Group: CLK
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  CHIP               tsmc13_wl10           slow
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock CLK (rise edge)                                                       0.00       0.00
+  clock network delay (ideal)                                                 0.50       0.50
+  input external delay                                                        0.00       0.50 r
+  mem_rdata_I[125] (in)                                             0.05      0.05       0.55 r
+  mem_rdata_I[125] (net)                        3         0.05                0.00       0.55 r
+  icache0_data_reg_3__125_/D (EDFFHQX1)                             0.05      0.00       0.55 r
+  data arrival time                                                                      0.55
+
+  clock CLK (rise edge)                                                       0.00       0.00
+  clock network delay (ideal)                                                 0.50       0.50
+  clock uncertainty                                                           0.15       0.65
+  icache0_data_reg_3__125_/CK (EDFFHQX1)                                      0.00       0.65 r
+  library hold time                                                          -0.07       0.58
+  data required time                                                                     0.58
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                     0.58
+  data arrival time                                                                     -0.55
+  ----------------------------------------------------------------------------------------------
+  slack (VIOLATED)                                                                      -0.03
+
+
+  Startpoint: mem_rdata_I[97]
+              (input port clocked by CLK)
+  Endpoint: icache0_data_reg_12__97_
+            (rising edge-triggered flip-flop clocked by CLK)
+  Path Group: CLK
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  CHIP               tsmc13_wl10           slow
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock CLK (rise edge)                                                       0.00       0.00
+  clock network delay (ideal)                                                 0.50       0.50
+  input external delay                                                        0.00       0.50 r
+  mem_rdata_I[97] (in)                                              0.05      0.05       0.55 r
+  mem_rdata_I[97] (net)                         3         0.05                0.00       0.55 r
+  icache0_data_reg_12__97_/D (EDFFHQX1)                             0.05      0.00       0.55 r
+  data arrival time                                                                      0.55
+
+  clock CLK (rise edge)                                                       0.00       0.00
+  clock network delay (ideal)                                                 0.50       0.50
+  clock uncertainty                                                           0.15       0.65
+  icache0_data_reg_12__97_/CK (EDFFHQX1)                                      0.00       0.65 r
+  library hold time                                                          -0.07       0.58
+  data required time                                                                     0.58
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                     0.58
+  data arrival time                                                                     -0.55
+  ----------------------------------------------------------------------------------------------
+  slack (VIOLATED)                                                                      -0.03
+
+
+  Startpoint: mem_rdata_I[45]
+              (input port clocked by CLK)
+  Endpoint: icache0_data_reg_7__45_
+            (rising edge-triggered flip-flop clocked by CLK)
+  Path Group: CLK
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  CHIP               tsmc13_wl10           slow
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock CLK (rise edge)                                                       0.00       0.00
+  clock network delay (ideal)                                                 0.50       0.50
+  input external delay                                                        0.00       0.50 r
+  mem_rdata_I[45] (in)                                              0.05      0.05       0.55 r
+  mem_rdata_I[45] (net)                         3         0.05                0.00       0.55 r
+  icache0_data_reg_7__45_/D (EDFFHQX1)                              0.05      0.00       0.55 r
+  data arrival time                                                                      0.55
+
+  clock CLK (rise edge)                                                       0.00       0.00
+  clock network delay (ideal)                                                 0.50       0.50
+  clock uncertainty                                                           0.15       0.65
+  icache0_data_reg_7__45_/CK (EDFFHQX1)                                       0.00       0.65 r
+  library hold time                                                          -0.07       0.58
+  data required time                                                                     0.58
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                     0.58
+  data arrival time                                                                     -0.55
+  ----------------------------------------------------------------------------------------------
+  slack (VIOLATED)                                                                      -0.03
 
 
   Startpoint: mem_rdata_I[35]
               (input port clocked by CLK)
-  Endpoint: icache0_data_reg_8__35_
-            (rising edge-triggered flip-flop clocked by CLK)
-  Path Group: CLK
-  Path Type: min
-
-  Des/Clust/Port     Wire Load Model       Library
-  ------------------------------------------------
-  CHIP               tsmc13_wl10           slow
-
-  Point                        Fanout       Cap     Trans      Incr       Path
-  -------------------------------------------------------------------------------
-  clock CLK (rise edge)                                        0.00       0.00
-  clock network delay (ideal)                                  0.50       0.50
-  input external delay                                         0.00       0.50 r
-  mem_rdata_I[35] (in)                               0.04      0.04       0.54 r
-  mem_rdata_I[35] (net)          3         0.04                0.00       0.54 r
-  icache0_data_reg_8__35_/D (EDFFXL)                 0.04      0.00       0.54 r
-  data arrival time                                                       0.54
-
-  clock CLK (rise edge)                                        0.00       0.00
-  clock network delay (ideal)                                  0.50       0.50
-  clock uncertainty                                            0.15       0.65
-  icache0_data_reg_8__35_/CK (EDFFXL)                          0.00       0.65 r
-  library hold time                                           -0.07       0.58
-  data required time                                                      0.58
-  -------------------------------------------------------------------------------
-  data required time                                                      0.58
-  data arrival time                                                      -0.54
-  -------------------------------------------------------------------------------
-  slack (VIOLATED)                                                       -0.04
-
-
-  Startpoint: mem_rdata_I[85]
-              (input port clocked by CLK)
-  Endpoint: icache0_data_reg_5__85_
-            (rising edge-triggered flip-flop clocked by CLK)
-  Path Group: CLK
-  Path Type: min
-
-  Des/Clust/Port     Wire Load Model       Library
-  ------------------------------------------------
-  CHIP               tsmc13_wl10           slow
-
-  Point                        Fanout       Cap     Trans      Incr       Path
-  -------------------------------------------------------------------------------
-  clock CLK (rise edge)                                        0.00       0.00
-  clock network delay (ideal)                                  0.50       0.50
-  input external delay                                         0.00       0.50 r
-  mem_rdata_I[85] (in)                               0.04      0.04       0.54 r
-  mem_rdata_I[85] (net)          3         0.04                0.00       0.54 r
-  icache0_data_reg_5__85_/D (EDFFXL)                 0.04      0.00       0.54 r
-  data arrival time                                                       0.54
-
-  clock CLK (rise edge)                                        0.00       0.00
-  clock network delay (ideal)                                  0.50       0.50
-  clock uncertainty                                            0.15       0.65
-  icache0_data_reg_5__85_/CK (EDFFXL)                          0.00       0.65 r
-  library hold time                                           -0.07       0.58
-  data required time                                                      0.58
-  -------------------------------------------------------------------------------
-  data required time                                                      0.58
-  data arrival time                                                      -0.54
-  -------------------------------------------------------------------------------
-  slack (VIOLATED)                                                       -0.04
-
-
-  Startpoint: mem_rdata_I[66]
-              (input port clocked by CLK)
-  Endpoint: icache0_data_reg_12__66_
-            (rising edge-triggered flip-flop clocked by CLK)
-  Path Group: CLK
-  Path Type: min
-
-  Des/Clust/Port     Wire Load Model       Library
-  ------------------------------------------------
-  CHIP               tsmc13_wl10           slow
-
-  Point                        Fanout       Cap     Trans      Incr       Path
-  -------------------------------------------------------------------------------
-  clock CLK (rise edge)                                        0.00       0.00
-  clock network delay (ideal)                                  0.50       0.50
-  input external delay                                         0.00       0.50 r
-  mem_rdata_I[66] (in)                               0.04      0.04       0.54 r
-  mem_rdata_I[66] (net)          3         0.04                0.00       0.54 r
-  icache0_data_reg_12__66_/D (EDFFXL)                0.04      0.00       0.54 r
-  data arrival time                                                       0.54
-
-  clock CLK (rise edge)                                        0.00       0.00
-  clock network delay (ideal)                                  0.50       0.50
-  clock uncertainty                                            0.15       0.65
-  icache0_data_reg_12__66_/CK (EDFFXL)                         0.00       0.65 r
-  library hold time                                           -0.07       0.58
-  data required time                                                      0.58
-  -------------------------------------------------------------------------------
-  data required time                                                      0.58
-  data arrival time                                                      -0.54
-  -------------------------------------------------------------------------------
-  slack (VIOLATED)                                                       -0.04
-
-
-  Startpoint: mem_rdata_I[74]
-              (input port clocked by CLK)
-  Endpoint: icache0_data_reg_1__74_
-            (rising edge-triggered flip-flop clocked by CLK)
-  Path Group: CLK
-  Path Type: min
-
-  Des/Clust/Port     Wire Load Model       Library
-  ------------------------------------------------
-  CHIP               tsmc13_wl10           slow
-
-  Point                        Fanout       Cap     Trans      Incr       Path
-  -------------------------------------------------------------------------------
-  clock CLK (rise edge)                                        0.00       0.00
-  clock network delay (ideal)                                  0.50       0.50
-  input external delay                                         0.00       0.50 r
-  mem_rdata_I[74] (in)                               0.04      0.04       0.54 r
-  mem_rdata_I[74] (net)          3         0.04                0.00       0.54 r
-  icache0_data_reg_1__74_/D (EDFFXL)                 0.04      0.00       0.54 r
-  data arrival time                                                       0.54
-
-  clock CLK (rise edge)                                        0.00       0.00
-  clock network delay (ideal)                                  0.50       0.50
-  clock uncertainty                                            0.15       0.65
-  icache0_data_reg_1__74_/CK (EDFFXL)                          0.00       0.65 r
-  library hold time                                           -0.07       0.58
-  data required time                                                      0.58
-  -------------------------------------------------------------------------------
-  data required time                                                      0.58
-  data arrival time                                                      -0.54
-  -------------------------------------------------------------------------------
-  slack (VIOLATED)                                                       -0.04
-
-
-  Startpoint: mem_rdata_I[82]
-              (input port clocked by CLK)
-  Endpoint: icache0_data_reg_0__82_
-            (rising edge-triggered flip-flop clocked by CLK)
-  Path Group: CLK
-  Path Type: min
-
-  Des/Clust/Port     Wire Load Model       Library
-  ------------------------------------------------
-  CHIP               tsmc13_wl10           slow
-
-  Point                        Fanout       Cap     Trans      Incr       Path
-  -------------------------------------------------------------------------------
-  clock CLK (rise edge)                                        0.00       0.00
-  clock network delay (ideal)                                  0.50       0.50
-  input external delay                                         0.00       0.50 r
-  mem_rdata_I[82] (in)                               0.04      0.04       0.54 r
-  mem_rdata_I[82] (net)          3         0.04                0.00       0.54 r
-  icache0_data_reg_0__82_/D (EDFFXL)                 0.04      0.00       0.54 r
-  data arrival time                                                       0.54
-
-  clock CLK (rise edge)                                        0.00       0.00
-  clock network delay (ideal)                                  0.50       0.50
-  clock uncertainty                                            0.15       0.65
-  icache0_data_reg_0__82_/CK (EDFFXL)                          0.00       0.65 r
-  library hold time                                           -0.07       0.58
-  data required time                                                      0.58
-  -------------------------------------------------------------------------------
-  data required time                                                      0.58
-  data arrival time                                                      -0.54
-  -------------------------------------------------------------------------------
-  slack (VIOLATED)                                                       -0.04
-
-
-  Startpoint: mem_rdata_I[50]
-              (input port clocked by CLK)
-  Endpoint: icache0_data_reg_0__50_
-            (rising edge-triggered flip-flop clocked by CLK)
-  Path Group: CLK
-  Path Type: min
-
-  Des/Clust/Port     Wire Load Model       Library
-  ------------------------------------------------
-  CHIP               tsmc13_wl10           slow
-
-  Point                        Fanout       Cap     Trans      Incr       Path
-  -------------------------------------------------------------------------------
-  clock CLK (rise edge)                                        0.00       0.00
-  clock network delay (ideal)                                  0.50       0.50
-  input external delay                                         0.00       0.50 r
-  mem_rdata_I[50] (in)                               0.04      0.04       0.54 r
-  mem_rdata_I[50] (net)          3         0.04                0.00       0.54 r
-  icache0_data_reg_0__50_/D (EDFFXL)                 0.04      0.00       0.54 r
-  data arrival time                                                       0.54
-
-  clock CLK (rise edge)                                        0.00       0.00
-  clock network delay (ideal)                                  0.50       0.50
-  clock uncertainty                                            0.15       0.65
-  icache0_data_reg_0__50_/CK (EDFFXL)                          0.00       0.65 r
-  library hold time                                           -0.07       0.58
-  data required time                                                      0.58
-  -------------------------------------------------------------------------------
-  data required time                                                      0.58
-  data arrival time                                                      -0.54
-  -------------------------------------------------------------------------------
-  slack (VIOLATED)                                                       -0.04
-
-
-  Startpoint: mem_rdata_I[63]
-              (input port clocked by CLK)
-  Endpoint: icache0_data_reg_1__63_
-            (rising edge-triggered flip-flop clocked by CLK)
-  Path Group: CLK
-  Path Type: min
-
-  Des/Clust/Port     Wire Load Model       Library
-  ------------------------------------------------
-  CHIP               tsmc13_wl10           slow
-
-  Point                        Fanout       Cap     Trans      Incr       Path
-  -------------------------------------------------------------------------------
-  clock CLK (rise edge)                                        0.00       0.00
-  clock network delay (ideal)                                  0.50       0.50
-  input external delay                                         0.00       0.50 r
-  mem_rdata_I[63] (in)                               0.04      0.04       0.54 r
-  mem_rdata_I[63] (net)          3         0.04                0.00       0.54 r
-  icache0_data_reg_1__63_/D (EDFFXL)                 0.04      0.00       0.54 r
-  data arrival time                                                       0.54
-
-  clock CLK (rise edge)                                        0.00       0.00
-  clock network delay (ideal)                                  0.50       0.50
-  clock uncertainty                                            0.15       0.65
-  icache0_data_reg_1__63_/CK (EDFFXL)                          0.00       0.65 r
-  library hold time                                           -0.07       0.58
-  data required time                                                      0.58
-  -------------------------------------------------------------------------------
-  data required time                                                      0.58
-  data arrival time                                                      -0.54
-  -------------------------------------------------------------------------------
-  slack (VIOLATED)                                                       -0.04
-
-
-  Startpoint: mem_rdata_I[4]
-              (input port clocked by CLK)
-  Endpoint: icache0_data_reg_8__4_
-            (rising edge-triggered flip-flop clocked by CLK)
-  Path Group: CLK
-  Path Type: min
-
-  Des/Clust/Port     Wire Load Model       Library
-  ------------------------------------------------
-  CHIP               tsmc13_wl10           slow
-
-  Point                        Fanout       Cap     Trans      Incr       Path
-  -------------------------------------------------------------------------------
-  clock CLK (rise edge)                                        0.00       0.00
-  clock network delay (ideal)                                  0.50       0.50
-  input external delay                                         0.00       0.50 r
-  mem_rdata_I[4] (in)                                0.04      0.04       0.54 r
-  mem_rdata_I[4] (net)           3         0.04                0.00       0.54 r
-  icache0_data_reg_8__4_/D (EDFFXL)                  0.04      0.00       0.54 r
-  data arrival time                                                       0.54
-
-  clock CLK (rise edge)                                        0.00       0.00
-  clock network delay (ideal)                                  0.50       0.50
-  clock uncertainty                                            0.15       0.65
-  icache0_data_reg_8__4_/CK (EDFFXL)                           0.00       0.65 r
-  library hold time                                           -0.07       0.58
-  data required time                                                      0.58
-  -------------------------------------------------------------------------------
-  data required time                                                      0.58
-  data arrival time                                                      -0.54
-  -------------------------------------------------------------------------------
-  slack (VIOLATED)                                                       -0.04
-
-
-  Startpoint: mem_rdata_I[17]
-              (input port clocked by CLK)
-  Endpoint: icache0_data_reg_0__17_
-            (rising edge-triggered flip-flop clocked by CLK)
-  Path Group: CLK
-  Path Type: min
-
-  Des/Clust/Port     Wire Load Model       Library
-  ------------------------------------------------
-  CHIP               tsmc13_wl10           slow
-
-  Point                        Fanout       Cap     Trans      Incr       Path
-  -------------------------------------------------------------------------------
-  clock CLK (rise edge)                                        0.00       0.00
-  clock network delay (ideal)                                  0.50       0.50
-  input external delay                                         0.00       0.50 r
-  mem_rdata_I[17] (in)                               0.04      0.04       0.54 r
-  mem_rdata_I[17] (net)          3         0.04                0.00       0.54 r
-  icache0_data_reg_0__17_/D (EDFFXL)                 0.04      0.00       0.54 r
-  data arrival time                                                       0.54
-
-  clock CLK (rise edge)                                        0.00       0.00
-  clock network delay (ideal)                                  0.50       0.50
-  clock uncertainty                                            0.15       0.65
-  icache0_data_reg_0__17_/CK (EDFFXL)                          0.00       0.65 r
-  library hold time                                           -0.07       0.58
-  data required time                                                      0.58
-  -------------------------------------------------------------------------------
-  data required time                                                      0.58
-  data arrival time                                                      -0.54
-  -------------------------------------------------------------------------------
-  slack (VIOLATED)                                                       -0.04
-
-
-  Startpoint: mem_rdata_I[10]
-              (input port clocked by CLK)
-  Endpoint: icache0_data_reg_2__10_
-            (rising edge-triggered flip-flop clocked by CLK)
-  Path Group: CLK
-  Path Type: min
-
-  Des/Clust/Port     Wire Load Model       Library
-  ------------------------------------------------
-  CHIP               tsmc13_wl10           slow
-
-  Point                        Fanout       Cap     Trans      Incr       Path
-  -------------------------------------------------------------------------------
-  clock CLK (rise edge)                                        0.00       0.00
-  clock network delay (ideal)                                  0.50       0.50
-  input external delay                                         0.00       0.50 r
-  mem_rdata_I[10] (in)                               0.04      0.04       0.54 r
-  mem_rdata_I[10] (net)          3         0.04                0.00       0.54 r
-  icache0_data_reg_2__10_/D (EDFFXL)                 0.04      0.00       0.54 r
-  data arrival time                                                       0.54
-
-  clock CLK (rise edge)                                        0.00       0.00
-  clock network delay (ideal)                                  0.50       0.50
-  clock uncertainty                                            0.15       0.65
-  icache0_data_reg_2__10_/CK (EDFFXL)                          0.00       0.65 r
-  library hold time                                           -0.07       0.58
-  data required time                                                      0.58
-  -------------------------------------------------------------------------------
-  data required time                                                      0.58
-  data arrival time                                                      -0.54
-  -------------------------------------------------------------------------------
-  slack (VIOLATED)                                                       -0.04
-
-
-  Startpoint: mem_rdata_I[113]
-              (input port clocked by CLK)
-  Endpoint: icache0_data_reg_4__113_
+  Endpoint: icache0_data_reg_5__35_
             (rising edge-triggered flip-flop clocked by CLK)
   Path Group: CLK
   Path Type: min
@@ -441,27 +271,27 @@ Wire Load Model Mode: top
   clock CLK (rise edge)                                                       0.00       0.00
   clock network delay (ideal)                                                 0.50       0.50
   input external delay                                                        0.00       0.50 r
-  mem_rdata_I[113] (in)                                             0.05      0.05       0.55 r
-  mem_rdata_I[113] (net)                        4         0.05                0.00       0.55 r
-  icache0_data_reg_4__113_/D (EDFFHQX2)                             0.05      0.00       0.55 r
+  mem_rdata_I[35] (in)                                              0.05      0.05       0.55 r
+  mem_rdata_I[35] (net)                         3         0.05                0.00       0.55 r
+  icache0_data_reg_5__35_/D (EDFFHQX1)                              0.05      0.00       0.55 r
   data arrival time                                                                      0.55
 
   clock CLK (rise edge)                                                       0.00       0.00
   clock network delay (ideal)                                                 0.50       0.50
   clock uncertainty                                                           0.15       0.65
-  icache0_data_reg_4__113_/CK (EDFFHQX2)                                      0.00       0.65 r
-  library hold time                                                          -0.06       0.59
-  data required time                                                                     0.59
+  icache0_data_reg_5__35_/CK (EDFFHQX1)                                       0.00       0.65 r
+  library hold time                                                          -0.07       0.58
+  data required time                                                                     0.58
   ----------------------------------------------------------------------------------------------
-  data required time                                                                     0.59
+  data required time                                                                     0.58
   data arrival time                                                                     -0.55
   ----------------------------------------------------------------------------------------------
-  slack (VIOLATED)                                                                      -0.04
+  slack (VIOLATED)                                                                      -0.03
 
 
-  Startpoint: mem_rdata_I[120]
+  Startpoint: mem_rdata_I[34]
               (input port clocked by CLK)
-  Endpoint: icache0_data_reg_4__120_
+  Endpoint: icache0_data_reg_6__34_
             (rising edge-triggered flip-flop clocked by CLK)
   Path Group: CLK
   Path Type: min
@@ -475,27 +305,95 @@ Wire Load Model Mode: top
   clock CLK (rise edge)                                                       0.00       0.00
   clock network delay (ideal)                                                 0.50       0.50
   input external delay                                                        0.00       0.50 r
-  mem_rdata_I[120] (in)                                             0.05      0.05       0.55 r
-  mem_rdata_I[120] (net)                        4         0.05                0.00       0.55 r
-  icache0_data_reg_4__120_/D (EDFFHQX2)                             0.05      0.00       0.55 r
+  mem_rdata_I[34] (in)                                              0.05      0.05       0.55 r
+  mem_rdata_I[34] (net)                         3         0.05                0.00       0.55 r
+  icache0_data_reg_6__34_/D (EDFFHQX1)                              0.05      0.00       0.55 r
   data arrival time                                                                      0.55
 
   clock CLK (rise edge)                                                       0.00       0.00
   clock network delay (ideal)                                                 0.50       0.50
   clock uncertainty                                                           0.15       0.65
-  icache0_data_reg_4__120_/CK (EDFFHQX2)                                      0.00       0.65 r
-  library hold time                                                          -0.06       0.59
-  data required time                                                                     0.59
+  icache0_data_reg_6__34_/CK (EDFFHQX1)                                       0.00       0.65 r
+  library hold time                                                          -0.07       0.58
+  data required time                                                                     0.58
   ----------------------------------------------------------------------------------------------
-  data required time                                                                     0.59
+  data required time                                                                     0.58
   data arrival time                                                                     -0.55
   ----------------------------------------------------------------------------------------------
-  slack (VIOLATED)                                                                      -0.04
+  slack (VIOLATED)                                                                      -0.03
 
 
-  Startpoint: mem_rdata_I[22]
+  Startpoint: mem_rdata_I[68]
               (input port clocked by CLK)
-  Endpoint: icache0_data_reg_5__22_
+  Endpoint: icache0_data_reg_12__68_
+            (rising edge-triggered flip-flop clocked by CLK)
+  Path Group: CLK
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  CHIP               tsmc13_wl10           slow
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock CLK (rise edge)                                                       0.00       0.00
+  clock network delay (ideal)                                                 0.50       0.50
+  input external delay                                                        0.00       0.50 r
+  mem_rdata_I[68] (in)                                              0.05      0.05       0.55 r
+  mem_rdata_I[68] (net)                         3         0.05                0.00       0.55 r
+  icache0_data_reg_12__68_/D (EDFFHQX1)                             0.05      0.00       0.55 r
+  data arrival time                                                                      0.55
+
+  clock CLK (rise edge)                                                       0.00       0.00
+  clock network delay (ideal)                                                 0.50       0.50
+  clock uncertainty                                                           0.15       0.65
+  icache0_data_reg_12__68_/CK (EDFFHQX1)                                      0.00       0.65 r
+  library hold time                                                          -0.07       0.58
+  data required time                                                                     0.58
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                     0.58
+  data arrival time                                                                     -0.55
+  ----------------------------------------------------------------------------------------------
+  slack (VIOLATED)                                                                      -0.03
+
+
+  Startpoint: mem_rdata_I[33]
+              (input port clocked by CLK)
+  Endpoint: icache0_data_reg_12__33_
+            (rising edge-triggered flip-flop clocked by CLK)
+  Path Group: CLK
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  CHIP               tsmc13_wl10           slow
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock CLK (rise edge)                                                       0.00       0.00
+  clock network delay (ideal)                                                 0.50       0.50
+  input external delay                                                        0.00       0.50 r
+  mem_rdata_I[33] (in)                                              0.05      0.05       0.55 r
+  mem_rdata_I[33] (net)                         3         0.05                0.00       0.55 r
+  icache0_data_reg_12__33_/D (EDFFHQX1)                             0.05      0.00       0.55 r
+  data arrival time                                                                      0.55
+
+  clock CLK (rise edge)                                                       0.00       0.00
+  clock network delay (ideal)                                                 0.50       0.50
+  clock uncertainty                                                           0.15       0.65
+  icache0_data_reg_12__33_/CK (EDFFHQX1)                                      0.00       0.65 r
+  library hold time                                                          -0.07       0.58
+  data required time                                                                     0.58
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                     0.58
+  data arrival time                                                                     -0.55
+  ----------------------------------------------------------------------------------------------
+  slack (VIOLATED)                                                                      -0.03
+
+
+  Startpoint: mem_rdata_I[1]
+              (input port clocked by CLK)
+  Endpoint: icache0_data_reg_0__1_
             (rising edge-triggered flip-flop clocked by CLK)
   Path Group: CLK
   Path Type: min
@@ -509,27 +407,27 @@ Wire Load Model Mode: top
   clock CLK (rise edge)                                        0.00       0.00
   clock network delay (ideal)                                  0.50       0.50
   input external delay                                         0.00       0.50 r
-  mem_rdata_I[22] (in)                               0.04      0.04       0.54 r
-  mem_rdata_I[22] (net)          3         0.04                0.00       0.54 r
-  icache0_data_reg_5__22_/D (EDFFXL)                 0.04      0.00       0.54 r
-  data arrival time                                                       0.54
+  mem_rdata_I[1] (in)                                0.05      0.05       0.55 r
+  mem_rdata_I[1] (net)           4         0.05                0.00       0.55 r
+  icache0_data_reg_0__1_/D (EDFFHQX1)                0.05      0.00       0.55 r
+  data arrival time                                                       0.55
 
   clock CLK (rise edge)                                        0.00       0.00
   clock network delay (ideal)                                  0.50       0.50
   clock uncertainty                                            0.15       0.65
-  icache0_data_reg_5__22_/CK (EDFFXL)                          0.00       0.65 r
+  icache0_data_reg_0__1_/CK (EDFFHQX1)                         0.00       0.65 r
   library hold time                                           -0.07       0.58
   data required time                                                      0.58
   -------------------------------------------------------------------------------
   data required time                                                      0.58
-  data arrival time                                                      -0.54
+  data arrival time                                                      -0.55
   -------------------------------------------------------------------------------
-  slack (VIOLATED)                                                       -0.04
+  slack (VIOLATED)                                                       -0.02
 
 
-  Startpoint: mem_rdata_I[18]
+  Startpoint: mem_rdata_I[1]
               (input port clocked by CLK)
-  Endpoint: icache0_data_reg_4__18_
+  Endpoint: icache0_data_reg_12__1_
             (rising edge-triggered flip-flop clocked by CLK)
   Path Group: CLK
   Path Type: min
@@ -543,27 +441,95 @@ Wire Load Model Mode: top
   clock CLK (rise edge)                                                       0.00       0.00
   clock network delay (ideal)                                                 0.50       0.50
   input external delay                                                        0.00       0.50 r
-  mem_rdata_I[18] (in)                                              0.06      0.06       0.56 r
-  mem_rdata_I[18] (net)                         4         0.06                0.00       0.56 r
-  icache0_data_reg_4__18_/D (EDFFHQX2)                              0.06      0.00       0.56 r
+  mem_rdata_I[1] (in)                                               0.05      0.05       0.55 r
+  mem_rdata_I[1] (net)                          4         0.05                0.00       0.55 r
+  icache0_data_reg_12__1_/D (EDFFHQX1)                              0.05      0.00       0.55 r
+  data arrival time                                                                      0.55
+
+  clock CLK (rise edge)                                                       0.00       0.00
+  clock network delay (ideal)                                                 0.50       0.50
+  clock uncertainty                                                           0.15       0.65
+  icache0_data_reg_12__1_/CK (EDFFHQX1)                                       0.00       0.65 r
+  library hold time                                                          -0.07       0.58
+  data required time                                                                     0.58
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                     0.58
+  data arrival time                                                                     -0.55
+  ----------------------------------------------------------------------------------------------
+  slack (VIOLATED)                                                                      -0.02
+
+
+  Startpoint: mem_rdata_I[9]
+              (input port clocked by CLK)
+  Endpoint: icache0_data_reg_8__9_
+            (rising edge-triggered flip-flop clocked by CLK)
+  Path Group: CLK
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  CHIP               tsmc13_wl10           slow
+
+  Point                        Fanout       Cap     Trans      Incr       Path
+  -------------------------------------------------------------------------------
+  clock CLK (rise edge)                                        0.00       0.00
+  clock network delay (ideal)                                  0.50       0.50
+  input external delay                                         0.00       0.50 r
+  mem_rdata_I[9] (in)                                0.07      0.07       0.57 r
+  mem_rdata_I[9] (net)           4         0.07                0.00       0.57 r
+  icache0_data_reg_8__9_/D (EDFFHQX2)                0.07      0.00       0.57 r
+  data arrival time                                                       0.57
+
+  clock CLK (rise edge)                                        0.00       0.00
+  clock network delay (ideal)                                  0.50       0.50
+  clock uncertainty                                            0.15       0.65
+  icache0_data_reg_8__9_/CK (EDFFHQX2)                         0.00       0.65 r
+  library hold time                                           -0.06       0.59
+  data required time                                                      0.59
+  -------------------------------------------------------------------------------
+  data required time                                                      0.59
+  data arrival time                                                      -0.57
+  -------------------------------------------------------------------------------
+  slack (VIOLATED)                                                       -0.02
+
+
+  Startpoint: mem_rdata_I[101]
+              (input port clocked by CLK)
+  Endpoint: icache0_data_reg_5__101_
+            (rising edge-triggered flip-flop clocked by CLK)
+  Path Group: CLK
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  CHIP               tsmc13_wl10           slow
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock CLK (rise edge)                                                       0.00       0.00
+  clock network delay (ideal)                                                 0.50       0.50
+  input external delay                                                        0.00       0.50 r
+  mem_rdata_I[101] (in)                                             0.06      0.06       0.56 r
+  mem_rdata_I[101] (net)                        4         0.06                0.00       0.56 r
+  icache0_data_reg_5__101_/D (EDFFHQX1)                             0.06      0.00       0.56 r
   data arrival time                                                                      0.56
 
   clock CLK (rise edge)                                                       0.00       0.00
   clock network delay (ideal)                                                 0.50       0.50
   clock uncertainty                                                           0.15       0.65
-  icache0_data_reg_4__18_/CK (EDFFHQX2)                                       0.00       0.65 r
-  library hold time                                                          -0.06       0.59
-  data required time                                                                     0.59
+  icache0_data_reg_5__101_/CK (EDFFHQX1)                                      0.00       0.65 r
+  library hold time                                                          -0.07       0.58
+  data required time                                                                     0.58
   ----------------------------------------------------------------------------------------------
-  data required time                                                                     0.59
+  data required time                                                                     0.58
   data arrival time                                                                     -0.56
   ----------------------------------------------------------------------------------------------
-  slack (VIOLATED)                                                                      -0.03
+  slack (VIOLATED)                                                                      -0.02
 
 
-  Startpoint: mem_rdata_I[118]
+  Startpoint: mem_rdata_I[101]
               (input port clocked by CLK)
-  Endpoint: icache0_data_reg_5__118_
+  Endpoint: icache0_data_reg_6__101_
             (rising edge-triggered flip-flop clocked by CLK)
   Path Group: CLK
   Path Type: min
@@ -572,100 +538,32 @@ Wire Load Model Mode: top
   ------------------------------------------------
   CHIP               tsmc13_wl10           slow
 
-  Point                        Fanout       Cap     Trans      Incr       Path
-  -------------------------------------------------------------------------------
-  clock CLK (rise edge)                                        0.00       0.00
-  clock network delay (ideal)                                  0.50       0.50
-  input external delay                                         0.00       0.50 r
-  mem_rdata_I[118] (in)                              0.05      0.05       0.55 r
-  mem_rdata_I[118] (net)         3         0.05                0.00       0.55 r
-  icache0_data_reg_5__118_/D (EDFFXL)                0.05      0.00       0.55 r
-  data arrival time                                                       0.55
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock CLK (rise edge)                                                       0.00       0.00
+  clock network delay (ideal)                                                 0.50       0.50
+  input external delay                                                        0.00       0.50 r
+  mem_rdata_I[101] (in)                                             0.06      0.06       0.56 r
+  mem_rdata_I[101] (net)                        4         0.06                0.00       0.56 r
+  icache0_data_reg_6__101_/D (EDFFHQX1)                             0.06      0.00       0.56 r
+  data arrival time                                                                      0.56
 
-  clock CLK (rise edge)                                        0.00       0.00
-  clock network delay (ideal)                                  0.50       0.50
-  clock uncertainty                                            0.15       0.65
-  icache0_data_reg_5__118_/CK (EDFFXL)                         0.00       0.65 r
-  library hold time                                           -0.07       0.58
-  data required time                                                      0.58
-  -------------------------------------------------------------------------------
-  data required time                                                      0.58
-  data arrival time                                                      -0.55
-  -------------------------------------------------------------------------------
-  slack (VIOLATED)                                                       -0.03
-
-
-  Startpoint: mem_rdata_I[47]
-              (input port clocked by CLK)
-  Endpoint: icache0_data_reg_2__47_
-            (rising edge-triggered flip-flop clocked by CLK)
-  Path Group: CLK
-  Path Type: min
-
-  Des/Clust/Port     Wire Load Model       Library
-  ------------------------------------------------
-  CHIP               tsmc13_wl10           slow
-
-  Point                        Fanout       Cap     Trans      Incr       Path
-  -------------------------------------------------------------------------------
-  clock CLK (rise edge)                                        0.00       0.00
-  clock network delay (ideal)                                  0.50       0.50
-  input external delay                                         0.00       0.50 r
-  mem_rdata_I[47] (in)                               0.05      0.05       0.55 r
-  mem_rdata_I[47] (net)          4         0.05                0.00       0.55 r
-  icache0_data_reg_2__47_/D (EDFFXL)                 0.05      0.00       0.55 r
-  data arrival time                                                       0.55
-
-  clock CLK (rise edge)                                        0.00       0.00
-  clock network delay (ideal)                                  0.50       0.50
-  clock uncertainty                                            0.15       0.65
-  icache0_data_reg_2__47_/CK (EDFFXL)                          0.00       0.65 r
-  library hold time                                           -0.07       0.58
-  data required time                                                      0.58
-  -------------------------------------------------------------------------------
-  data required time                                                      0.58
-  data arrival time                                                      -0.55
-  -------------------------------------------------------------------------------
-  slack (VIOLATED)                                                       -0.03
-
-
-  Startpoint: mem_rdata_I[47]
-              (input port clocked by CLK)
-  Endpoint: icache0_data_reg_11__47_
-            (rising edge-triggered flip-flop clocked by CLK)
-  Path Group: CLK
-  Path Type: min
-
-  Des/Clust/Port     Wire Load Model       Library
-  ------------------------------------------------
-  CHIP               tsmc13_wl10           slow
-
-  Point                        Fanout       Cap     Trans      Incr       Path
-  -------------------------------------------------------------------------------
-  clock CLK (rise edge)                                        0.00       0.00
-  clock network delay (ideal)                                  0.50       0.50
-  input external delay                                         0.00       0.50 r
-  mem_rdata_I[47] (in)                               0.05      0.05       0.55 r
-  mem_rdata_I[47] (net)          4         0.05                0.00       0.55 r
-  icache0_data_reg_11__47_/D (EDFFXL)                0.05      0.00       0.55 r
-  data arrival time                                                       0.55
-
-  clock CLK (rise edge)                                        0.00       0.00
-  clock network delay (ideal)                                  0.50       0.50
-  clock uncertainty                                            0.15       0.65
-  icache0_data_reg_11__47_/CK (EDFFXL)                         0.00       0.65 r
-  library hold time                                           -0.07       0.58
-  data required time                                                      0.58
-  -------------------------------------------------------------------------------
-  data required time                                                      0.58
-  data arrival time                                                      -0.55
-  -------------------------------------------------------------------------------
-  slack (VIOLATED)                                                       -0.03
+  clock CLK (rise edge)                                                       0.00       0.00
+  clock network delay (ideal)                                                 0.50       0.50
+  clock uncertainty                                                           0.15       0.65
+  icache0_data_reg_6__101_/CK (EDFFHQX1)                                      0.00       0.65 r
+  library hold time                                                          -0.07       0.58
+  data required time                                                                     0.58
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                     0.58
+  data arrival time                                                                     -0.56
+  ----------------------------------------------------------------------------------------------
+  slack (VIOLATED)                                                                      -0.02
 
 
   Startpoint: mem_rdata_I[60]
               (input port clocked by CLK)
-  Endpoint: icache0_data_reg_0__60_
+  Endpoint: icache0_data_reg_5__60_
             (rising edge-triggered flip-flop clocked by CLK)
   Path Group: CLK
   Path Type: min
@@ -679,22 +577,124 @@ Wire Load Model Mode: top
   clock CLK (rise edge)                                        0.00       0.00
   clock network delay (ideal)                                  0.50       0.50
   input external delay                                         0.00       0.50 r
-  mem_rdata_I[60] (in)                               0.05      0.05       0.55 r
-  mem_rdata_I[60] (net)          4         0.05                0.00       0.55 r
-  icache0_data_reg_0__60_/D (EDFFXL)                 0.05      0.00       0.55 r
-  data arrival time                                                       0.55
+  mem_rdata_I[60] (in)                               0.06      0.06       0.56 r
+  mem_rdata_I[60] (net)          4         0.06                0.00       0.56 r
+  icache0_data_reg_5__60_/D (EDFFXL)                 0.06      0.00       0.56 r
+  data arrival time                                                       0.56
 
   clock CLK (rise edge)                                        0.00       0.00
   clock network delay (ideal)                                  0.50       0.50
   clock uncertainty                                            0.15       0.65
-  icache0_data_reg_0__60_/CK (EDFFXL)                          0.00       0.65 r
+  icache0_data_reg_5__60_/CK (EDFFXL)                          0.00       0.65 r
   library hold time                                           -0.07       0.58
   data required time                                                      0.58
   -------------------------------------------------------------------------------
   data required time                                                      0.58
-  data arrival time                                                      -0.55
+  data arrival time                                                      -0.56
   -------------------------------------------------------------------------------
-  slack (VIOLATED)                                                       -0.03
+  slack (VIOLATED)                                                       -0.02
+
+
+  Startpoint: mem_rdata_I[56]
+              (input port clocked by CLK)
+  Endpoint: icache0_data_reg_3__56_
+            (rising edge-triggered flip-flop clocked by CLK)
+  Path Group: CLK
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  CHIP               tsmc13_wl10           slow
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock CLK (rise edge)                                                       0.00       0.00
+  clock network delay (ideal)                                                 0.50       0.50
+  input external delay                                                        0.00       0.50 r
+  mem_rdata_I[56] (in)                                              0.06      0.06       0.56 r
+  mem_rdata_I[56] (net)                         4         0.06                0.00       0.56 r
+  icache0_data_reg_3__56_/D (EDFFHQX1)                              0.06      0.00       0.56 r
+  data arrival time                                                                      0.56
+
+  clock CLK (rise edge)                                                       0.00       0.00
+  clock network delay (ideal)                                                 0.50       0.50
+  clock uncertainty                                                           0.15       0.65
+  icache0_data_reg_3__56_/CK (EDFFHQX1)                                       0.00       0.65 r
+  library hold time                                                          -0.07       0.58
+  data required time                                                                     0.58
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                     0.58
+  data arrival time                                                                     -0.56
+  ----------------------------------------------------------------------------------------------
+  slack (VIOLATED)                                                                      -0.02
+
+
+  Startpoint: mem_rdata_I[56]
+              (input port clocked by CLK)
+  Endpoint: icache0_data_reg_8__56_
+            (rising edge-triggered flip-flop clocked by CLK)
+  Path Group: CLK
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  CHIP               tsmc13_wl10           slow
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock CLK (rise edge)                                                       0.00       0.00
+  clock network delay (ideal)                                                 0.50       0.50
+  input external delay                                                        0.00       0.50 r
+  mem_rdata_I[56] (in)                                              0.06      0.06       0.56 r
+  mem_rdata_I[56] (net)                         4         0.06                0.00       0.56 r
+  icache0_data_reg_8__56_/D (EDFFHQX1)                              0.06      0.00       0.56 r
+  data arrival time                                                                      0.56
+
+  clock CLK (rise edge)                                                       0.00       0.00
+  clock network delay (ideal)                                                 0.50       0.50
+  clock uncertainty                                                           0.15       0.65
+  icache0_data_reg_8__56_/CK (EDFFHQX1)                                       0.00       0.65 r
+  library hold time                                                          -0.07       0.58
+  data required time                                                                     0.58
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                     0.58
+  data arrival time                                                                     -0.56
+  ----------------------------------------------------------------------------------------------
+  slack (VIOLATED)                                                                      -0.02
+
+
+  Startpoint: mem_rdata_I[104]
+              (input port clocked by CLK)
+  Endpoint: icache0_data_reg_8__104_
+            (rising edge-triggered flip-flop clocked by CLK)
+  Path Group: CLK
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  CHIP               tsmc13_wl10           slow
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock CLK (rise edge)                                                       0.00       0.00
+  clock network delay (ideal)                                                 0.50       0.50
+  input external delay                                                        0.00       0.50 r
+  mem_rdata_I[104] (in)                                             0.07      0.07       0.57 r
+  mem_rdata_I[104] (net)                        4         0.07                0.00       0.57 r
+  icache0_data_reg_8__104_/D (EDFFHQX2)                             0.07      0.00       0.57 r
+  data arrival time                                                                      0.57
+
+  clock CLK (rise edge)                                                       0.00       0.00
+  clock network delay (ideal)                                                 0.50       0.50
+  clock uncertainty                                                           0.15       0.65
+  icache0_data_reg_8__104_/CK (EDFFHQX2)                                      0.00       0.65 r
+  library hold time                                                          -0.06       0.59
+  data required time                                                                     0.59
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                     0.59
+  data arrival time                                                                     -0.57
+  ----------------------------------------------------------------------------------------------
+  slack (VIOLATED)                                                                      -0.02
 
 
 1

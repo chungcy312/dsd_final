@@ -51,7 +51,7 @@ report_constraint -all_violators               > ./Report/${DESIGN}_syn.constrai
 report_area -hierarchy                         > ./Report/${DESIGN}_syn.area
 report_timing -delay min -max_paths 20 -path full -nets -transition_time -capacitance \
                                                    > ./Report/${DESIGN}_syn.timing_min
-report_timing -delay max -max_paths 50 -path full -nets -transition_time -capacitance \
+report_timing -delay max -max_paths 100 -path full -nets -transition_time -capacitance \
                                                    > ./Report/${DESIGN}_syn.timing_max
 report_timing -delay max -max_paths 1 -path full_clock_expanded -nets -transition_time -capacitance -input_pins \
                                                    > ./Report/${DESIGN}_syn.critical_path
