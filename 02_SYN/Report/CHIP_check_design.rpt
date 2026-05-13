@@ -2,30 +2,29 @@
 ****************************************
 check_design summary:
 Version:     U-2022.12
-Date:        Tue May 12 19:48:52 2026
+Date:        Wed May 13 14:46:54 2026
 ****************************************
 
                    Name                                            Total
 --------------------------------------------------------------------------------
-Inputs/Outputs                                                    494
+Inputs/Outputs                                                    526
     Unconnected ports (LINT-28)                                     4
-    Feedthrough (LINT-29)                                         148
+    Feedthrough (LINT-29)                                         180
     Shorted outputs (LINT-31)                                     180
     Constant outputs (LINT-52)                                    162
 
-Cells                                                              12
-    Cells do not drive (LINT-1)                                    12
+Cells                                                              11
+    Cells do not drive (LINT-1)                                    11
 --------------------------------------------------------------------------------
 
-Warning: In design 'core_MUL_CYCLES3', cell 'C2968' does not drive any nets. (LINT-1)
-Warning: In design 'dcache_1way_BLOCKS16', cell 'C30666' does not drive any nets. (LINT-1)
-Warning: In design 'dcache_1way_BLOCKS16', cell 'C30672' does not drive any nets. (LINT-1)
+Warning: In design 'dcache_1way_BLOCKS16', cell 'C30338' does not drive any nets. (LINT-1)
+Warning: In design 'dcache_1way_BLOCKS16', cell 'C30344' does not drive any nets. (LINT-1)
 Warning: In design 'if_stage', cell 'C838' does not drive any nets. (LINT-1)
 Warning: In design 'if_stage', cell 'C854' does not drive any nets. (LINT-1)
-Warning: In design 'ex_stage_MUL_CYCLES3', cell 'B_9' does not drive any nets. (LINT-1)
-Warning: In design 'ex_stage_MUL_CYCLES3', cell 'C683' does not drive any nets. (LINT-1)
-Warning: In design 'ex_stage_MUL_CYCLES3', cell 'C715' does not drive any nets. (LINT-1)
-Warning: In design 'ex_stage_MUL_CYCLES3', cell 'C727' does not drive any nets. (LINT-1)
+Warning: In design 'ex_stage_MUL_CYCLES3', cell 'B_7' does not drive any nets. (LINT-1)
+Warning: In design 'ex_stage_MUL_CYCLES3', cell 'C563' does not drive any nets. (LINT-1)
+Warning: In design 'ex_stage_MUL_CYCLES3', cell 'C595' does not drive any nets. (LINT-1)
+Warning: In design 'ex_stage_MUL_CYCLES3', cell 'C607' does not drive any nets. (LINT-1)
 Warning: In design 'alu', cell 'B_2' does not drive any nets. (LINT-1)
 Warning: In design 'alu', cell 'B_3' does not drive any nets. (LINT-1)
 Warning: In design 'alu', cell 'B_4' does not drive any nets. (LINT-1)
@@ -79,6 +78,38 @@ Warning: In design 'id_stage', input port 'inst[10]' is connected directly to ou
 Warning: In design 'id_stage', input port 'inst[9]' is connected directly to output port 'rd[2]'. (LINT-29)
 Warning: In design 'id_stage', input port 'inst[8]' is connected directly to output port 'rd[1]'. (LINT-29)
 Warning: In design 'id_stage', input port 'inst[7]' is connected directly to output port 'rd[0]'. (LINT-29)
+Warning: In design 'ex_stage_MUL_CYCLES3', input port 'rdata2[31]' is connected directly to output port 'store_data[31]'. (LINT-29)
+Warning: In design 'ex_stage_MUL_CYCLES3', input port 'rdata2[30]' is connected directly to output port 'store_data[30]'. (LINT-29)
+Warning: In design 'ex_stage_MUL_CYCLES3', input port 'rdata2[29]' is connected directly to output port 'store_data[29]'. (LINT-29)
+Warning: In design 'ex_stage_MUL_CYCLES3', input port 'rdata2[28]' is connected directly to output port 'store_data[28]'. (LINT-29)
+Warning: In design 'ex_stage_MUL_CYCLES3', input port 'rdata2[27]' is connected directly to output port 'store_data[27]'. (LINT-29)
+Warning: In design 'ex_stage_MUL_CYCLES3', input port 'rdata2[26]' is connected directly to output port 'store_data[26]'. (LINT-29)
+Warning: In design 'ex_stage_MUL_CYCLES3', input port 'rdata2[25]' is connected directly to output port 'store_data[25]'. (LINT-29)
+Warning: In design 'ex_stage_MUL_CYCLES3', input port 'rdata2[24]' is connected directly to output port 'store_data[24]'. (LINT-29)
+Warning: In design 'ex_stage_MUL_CYCLES3', input port 'rdata2[23]' is connected directly to output port 'store_data[23]'. (LINT-29)
+Warning: In design 'ex_stage_MUL_CYCLES3', input port 'rdata2[22]' is connected directly to output port 'store_data[22]'. (LINT-29)
+Warning: In design 'ex_stage_MUL_CYCLES3', input port 'rdata2[21]' is connected directly to output port 'store_data[21]'. (LINT-29)
+Warning: In design 'ex_stage_MUL_CYCLES3', input port 'rdata2[20]' is connected directly to output port 'store_data[20]'. (LINT-29)
+Warning: In design 'ex_stage_MUL_CYCLES3', input port 'rdata2[19]' is connected directly to output port 'store_data[19]'. (LINT-29)
+Warning: In design 'ex_stage_MUL_CYCLES3', input port 'rdata2[18]' is connected directly to output port 'store_data[18]'. (LINT-29)
+Warning: In design 'ex_stage_MUL_CYCLES3', input port 'rdata2[17]' is connected directly to output port 'store_data[17]'. (LINT-29)
+Warning: In design 'ex_stage_MUL_CYCLES3', input port 'rdata2[16]' is connected directly to output port 'store_data[16]'. (LINT-29)
+Warning: In design 'ex_stage_MUL_CYCLES3', input port 'rdata2[15]' is connected directly to output port 'store_data[15]'. (LINT-29)
+Warning: In design 'ex_stage_MUL_CYCLES3', input port 'rdata2[14]' is connected directly to output port 'store_data[14]'. (LINT-29)
+Warning: In design 'ex_stage_MUL_CYCLES3', input port 'rdata2[13]' is connected directly to output port 'store_data[13]'. (LINT-29)
+Warning: In design 'ex_stage_MUL_CYCLES3', input port 'rdata2[12]' is connected directly to output port 'store_data[12]'. (LINT-29)
+Warning: In design 'ex_stage_MUL_CYCLES3', input port 'rdata2[11]' is connected directly to output port 'store_data[11]'. (LINT-29)
+Warning: In design 'ex_stage_MUL_CYCLES3', input port 'rdata2[10]' is connected directly to output port 'store_data[10]'. (LINT-29)
+Warning: In design 'ex_stage_MUL_CYCLES3', input port 'rdata2[9]' is connected directly to output port 'store_data[9]'. (LINT-29)
+Warning: In design 'ex_stage_MUL_CYCLES3', input port 'rdata2[8]' is connected directly to output port 'store_data[8]'. (LINT-29)
+Warning: In design 'ex_stage_MUL_CYCLES3', input port 'rdata2[7]' is connected directly to output port 'store_data[7]'. (LINT-29)
+Warning: In design 'ex_stage_MUL_CYCLES3', input port 'rdata2[6]' is connected directly to output port 'store_data[6]'. (LINT-29)
+Warning: In design 'ex_stage_MUL_CYCLES3', input port 'rdata2[5]' is connected directly to output port 'store_data[5]'. (LINT-29)
+Warning: In design 'ex_stage_MUL_CYCLES3', input port 'rdata2[4]' is connected directly to output port 'store_data[4]'. (LINT-29)
+Warning: In design 'ex_stage_MUL_CYCLES3', input port 'rdata2[3]' is connected directly to output port 'store_data[3]'. (LINT-29)
+Warning: In design 'ex_stage_MUL_CYCLES3', input port 'rdata2[2]' is connected directly to output port 'store_data[2]'. (LINT-29)
+Warning: In design 'ex_stage_MUL_CYCLES3', input port 'rdata2[1]' is connected directly to output port 'store_data[1]'. (LINT-29)
+Warning: In design 'ex_stage_MUL_CYCLES3', input port 'rdata2[0]' is connected directly to output port 'store_data[0]'. (LINT-29)
 Warning: In design 'mem_stage', input port 'mem_write' is connected directly to output port 'dmem_wen'. (LINT-29)
 Warning: In design 'mem_stage', input port 'result[31]' is connected directly to output port 'dmem_addr[31]'. (LINT-29)
 Warning: In design 'mem_stage', input port 'result[30]' is connected directly to output port 'dmem_addr[30]'. (LINT-29)

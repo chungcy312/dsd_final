@@ -14,24 +14,18 @@ uniquify
 # Keep all timing/design constraints in one place.
 read_sdc ./CHIP_syn.sdc
 
-# Push area down after timing is constrained. DC still treats timing as the
-# hard constraint; max_area 0 asks it to keep reducing area where legal.
-set_max_area 0
+# Timing-first flow.  Keep area recovery out of the main loop until setup
+# paths are clean; aggressive area optimization was downsizing marginal paths.
 set_flatten true -effort high
 set_structure true
 set compile_ultra_ungroup_dw true
 
 check_design > ./Report/${DESIGN}_check_design.rpt
 
-# Some DC versions do not support compile_ultra -ungroup_all, and some ignore
-# -area_high_effort_script.  Compile, flatten hierarchy, then explicitly run
-# area optimization while keeping timing constraints active.
+# Compile, flatten hierarchy, then run timing-focused incremental cleanup.
 compile_ultra
 ungroup -all -flatten
 compile_ultra -incremental
-optimize_netlist -area
-# Area recovery can disturb short-path padding.  Run one final incremental
-# timing pass with set_fix_hold still active before writing the gate netlist.
 compile_ultra -incremental
 
 set bus_inference_style {%s[%d]}
