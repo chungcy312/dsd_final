@@ -3,7 +3,7 @@
 Report : area
 Design : CHIP
 Version: U-2022.12
-Date   : Tue May 12 17:34:24 2026
+Date   : Tue May 12 20:25:22 2026
 ****************************************
 
 Library(s) Used:
@@ -11,22 +11,22 @@ Library(s) Used:
     typical (File: /home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/typical.db)
 
 Number of ports:                          577
-Number of nets:                         34030
-Number of cells:                        33416
-Number of combinational cells:          26524
-Number of sequential cells:              6726
+Number of nets:                         30444
+Number of cells:                        29966
+Number of combinational cells:          22964
+Number of sequential cells:              6853
 Number of macros/black boxes:               0
-Number of buf/inv:                       6245
-Number of references:                     238
+Number of buf/inv:                       5817
+Number of references:                     230
 
-Combinational area:             308358.171223
-Buf/Inv area:                    45862.050808
-Noncombinational area:          246874.948883
+Combinational area:             254910.439239
+Buf/Inv area:                    40452.437064
+Noncombinational area:          262518.185175
 Macro/Black Box area:                0.000000
-Net Interconnect area:         3900980.033936
+Net Interconnect area:         3603805.121216
 
-Total cell area:                555233.120106
-Total area:                    4456213.154042
+Total cell area:                517428.624414
+Total area:                    4121233.745630
 
 Hierarchical area distribution
 ------------------------------
@@ -36,8 +36,8 @@ Hierarchical area distribution
 Hierarchical cell                 Absolute     Percent  Combi-       Noncombi-    Black-
                                   Total        Total    national     national     boxes   Design
 --------------------------------  -----------  -------  -----------  -----------  ------  ---------
-CHIP                              555233.1201    100.0  308358.1712  246874.9489  0.0000  CHIP
+CHIP                              517428.6244    100.0  254910.4392  262518.1852  0.0000  CHIP
 --------------------------------  -----------  -------  -----------  -----------  ------  ---------
-Total                                                   308358.1712  246874.9489  0.0000
+Total                                                   254910.4392  262518.1852  0.0000
 
 1

@@ -7,7 +7,7 @@ Report : timing
         -max_paths 10
 Design : CHIP
 Version: U-2022.12
-Date   : Tue May 12 17:34:26 2026
+Date   : Tue May 12 20:25:23 2026
 ****************************************
 
  # A fanout number of 1000 was used for high fanout net computations.
@@ -17,25 +17,25 @@ Wire Load Model Mode: top
 
 Endpoint                         Path Delay     Path Required     Slack
 ------------------------------------------------------------------------
-core0_if_stage0_saved_pc_reg_7_/D (DFFRHQX8)
-                                    3.00 r            2.76        -0.24
-core0_if_stage0_saved_pc_reg_7_/D (DFFRHQX8)
-                                    3.01 f            2.77        -0.24
-core0_if_stage0_saved_pc_reg_7_/D (DFFRHQX8)
-                                    3.00 r            2.76        -0.24
-core0_if_stage0_saved_pc_reg_3_/D (DFFHQX4)
-                                    3.02 r            2.78        -0.24
-core0_if_stage0_saved_pc_reg_11_/D (DFFRHQX4)
-                                    3.00 f            2.76        -0.24
-core0_if_stage0_saved_pc_reg_6_/D (DFFRHQX4)
-                                    3.00 f            2.76        -0.24
-core0_if_stage0_saved_upper_half_reg_12_/D (DFFRHQX4)
-                                    3.00 f            2.76        -0.24
-core0_if_stage0_saved_pc_reg_3_/D (DFFHQX4)
-                                    3.02 r            2.78        -0.24
-core0_if_stage0_saved_pc_reg_23_/E (EDFFHQX2)
-                                    2.90 f            2.66        -0.24
-core0_if_stage0_saved_pc_reg_21_/E (EDFFHQX2)
-                                    2.90 f            2.66        -0.24
+core0_if_stage0_saved_pc_reg_25_/D (DFFHQX4)
+                                    3.05 f            2.76        -0.29
+core0_if_stage0_saved_pc_reg_8_/D (DFFHQX4)
+                                    3.05 f            2.76        -0.29
+core0_if_stage0_saved_pc_reg_4_/D (DFFHQX4)
+                                    3.05 f            2.76        -0.29
+core0_if_stage0_saved_pc_reg_5_/D (DFFHQX4)
+                                    3.05 f            2.76        -0.29
+core0_if_stage0_saved_pc_reg_25_/D (DFFHQX4)
+                                    3.05 f            2.76        -0.29
+core0_if_stage0_saved_pc_reg_8_/D (DFFHQX4)
+                                    3.05 f            2.76        -0.29
+core0_if_stage0_saved_pc_reg_4_/D (DFFHQX4)
+                                    3.05 f            2.76        -0.29
+core0_if_stage0_saved_pc_reg_5_/D (DFFHQX4)
+                                    3.05 f            2.76        -0.29
+core0_if_stage0_saved_pc_reg_28_/D (DFFHQX4)
+                                    3.04 f            2.75        -0.29
+core0_if_stage0_saved_pc_reg_28_/D (DFFHQX4)
+                                    3.04 f            2.75        -0.29
 
 1
