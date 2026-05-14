@@ -2,7 +2,7 @@
 ****************************************
 check_design summary:
 Version:     U-2022.12
-Date:        Wed May 13 14:46:54 2026
+Date:        Thu May 14 02:11:04 2026
 ****************************************
 
                    Name                                            Total
@@ -17,10 +17,10 @@ Cells                                                              11
     Cells do not drive (LINT-1)                                    11
 --------------------------------------------------------------------------------
 
-Warning: In design 'dcache_1way_BLOCKS16', cell 'C30338' does not drive any nets. (LINT-1)
-Warning: In design 'dcache_1way_BLOCKS16', cell 'C30344' does not drive any nets. (LINT-1)
-Warning: In design 'if_stage', cell 'C838' does not drive any nets. (LINT-1)
-Warning: In design 'if_stage', cell 'C854' does not drive any nets. (LINT-1)
+Warning: In design 'dcache_1way_BLOCKS16', cell 'C38676' does not drive any nets. (LINT-1)
+Warning: In design 'dcache_1way_BLOCKS16', cell 'C38681' does not drive any nets. (LINT-1)
+Warning: In design 'if_stage', cell 'C651' does not drive any nets. (LINT-1)
+Warning: In design 'if_stage', cell 'C667' does not drive any nets. (LINT-1)
 Warning: In design 'ex_stage_MUL_CYCLES3', cell 'B_7' does not drive any nets. (LINT-1)
 Warning: In design 'ex_stage_MUL_CYCLES3', cell 'C563' does not drive any nets. (LINT-1)
 Warning: In design 'ex_stage_MUL_CYCLES3', cell 'C595' does not drive any nets. (LINT-1)

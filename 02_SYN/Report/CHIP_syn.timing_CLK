@@ -10,7 +10,7 @@ Report : timing
         -capacitance
 Design : CHIP
 Version: U-2022.12
-Date   : Wed May 13 15:29:48 2026
+Date   : Thu May 14 02:50:50 2026
 ****************************************
 
  # A fanout number of 1000 was used for high fanout net computations.
@@ -19,66 +19,7 @@ Operating Conditions: slow   Library: slow
 Wire Load Model Mode: top
 
   Startpoint: rst_n (input port clocked by CLK)
-  Endpoint: dcache0_mem_wdata_r_reg_127_
-            (rising edge-triggered flip-flop clocked by CLK)
-  Path Group: CLK
-  Path Type: max
-
-  Des/Clust/Port     Wire Load Model       Library
-  ------------------------------------------------
-  CHIP               tsmc13_wl10           slow
-
-  Point                                       Fanout       Cap     Trans      Incr       Path
-  ----------------------------------------------------------------------------------------------
-  clock CLK (rise edge)                                                       0.00       0.00
-  clock network delay (ideal)                                                 0.50       0.50
-  input external delay                                                        1.50       2.00 f
-  rst_n (in)                                                        0.05      0.05       2.05 f
-  rst_n (net)                                   1         0.05                0.00       2.05 f
-  U4962/Y (INVX16)                                                  0.07      0.05       2.10 r
-  n6481 (net)                                   3         0.11                0.00       2.10 r
-  U5706/Y (INVX20)                                                  0.05      0.05       2.14 f
-  n8799 (net)                                   6         0.16                0.00       2.14 f
-  dcache0_U3532/Y (NAND2X8)                                         0.11      0.07       2.22 r
-  dcache0_n2358 (net)                           3         0.08                0.00       2.22 r
-  dcache0_U4441/Y (BUFX20)                                          0.10      0.11       2.33 r
-  dcache0_n2368 (net)                           8         0.22                0.00       2.33 r
-  dcache0_U1753/Y (NOR2X8)                                          0.05      0.04       2.37 f
-  dcache0_n2354 (net)                           1         0.03                0.00       2.37 f
-  U17599/Y (NOR2X8)                                                 0.10      0.07       2.44 r
-  n11365 (net)                                  1         0.05                0.00       2.44 r
-  U17829/Y (INVX16)                                                 0.06      0.06       2.50 f
-  dcache0_n6912 (net)                           4         0.16                0.00       2.50 f
-  dcache0_U2201/Y (BUFX20)                                          0.10      0.13       2.63 f
-  dcache0_n7566 (net)                          22         0.39                0.00       2.63 f
-  U3893/Y (CLKAND2X12)                                              0.04      0.09       2.73 f
-  n10090 (net)                                  1         0.03                0.00       2.73 f
-  U17600/Y (NOR2X8)                                                 0.07      0.05       2.78 r
-  dcache0_n77 (net)                             1         0.03                0.00       2.78 r
-  U13917/Y (NAND2X6)                                                0.06      0.04       2.82 f
-  dcache0_n599 (net)                            1         0.03                0.00       2.82 f
-  U15010/Y (NOR3X6)                                                 0.11      0.07       2.89 r
-  n9349 (net)                                   1         0.02                0.00       2.89 r
-  U15009/Y (NAND4X4)                                                0.07      0.05       2.94 f
-  dcache0_n8587 (net)                           1         0.01                0.00       2.94 f
-  dcache0_mem_wdata_r_reg_127_/D (DFFHQX4)                          0.07      0.00       2.94 f
-  data arrival time                                                                      2.94
-
-  clock CLK (rise edge)                                                       2.50       2.50
-  clock network delay (ideal)                                                 0.50       3.00
-  clock uncertainty                                                          -0.15       2.85
-  dcache0_mem_wdata_r_reg_127_/CK (DFFHQX4)                                   0.00       2.85 r
-  library setup time                                                         -0.10       2.75
-  data required time                                                                     2.75
-  ----------------------------------------------------------------------------------------------
-  data required time                                                                     2.75
-  data arrival time                                                                     -2.94
-  ----------------------------------------------------------------------------------------------
-  slack (VIOLATED)                                                                      -0.19
-
-
-  Startpoint: rst_n (input port clocked by CLK)
-  Endpoint: dcache0_mem_wdata_r_reg_52_
+  Endpoint: core0_id_stage0_register_file0_data_r_reg_25__26_
             (rising edge-triggered flip-flop clocked by CLK)
   Path Group: CLK
   Path Type: max
@@ -92,229 +33,47 @@ Wire Load Model Mode: top
   clock CLK (rise edge)                                                       0.00       0.00
   clock network delay (ideal)                                                 0.50       0.50
   input external delay                                                        1.50       2.00 r
-  rst_n (in)                                                        0.05      0.05       2.05 r
-  rst_n (net)                                   1         0.05                0.00       2.05 r
-  U4962/Y (INVX16)                                                  0.04      0.04       2.08 f
-  n6481 (net)                                   3         0.11                0.00       2.08 f
-  U5706/Y (INVX20)                                                  0.08      0.06       2.14 r
-  n8799 (net)                                   6         0.16                0.00       2.14 r
-  dcache0_U3532/Y (NAND2X8)                                         0.07      0.06       2.20 f
-  dcache0_n2358 (net)                           3         0.08                0.00       2.20 f
-  dcache0_U3779/Y (BUFX20)                                          0.05      0.10       2.30 f
-  dcache0_n2386 (net)                           6         0.16                0.00       2.30 f
-  U17749/Y (OAI22X4)                                                0.22      0.14       2.44 r
-  dcache0_n814 (net)                            1         0.04                0.00       2.44 r
-  dcache0_U1843/Y (INVX12)                                          0.08      0.08       2.52 f
-  dcache0_n2393 (net)                           3         0.12                0.00       2.52 f
-  dcache0_U3007/Y (INVX16)                                          0.08      0.07       2.59 r
-  dcache0_n7023 (net)                           5         0.14                0.00       2.59 r
-  dcache0_U2834/Y (BUFX20)                                          0.10      0.11       2.70 r
-  dcache0_n6114 (net)                          13         0.22                0.00       2.70 r
-  U15039/Y (INVX8)                                                  0.05      0.05       2.74 f
-  n9981 (net)                                   2         0.05                0.00       2.74 f
-  dcache0_U904/Y (OAI2BB2X4)                                        0.13      0.09       2.83 r
-  dcache0_n6551 (net)                           1         0.02                0.00       2.83 r
-  U16473/Y (NOR3X4)                                                 0.08      0.06       2.90 f
-  n9844 (net)                                   1         0.02                0.00       2.90 f
-  U15175/Y (NAND4X4)                                                0.09      0.06       2.96 r
-  dcache0_n9862 (net)                           1         0.01                0.00       2.96 r
-  dcache0_mem_wdata_r_reg_52_/D (DFFHQX4)                           0.09      0.00       2.96 r
-  data arrival time                                                                      2.96
+  rst_n (in)                                                        0.08      0.08       2.08 r
+  rst_n (net)                                   3         0.08                0.00       2.08 r
+  U5792/Y (INVX8)                                                   0.05      0.05       2.13 f
+  n7762 (net)                                   3         0.08                0.00       2.13 f
+  U12599/Y (BUFX20)                                                 0.04      0.08       2.21 f
+  icache0_n602 (net)                            2         0.09                0.00       2.21 f
+  U11207/Y (INVX20)                                                 0.04      0.03       2.24 r
+  core0_id_stage0_register_file0_n159 (net)     2         0.06                0.00       2.24 r
+  core0_id_stage0_register_file0_U1383/Y (NAND2X8)                  0.07      0.05       2.30 f
+  core0_id_stage0_register_file0_n88 (net)      2         0.07                0.00       2.30 f
+  U11240/Y (INVX20)                                                 0.09      0.07       2.37 r
+  core0_id_stage0_register_file0_n92 (net)      8         0.20                0.00       2.37 r
+  U13644/Y (NAND2X8)                                                0.07      0.06       2.43 f
+  core0_id_stage0_register_file0_n776 (net)     2         0.06                0.00       2.43 f
+  U13643/Y (INVX12)                                                 0.04      0.04       2.47 r
+  core0_id_stage0_register_file0_n64 (net)      1         0.03                0.00       2.47 r
+  U12391/Y (NOR2X8)                                                 0.05      0.04       2.51 f
+  core0_id_stage0_register_file0_n63 (net)      1         0.05                0.00       2.51 f
+  core0_id_stage0_register_file0_U1183/Y (INVX20)                   0.20      0.13       2.63 r
+  core0_id_stage0_register_file0_n829 (net)    32         0.45                0.00       2.63 r
+  core0_id_stage0_register_file0_U2007/Y (OAI22X1)                  0.14      0.10       2.74 f
+  core0_id_stage0_register_file0_n2822 (net)
+                                                1         0.01                0.00       2.74 f
+  core0_id_stage0_register_file0_data_r_reg_25__26_/D (DFFQXL)      0.14      0.00       2.74 f
+  data arrival time                                                                      2.74
 
   clock CLK (rise edge)                                                       2.50       2.50
   clock network delay (ideal)                                                 0.50       3.00
   clock uncertainty                                                          -0.15       2.85
-  dcache0_mem_wdata_r_reg_52_/CK (DFFHQX4)                                    0.00       2.85 r
-  library setup time                                                         -0.08       2.77
-  data required time                                                                     2.77
+  core0_id_stage0_register_file0_data_r_reg_25__26_/CK (DFFQXL)               0.00       2.85 r
+  library setup time                                                         -0.15       2.70
+  data required time                                                                     2.70
   ----------------------------------------------------------------------------------------------
-  data required time                                                                     2.77
-  data arrival time                                                                     -2.96
+  data required time                                                                     2.70
+  data arrival time                                                                     -2.74
   ----------------------------------------------------------------------------------------------
-  slack (VIOLATED)                                                                      -0.19
+  slack (VIOLATED)                                                                      -0.04
 
 
   Startpoint: rst_n (input port clocked by CLK)
-  Endpoint: dcache0_mem_wdata_r_reg_63_
-            (rising edge-triggered flip-flop clocked by CLK)
-  Path Group: CLK
-  Path Type: max
-
-  Des/Clust/Port     Wire Load Model       Library
-  ------------------------------------------------
-  CHIP               tsmc13_wl10           slow
-
-  Point                                       Fanout       Cap     Trans      Incr       Path
-  ----------------------------------------------------------------------------------------------
-  clock CLK (rise edge)                                                       0.00       0.00
-  clock network delay (ideal)                                                 0.50       0.50
-  input external delay                                                        1.50       2.00 f
-  rst_n (in)                                                        0.05      0.05       2.05 f
-  rst_n (net)                                   1         0.05                0.00       2.05 f
-  U4962/Y (INVX16)                                                  0.07      0.05       2.10 r
-  n6481 (net)                                   3         0.11                0.00       2.10 r
-  U5706/Y (INVX20)                                                  0.05      0.05       2.14 f
-  n8799 (net)                                   6         0.16                0.00       2.14 f
-  dcache0_U3532/Y (NAND2X8)                                         0.11      0.07       2.22 r
-  dcache0_n2358 (net)                           3         0.08                0.00       2.22 r
-  dcache0_U4441/Y (BUFX20)                                          0.10      0.11       2.33 r
-  dcache0_n2368 (net)                           8         0.22                0.00       2.33 r
-  dcache0_U1753/Y (NOR2X8)                                          0.05      0.04       2.37 f
-  dcache0_n2354 (net)                           1         0.03                0.00       2.37 f
-  U17599/Y (NOR2X8)                                                 0.10      0.07       2.44 r
-  n11365 (net)                                  1         0.05                0.00       2.44 r
-  U17829/Y (INVX16)                                                 0.06      0.06       2.50 f
-  dcache0_n6912 (net)                           4         0.16                0.00       2.50 f
-  U11173/Y (CLKINVX20)                                              0.05      0.04       2.55 r
-  dcache0_n1440 (net)                           4         0.18                0.00       2.55 r
-  dcache0_U2139/Y (INVX20)                                          0.06      0.05       2.60 f
-  dcache0_n6899 (net)                          15         0.25                0.00       2.60 f
-  dcache0_U3336/Y (OAI2BB2X4)                                       0.11      0.13       2.73 f
-  dcache0_n6891 (net)                           1         0.03                0.00       2.73 f
-  U14199/Y (NOR2X8)                                                 0.08      0.07       2.80 r
-  n11164 (net)                                  1         0.03                0.00       2.80 r
-  U14198/Y (NAND2X6)                                                0.05      0.05       2.85 f
-  dcache0_n720 (net)                            1         0.03                0.00       2.85 f
-  U17644/Y (NOR2X8)                                                 0.07      0.05       2.90 r
-  dcache0_n6897 (net)                           1         0.02                0.00       2.90 r
-  U14127/Y (NAND4X4)                                                0.07      0.05       2.94 f
-  dcache0_n9675 (net)                           1         0.01                0.00       2.94 f
-  dcache0_mem_wdata_r_reg_63_/D (DFFHQX4)                           0.07      0.00       2.94 f
-  data arrival time                                                                      2.94
-
-  clock CLK (rise edge)                                                       2.50       2.50
-  clock network delay (ideal)                                                 0.50       3.00
-  clock uncertainty                                                          -0.15       2.85
-  dcache0_mem_wdata_r_reg_63_/CK (DFFHQX4)                                    0.00       2.85 r
-  library setup time                                                         -0.10       2.75
-  data required time                                                                     2.75
-  ----------------------------------------------------------------------------------------------
-  data required time                                                                     2.75
-  data arrival time                                                                     -2.94
-  ----------------------------------------------------------------------------------------------
-  slack (VIOLATED)                                                                      -0.19
-
-
-  Startpoint: rst_n (input port clocked by CLK)
-  Endpoint: dcache0_mem_wdata_r_reg_91_
-            (rising edge-triggered flip-flop clocked by CLK)
-  Path Group: CLK
-  Path Type: max
-
-  Des/Clust/Port     Wire Load Model       Library
-  ------------------------------------------------
-  CHIP               tsmc13_wl10           slow
-
-  Point                                       Fanout       Cap     Trans      Incr       Path
-  ----------------------------------------------------------------------------------------------
-  clock CLK (rise edge)                                                       0.00       0.00
-  clock network delay (ideal)                                                 0.50       0.50
-  input external delay                                                        1.50       2.00 f
-  rst_n (in)                                                        0.05      0.05       2.05 f
-  rst_n (net)                                   1         0.05                0.00       2.05 f
-  U4962/Y (INVX16)                                                  0.07      0.05       2.10 r
-  n6481 (net)                                   3         0.11                0.00       2.10 r
-  U5706/Y (INVX20)                                                  0.05      0.05       2.14 f
-  n8799 (net)                                   6         0.16                0.00       2.14 f
-  dcache0_U3532/Y (NAND2X8)                                         0.11      0.07       2.22 r
-  dcache0_n2358 (net)                           3         0.08                0.00       2.22 r
-  dcache0_U4441/Y (BUFX20)                                          0.10      0.11       2.33 r
-  dcache0_n2368 (net)                           8         0.22                0.00       2.33 r
-  dcache0_U1753/Y (NOR2X8)                                          0.05      0.04       2.37 f
-  dcache0_n2354 (net)                           1         0.03                0.00       2.37 f
-  U17599/Y (NOR2X8)                                                 0.10      0.07       2.44 r
-  n11365 (net)                                  1         0.05                0.00       2.44 r
-  U17829/Y (INVX16)                                                 0.06      0.06       2.50 f
-  dcache0_n6912 (net)                           4         0.16                0.00       2.50 f
-  dcache0_U2201/Y (BUFX20)                                          0.10      0.13       2.63 f
-  dcache0_n7566 (net)                          22         0.39                0.00       2.63 f
-  U14157/Y (NAND2X4)                                                0.09      0.07       2.71 r
-  n11147 (net)                                  1         0.03                0.00       2.71 r
-  U14156/Y (NAND2X6)                                                0.04      0.04       2.75 f
-  n11575 (net)                                  1         0.02                0.00       2.75 f
-  U18488/Y (CLKINVX8)                                               0.05      0.04       2.79 r
-  n10066 (net)                                  1         0.04                0.00       2.79 r
-  U14197/Y (NAND4X8)                                                0.08      0.05       2.84 f
-  n11163 (net)                                  1         0.03                0.00       2.84 f
-  U14196/Y (NOR2X8)                                                 0.07      0.06       2.90 r
-  dcache0_n7199 (net)                           1         0.02                0.00       2.90 r
-  U15231/Y (NAND4X4)                                                0.07      0.05       2.94 f
-  dcache0_n9199 (net)                           1         0.01                0.00       2.94 f
-  dcache0_mem_wdata_r_reg_91_/D (DFFHQX4)                           0.07      0.00       2.94 f
-  data arrival time                                                                      2.94
-
-  clock CLK (rise edge)                                                       2.50       2.50
-  clock network delay (ideal)                                                 0.50       3.00
-  clock uncertainty                                                          -0.15       2.85
-  dcache0_mem_wdata_r_reg_91_/CK (DFFHQX4)                                    0.00       2.85 r
-  library setup time                                                         -0.09       2.76
-  data required time                                                                     2.76
-  ----------------------------------------------------------------------------------------------
-  data required time                                                                     2.76
-  data arrival time                                                                     -2.94
-  ----------------------------------------------------------------------------------------------
-  slack (VIOLATED)                                                                      -0.19
-
-
-  Startpoint: rst_n (input port clocked by CLK)
-  Endpoint: dcache0_mem_wdata_r_reg_97_
-            (rising edge-triggered flip-flop clocked by CLK)
-  Path Group: CLK
-  Path Type: max
-
-  Des/Clust/Port     Wire Load Model       Library
-  ------------------------------------------------
-  CHIP               tsmc13_wl10           slow
-
-  Point                                       Fanout       Cap     Trans      Incr       Path
-  ----------------------------------------------------------------------------------------------
-  clock CLK (rise edge)                                                       0.00       0.00
-  clock network delay (ideal)                                                 0.50       0.50
-  input external delay                                                        1.50       2.00 f
-  rst_n (in)                                                        0.05      0.05       2.05 f
-  rst_n (net)                                   1         0.05                0.00       2.05 f
-  U4962/Y (INVX16)                                                  0.07      0.05       2.10 r
-  n6481 (net)                                   3         0.11                0.00       2.10 r
-  U5706/Y (INVX20)                                                  0.05      0.05       2.14 f
-  n8799 (net)                                   6         0.16                0.00       2.14 f
-  dcache0_U3502/Y (NAND2X8)                                         0.11      0.07       2.22 r
-  dcache0_n2356 (net)                           3         0.08                0.00       2.22 r
-  dcache0_U4442/Y (BUFX20)                                          0.07      0.10       2.31 r
-  dcache0_n2383 (net)                           5         0.14                0.00       2.31 r
-  U17717/Y (OAI22X4)                                                0.13      0.07       2.39 f
-  dcache0_n6900 (net)                           1         0.03                0.00       2.39 f
-  U12099/Y (BUFX20)                                                 0.07      0.12       2.51 f
-  n8961 (net)                                   6         0.21                0.00       2.51 f
-  U11065/Y (CLKINVX20)                                              0.08      0.06       2.57 r
-  n9300 (net)                                  10         0.33                0.00       2.57 r
-  U11455/Y (INVX20)                                                 0.06      0.05       2.63 f
-  n8923 (net)                                  10         0.20                0.00       2.63 f
-  U15290/Y (NAND2X4)                                                0.08      0.06       2.69 r
-  dcache0_n1180 (net)                           1         0.03                0.00       2.69 r
-  dcache0_U1644/Y (NAND2X6)                                         0.06      0.05       2.74 f
-  dcache0_n7379 (net)                           1         0.04                0.00       2.74 f
-  U11213/Y (NOR4X8)                                                 0.15      0.14       2.88 r
-  dcache0_n7388 (net)                           1         0.02                0.00       2.88 r
-  U11212/Y (NAND4X4)                                                0.07      0.06       2.94 f
-  dcache0_n9097 (net)                           1         0.01                0.00       2.94 f
-  dcache0_mem_wdata_r_reg_97_/D (DFFHQX4)                           0.07      0.00       2.94 f
-  data arrival time                                                                      2.94
-
-  clock CLK (rise edge)                                                       2.50       2.50
-  clock network delay (ideal)                                                 0.50       3.00
-  clock uncertainty                                                          -0.15       2.85
-  dcache0_mem_wdata_r_reg_97_/CK (DFFHQX4)                                    0.00       2.85 r
-  library setup time                                                         -0.10       2.75
-  data required time                                                                     2.75
-  ----------------------------------------------------------------------------------------------
-  data required time                                                                     2.75
-  data arrival time                                                                     -2.94
-  ----------------------------------------------------------------------------------------------
-  slack (VIOLATED)                                                                      -0.19
-
-
-  Startpoint: rst_n (input port clocked by CLK)
-  Endpoint: dcache0_mem_wdata_r_reg_0_
+  Endpoint: core0_id_stage0_register_file0_data_r_reg_25__10_
             (rising edge-triggered flip-flop clocked by CLK)
   Path Group: CLK
   Path Type: max
@@ -328,567 +87,47 @@ Wire Load Model Mode: top
   clock CLK (rise edge)                                                       0.00       0.00
   clock network delay (ideal)                                                 0.50       0.50
   input external delay                                                        1.50       2.00 r
-  rst_n (in)                                                        0.05      0.05       2.05 r
-  rst_n (net)                                   1         0.05                0.00       2.05 r
-  U4962/Y (INVX16)                                                  0.04      0.04       2.08 f
-  n6481 (net)                                   3         0.11                0.00       2.08 f
-  U5706/Y (INVX20)                                                  0.08      0.06       2.14 r
-  n8799 (net)                                   6         0.16                0.00       2.14 r
-  dcache0_U3532/Y (NAND2X8)                                         0.07      0.06       2.20 f
-  dcache0_n2358 (net)                           3         0.08                0.00       2.20 f
-  dcache0_U4441/Y (BUFX20)                                          0.07      0.11       2.31 f
-  dcache0_n2368 (net)                           8         0.22                0.00       2.31 f
-  dcache0_U1753/Y (NOR2X8)                                          0.08      0.06       2.37 r
-  dcache0_n2354 (net)                           1         0.03                0.00       2.37 r
-  U17599/Y (NOR2X8)                                                 0.05      0.05       2.42 f
-  n11365 (net)                                  1         0.05                0.00       2.42 f
-  U17829/Y (INVX16)                                                 0.09      0.07       2.49 r
-  dcache0_n6912 (net)                           4         0.16                0.00       2.49 r
-  U11173/Y (CLKINVX20)                                              0.06      0.06       2.55 f
-  dcache0_n1440 (net)                           4         0.18                0.00       2.55 f
-  dcache0_U2139/Y (INVX20)                                          0.11      0.08       2.63 r
-  dcache0_n6899 (net)                          15         0.25                0.00       2.63 r
-  U12274/Y (INVX16)                                                 0.05      0.04       2.67 f
-  n11509 (net)                                  4         0.08                0.00       2.67 f
-  dcache0_U2345/Y (OAI2BB2X2)                                       0.21      0.15       2.82 r
-  dcache0_n5952 (net)                           1         0.02                0.00       2.82 r
-  dcache0_U158/Y (NOR2X4)                                           0.07      0.06       2.88 f
-  dcache0_n668 (net)                            1         0.02                0.00       2.88 f
-  U15111/Y (NAND4X4)                                                0.09      0.08       2.96 r
-  dcache0_n10746 (net)                          1         0.01                0.00       2.96 r
-  dcache0_mem_wdata_r_reg_0_/D (DFFHQX4)                            0.09      0.00       2.96 r
-  data arrival time                                                                      2.96
+  rst_n (in)                                                        0.08      0.08       2.08 r
+  rst_n (net)                                   3         0.08                0.00       2.08 r
+  U5792/Y (INVX8)                                                   0.05      0.05       2.13 f
+  n7762 (net)                                   3         0.08                0.00       2.13 f
+  U12599/Y (BUFX20)                                                 0.04      0.08       2.21 f
+  icache0_n602 (net)                            2         0.09                0.00       2.21 f
+  U11207/Y (INVX20)                                                 0.04      0.03       2.24 r
+  core0_id_stage0_register_file0_n159 (net)     2         0.06                0.00       2.24 r
+  core0_id_stage0_register_file0_U1383/Y (NAND2X8)                  0.07      0.05       2.30 f
+  core0_id_stage0_register_file0_n88 (net)      2         0.07                0.00       2.30 f
+  U11240/Y (INVX20)                                                 0.09      0.07       2.37 r
+  core0_id_stage0_register_file0_n92 (net)      8         0.20                0.00       2.37 r
+  U13644/Y (NAND2X8)                                                0.07      0.06       2.43 f
+  core0_id_stage0_register_file0_n776 (net)     2         0.06                0.00       2.43 f
+  U13643/Y (INVX12)                                                 0.04      0.04       2.47 r
+  core0_id_stage0_register_file0_n64 (net)      1         0.03                0.00       2.47 r
+  U12391/Y (NOR2X8)                                                 0.05      0.04       2.51 f
+  core0_id_stage0_register_file0_n63 (net)      1         0.05                0.00       2.51 f
+  core0_id_stage0_register_file0_U1183/Y (INVX20)                   0.20      0.13       2.63 r
+  core0_id_stage0_register_file0_n829 (net)    32         0.45                0.00       2.63 r
+  core0_id_stage0_register_file0_U2274/Y (OAI22X1)                  0.14      0.10       2.74 f
+  core0_id_stage0_register_file0_n2806 (net)
+                                                1         0.01                0.00       2.74 f
+  core0_id_stage0_register_file0_data_r_reg_25__10_/D (DFFQXL)      0.14      0.00       2.74 f
+  data arrival time                                                                      2.74
 
   clock CLK (rise edge)                                                       2.50       2.50
   clock network delay (ideal)                                                 0.50       3.00
   clock uncertainty                                                          -0.15       2.85
-  dcache0_mem_wdata_r_reg_0_/CK (DFFHQX4)                                     0.00       2.85 r
-  library setup time                                                         -0.08       2.77
-  data required time                                                                     2.77
+  core0_id_stage0_register_file0_data_r_reg_25__10_/CK (DFFQXL)               0.00       2.85 r
+  library setup time                                                         -0.15       2.70
+  data required time                                                                     2.70
   ----------------------------------------------------------------------------------------------
-  data required time                                                                     2.77
-  data arrival time                                                                     -2.96
+  data required time                                                                     2.70
+  data arrival time                                                                     -2.74
   ----------------------------------------------------------------------------------------------
-  slack (VIOLATED)                                                                      -0.19
+  slack (VIOLATED)                                                                      -0.04
 
 
   Startpoint: rst_n (input port clocked by CLK)
-  Endpoint: dcache0_mem_wdata_r_reg_86_
-            (rising edge-triggered flip-flop clocked by CLK)
-  Path Group: CLK
-  Path Type: max
-
-  Des/Clust/Port     Wire Load Model       Library
-  ------------------------------------------------
-  CHIP               tsmc13_wl10           slow
-
-  Point                                       Fanout       Cap     Trans      Incr       Path
-  ----------------------------------------------------------------------------------------------
-  clock CLK (rise edge)                                                       0.00       0.00
-  clock network delay (ideal)                                                 0.50       0.50
-  input external delay                                                        1.50       2.00 f
-  rst_n (in)                                                        0.05      0.05       2.05 f
-  rst_n (net)                                   1         0.05                0.00       2.05 f
-  U4962/Y (INVX16)                                                  0.07      0.05       2.10 r
-  n6481 (net)                                   3         0.11                0.00       2.10 r
-  U5706/Y (INVX20)                                                  0.05      0.05       2.14 f
-  n8799 (net)                                   6         0.16                0.00       2.14 f
-  dcache0_U3532/Y (NAND2X8)                                         0.11      0.07       2.22 r
-  dcache0_n2358 (net)                           3         0.08                0.00       2.22 r
-  dcache0_U4441/Y (BUFX20)                                          0.10      0.11       2.33 r
-  dcache0_n2368 (net)                           8         0.22                0.00       2.33 r
-  U17966/Y (INVX16)                                                 0.04      0.03       2.36 f
-  n10002 (net)                                  1         0.05                0.00       2.36 f
-  U11464/Y (CLKINVX12)                                              0.03      0.03       2.39 r
-  dcache0_n844 (net)                            2         0.06                0.00       2.39 r
-  dcache0_U2302/Y (NOR2X8)                                          0.05      0.03       2.42 f
-  dcache0_n2384 (net)                           1         0.03                0.00       2.42 f
-  dcache0_U3241/Y (NOR2X8)                                          0.10      0.07       2.49 r
-  dcache0_n1436 (net)                           1         0.05                0.00       2.49 r
-  dcache0_U2971/Y (INVX16)                                          0.06      0.06       2.55 f
-  dcache0_n7457 (net)                           5         0.15                0.00       2.55 f
-  dcache0_U1732/Y (BUFX20)                                          0.11      0.13       2.69 f
-  dcache0_n7164 (net)                          23         0.43                0.00       2.69 f
-  U15312/Y (OAI2BB2X4)                                              0.10      0.14       2.82 f
-  n9576 (net)                                   1         0.03                0.00       2.82 f
-  U14205/Y (NOR2X6)                                                 0.08      0.07       2.89 r
-  dcache0_n1196 (net)                           1         0.02                0.00       2.89 r
-  U14084/Y (NAND4X4)                                                0.06      0.05       2.94 f
-  dcache0_n9284 (net)                           1         0.01                0.00       2.94 f
-  dcache0_mem_wdata_r_reg_86_/D (DFFHQX4)                           0.06      0.00       2.94 f
-  data arrival time                                                                      2.94
-
-  clock CLK (rise edge)                                                       2.50       2.50
-  clock network delay (ideal)                                                 0.50       3.00
-  clock uncertainty                                                          -0.15       2.85
-  dcache0_mem_wdata_r_reg_86_/CK (DFFHQX4)                                    0.00       2.85 r
-  library setup time                                                         -0.09       2.76
-  data required time                                                                     2.76
-  ----------------------------------------------------------------------------------------------
-  data required time                                                                     2.76
-  data arrival time                                                                     -2.94
-  ----------------------------------------------------------------------------------------------
-  slack (VIOLATED)                                                                      -0.19
-
-
-  Startpoint: rst_n (input port clocked by CLK)
-  Endpoint: dcache0_mem_wdata_r_reg_73_
-            (rising edge-triggered flip-flop clocked by CLK)
-  Path Group: CLK
-  Path Type: max
-
-  Des/Clust/Port     Wire Load Model       Library
-  ------------------------------------------------
-  CHIP               tsmc13_wl10           slow
-
-  Point                                       Fanout       Cap     Trans      Incr       Path
-  ----------------------------------------------------------------------------------------------
-  clock CLK (rise edge)                                                       0.00       0.00
-  clock network delay (ideal)                                                 0.50       0.50
-  input external delay                                                        1.50       2.00 f
-  rst_n (in)                                                        0.05      0.05       2.05 f
-  rst_n (net)                                   1         0.05                0.00       2.05 f
-  U4962/Y (INVX16)                                                  0.07      0.05       2.10 r
-  n6481 (net)                                   3         0.11                0.00       2.10 r
-  U5706/Y (INVX20)                                                  0.05      0.05       2.14 f
-  n8799 (net)                                   6         0.16                0.00       2.14 f
-  dcache0_U3532/Y (NAND2X8)                                         0.11      0.07       2.22 r
-  dcache0_n2358 (net)                           3         0.08                0.00       2.22 r
-  dcache0_U4441/Y (BUFX20)                                          0.10      0.11       2.33 r
-  dcache0_n2368 (net)                           8         0.22                0.00       2.33 r
-  dcache0_U1753/Y (NOR2X8)                                          0.05      0.04       2.37 f
-  dcache0_n2354 (net)                           1         0.03                0.00       2.37 f
-  U17599/Y (NOR2X8)                                                 0.10      0.07       2.44 r
-  n11365 (net)                                  1         0.05                0.00       2.44 r
-  U17829/Y (INVX16)                                                 0.06      0.06       2.50 f
-  dcache0_n6912 (net)                           4         0.16                0.00       2.50 f
-  dcache0_U2201/Y (BUFX20)                                          0.10      0.13       2.63 f
-  dcache0_n7566 (net)                          22         0.39                0.00       2.63 f
-  U16449/Y (NAND2X2)                                                0.12      0.10       2.73 r
-  n9806 (net)                                   1         0.02                0.00       2.73 r
-  U15057/Y (NAND4X4)                                                0.10      0.08       2.81 f
-  dcache0_n515 (net)                            1         0.03                0.00       2.81 f
-  U13094/Y (NOR3X6)                                                 0.10      0.08       2.89 r
-  dcache0_n2540 (net)                           1         0.02                0.00       2.89 r
-  dcache0_U1707/Y (NAND4X4)                                         0.08      0.05       2.94 f
-  dcache0_n9505 (net)                           1         0.01                0.00       2.94 f
-  dcache0_mem_wdata_r_reg_73_/D (DFFHQX4)                           0.08      0.00       2.94 f
-  data arrival time                                                                      2.94
-
-  clock CLK (rise edge)                                                       2.50       2.50
-  clock network delay (ideal)                                                 0.50       3.00
-  clock uncertainty                                                          -0.15       2.85
-  dcache0_mem_wdata_r_reg_73_/CK (DFFHQX4)                                    0.00       2.85 r
-  library setup time                                                         -0.10       2.75
-  data required time                                                                     2.75
-  ----------------------------------------------------------------------------------------------
-  data required time                                                                     2.75
-  data arrival time                                                                     -2.94
-  ----------------------------------------------------------------------------------------------
-  slack (VIOLATED)                                                                      -0.19
-
-
-  Startpoint: rst_n (input port clocked by CLK)
-  Endpoint: dcache0_mem_wdata_r_reg_101_
-            (rising edge-triggered flip-flop clocked by CLK)
-  Path Group: CLK
-  Path Type: max
-
-  Des/Clust/Port     Wire Load Model       Library
-  ------------------------------------------------
-  CHIP               tsmc13_wl10           slow
-
-  Point                                       Fanout       Cap     Trans      Incr       Path
-  ----------------------------------------------------------------------------------------------
-  clock CLK (rise edge)                                                       0.00       0.00
-  clock network delay (ideal)                                                 0.50       0.50
-  input external delay                                                        1.50       2.00 f
-  rst_n (in)                                                        0.05      0.05       2.05 f
-  rst_n (net)                                   1         0.05                0.00       2.05 f
-  U4962/Y (INVX16)                                                  0.07      0.05       2.10 r
-  n6481 (net)                                   3         0.11                0.00       2.10 r
-  U5706/Y (INVX20)                                                  0.05      0.05       2.14 f
-  n8799 (net)                                   6         0.16                0.00       2.14 f
-  dcache0_U3532/Y (NAND2X8)                                         0.11      0.07       2.22 r
-  dcache0_n2358 (net)                           3         0.08                0.00       2.22 r
-  dcache0_U4441/Y (BUFX20)                                          0.10      0.11       2.33 r
-  dcache0_n2368 (net)                           8         0.22                0.00       2.33 r
-  dcache0_U1753/Y (NOR2X8)                                          0.05      0.04       2.37 f
-  dcache0_n2354 (net)                           1         0.03                0.00       2.37 f
-  U17599/Y (NOR2X8)                                                 0.10      0.07       2.44 r
-  n11365 (net)                                  1         0.05                0.00       2.44 r
-  U17829/Y (INVX16)                                                 0.06      0.06       2.50 f
-  dcache0_n6912 (net)                           4         0.16                0.00       2.50 f
-  dcache0_U2677/Y (BUFX20)                                          0.10      0.13       2.63 f
-  dcache0_n7154 (net)                          22         0.36                0.00       2.63 f
-  U16529/Y (OAI2BB2X4)                                              0.11      0.12       2.75 f
-  dcache0_n7417 (net)                           1         0.03                0.00       2.75 f
-  U17598/Y (NOR2X8)                                                 0.08      0.07       2.82 r
-  dcache0_n675 (net)                            1         0.03                0.00       2.82 r
-  U11411/Y (NAND2X6)                                                0.06      0.04       2.87 f
-  n11410 (net)                                  1         0.03                0.00       2.87 f
-  U17658/Y (INVX8)                                                  0.04      0.04       2.90 r
-  n11409 (net)                                  1         0.02                0.00       2.90 r
-  U18389/Y (NAND4X4)                                                0.07      0.04       2.94 f
-  dcache0_n9029 (net)                           1         0.01                0.00       2.94 f
-  dcache0_mem_wdata_r_reg_101_/D (DFFHQX4)                          0.07      0.00       2.94 f
-  data arrival time                                                                      2.94
-
-  clock CLK (rise edge)                                                       2.50       2.50
-  clock network delay (ideal)                                                 0.50       3.00
-  clock uncertainty                                                          -0.15       2.85
-  dcache0_mem_wdata_r_reg_101_/CK (DFFHQX4)                                   0.00       2.85 r
-  library setup time                                                         -0.09       2.76
-  data required time                                                                     2.76
-  ----------------------------------------------------------------------------------------------
-  data required time                                                                     2.76
-  data arrival time                                                                     -2.94
-  ----------------------------------------------------------------------------------------------
-  slack (VIOLATED)                                                                      -0.19
-
-
-  Startpoint: rst_n (input port clocked by CLK)
-  Endpoint: dcache0_mem_wdata_r_reg_115_
-            (rising edge-triggered flip-flop clocked by CLK)
-  Path Group: CLK
-  Path Type: max
-
-  Des/Clust/Port     Wire Load Model       Library
-  ------------------------------------------------
-  CHIP               tsmc13_wl10           slow
-
-  Point                                       Fanout       Cap     Trans      Incr       Path
-  ----------------------------------------------------------------------------------------------
-  clock CLK (rise edge)                                                       0.00       0.00
-  clock network delay (ideal)                                                 0.50       0.50
-  input external delay                                                        1.50       2.00 f
-  rst_n (in)                                                        0.05      0.05       2.05 f
-  rst_n (net)                                   1         0.05                0.00       2.05 f
-  U4962/Y (INVX16)                                                  0.07      0.05       2.10 r
-  n6481 (net)                                   3         0.11                0.00       2.10 r
-  U5706/Y (INVX20)                                                  0.05      0.05       2.14 f
-  n8799 (net)                                   6         0.16                0.00       2.14 f
-  dcache0_U3502/Y (NAND2X8)                                         0.11      0.07       2.22 r
-  dcache0_n2356 (net)                           3         0.08                0.00       2.22 r
-  dcache0_U2684/Y (BUFX20)                                          0.09      0.11       2.32 r
-  dcache0_n841 (net)                            7         0.19                0.00       2.32 r
-  dcache0_U1135/Y (NOR2X8)                                          0.06      0.04       2.37 f
-  dcache0_n2363 (net)                           1         0.03                0.00       2.37 f
-  U14080/Y (NOR2X8)                                                 0.10      0.07       2.44 r
-  dcache0_n1599 (net)                           1         0.05                0.00       2.44 r
-  dcache0_U3331/Y (INVX16)                                          0.07      0.07       2.50 f
-  dcache0_n2390 (net)                           7         0.19                0.00       2.50 f
-  dcache0_U4461/Y (BUFX20)                                          0.09      0.12       2.63 f
-  dcache0_n7891 (net)                          21         0.33                0.00       2.63 f
-  dcache0_U2485/Y (AO22X4)                                          0.07      0.17       2.80 f
-  dcache0_n7557 (net)                           1         0.03                0.00       2.80 f
-  dcache0_U999/Y (NOR3X6)                                           0.10      0.09       2.89 r
-  dcache0_n7565 (net)                           1         0.02                0.00       2.89 r
-  U17562/Y (NAND4X4)                                                0.07      0.05       2.94 f
-  dcache0_n8791 (net)                           1         0.01                0.00       2.94 f
-  dcache0_mem_wdata_r_reg_115_/D (DFFHQX4)                          0.07      0.00       2.94 f
-  data arrival time                                                                      2.94
-
-  clock CLK (rise edge)                                                       2.50       2.50
-  clock network delay (ideal)                                                 0.50       3.00
-  clock uncertainty                                                          -0.15       2.85
-  dcache0_mem_wdata_r_reg_115_/CK (DFFHQX4)                                   0.00       2.85 r
-  library setup time                                                         -0.10       2.75
-  data required time                                                                     2.75
-  ----------------------------------------------------------------------------------------------
-  data required time                                                                     2.75
-  data arrival time                                                                     -2.94
-  ----------------------------------------------------------------------------------------------
-  slack (VIOLATED)                                                                      -0.19
-
-
-  Startpoint: rst_n (input port clocked by CLK)
-  Endpoint: dcache0_mem_wdata_r_reg_53_
-            (rising edge-triggered flip-flop clocked by CLK)
-  Path Group: CLK
-  Path Type: max
-
-  Des/Clust/Port     Wire Load Model       Library
-  ------------------------------------------------
-  CHIP               tsmc13_wl10           slow
-
-  Point                                       Fanout       Cap     Trans      Incr       Path
-  ----------------------------------------------------------------------------------------------
-  clock CLK (rise edge)                                                       0.00       0.00
-  clock network delay (ideal)                                                 0.50       0.50
-  input external delay                                                        1.50       2.00 f
-  rst_n (in)                                                        0.05      0.05       2.05 f
-  rst_n (net)                                   1         0.05                0.00       2.05 f
-  U4962/Y (INVX16)                                                  0.07      0.05       2.10 r
-  n6481 (net)                                   3         0.11                0.00       2.10 r
-  U5706/Y (INVX20)                                                  0.05      0.05       2.14 f
-  n8799 (net)                                   6         0.16                0.00       2.14 f
-  dcache0_U3532/Y (NAND2X8)                                         0.11      0.07       2.22 r
-  dcache0_n2358 (net)                           3         0.08                0.00       2.22 r
-  dcache0_U4441/Y (BUFX20)                                          0.10      0.11       2.33 r
-  dcache0_n2368 (net)                           8         0.22                0.00       2.33 r
-  U17954/Y (NOR2X4)                                                 0.11      0.06       2.39 f
-  dcache0_n768 (net)                            1         0.03                0.00       2.39 f
-  U13929/Y (NOR2X8)                                                 0.12      0.10       2.49 r
-  dcache0_n1301 (net)                           1         0.05                0.00       2.49 r
-  U16677/Y (INVX20)                                                 0.06      0.06       2.55 f
-  dcache0_n7459 (net)                           5         0.16                0.00       2.55 f
-  U11210/Y (CLKINVX12)                                              0.05      0.05       2.59 r
-  dcache0_n759 (net)                            3         0.11                0.00       2.59 r
-  U15448/Y (INVX16)                                                 0.08      0.06       2.66 f
-  n9539 (net)                                  14         0.26                0.00       2.66 f
-  U18460/Y (AO22X4)                                                 0.06      0.17       2.82 f
-  n9193 (net)                                   1         0.03                0.00       2.82 f
-  U5311/Y (NOR2X6)                                                  0.08      0.07       2.89 r
-  dcache0_n1118 (net)                           1         0.02                0.00       2.89 r
-  U15321/Y (NAND4X4)                                                0.07      0.05       2.94 f
-  dcache0_n9845 (net)                           1         0.01                0.00       2.94 f
-  dcache0_mem_wdata_r_reg_53_/D (DFFHQX4)                           0.07      0.00       2.94 f
-  data arrival time                                                                      2.94
-
-  clock CLK (rise edge)                                                       2.50       2.50
-  clock network delay (ideal)                                                 0.50       3.00
-  clock uncertainty                                                          -0.15       2.85
-  dcache0_mem_wdata_r_reg_53_/CK (DFFHQX4)                                    0.00       2.85 r
-  library setup time                                                         -0.09       2.76
-  data required time                                                                     2.76
-  ----------------------------------------------------------------------------------------------
-  data required time                                                                     2.76
-  data arrival time                                                                     -2.94
-  ----------------------------------------------------------------------------------------------
-  slack (VIOLATED)                                                                      -0.19
-
-
-  Startpoint: rst_n (input port clocked by CLK)
-  Endpoint: dcache0_mem_wdata_r_reg_104_
-            (rising edge-triggered flip-flop clocked by CLK)
-  Path Group: CLK
-  Path Type: max
-
-  Des/Clust/Port     Wire Load Model       Library
-  ------------------------------------------------
-  CHIP               tsmc13_wl10           slow
-
-  Point                                       Fanout       Cap     Trans      Incr       Path
-  ----------------------------------------------------------------------------------------------
-  clock CLK (rise edge)                                                       0.00       0.00
-  clock network delay (ideal)                                                 0.50       0.50
-  input external delay                                                        1.50       2.00 f
-  rst_n (in)                                                        0.05      0.05       2.05 f
-  rst_n (net)                                   1         0.05                0.00       2.05 f
-  U4962/Y (INVX16)                                                  0.07      0.05       2.10 r
-  n6481 (net)                                   3         0.11                0.00       2.10 r
-  U5706/Y (INVX20)                                                  0.05      0.05       2.14 f
-  n8799 (net)                                   6         0.16                0.00       2.14 f
-  dcache0_U3502/Y (NAND2X8)                                         0.11      0.07       2.22 r
-  dcache0_n2356 (net)                           3         0.08                0.00       2.22 r
-  dcache0_U2684/Y (BUFX20)                                          0.09      0.11       2.32 r
-  dcache0_n841 (net)                            7         0.19                0.00       2.32 r
-  U17826/Y (NOR2X8)                                                 0.06      0.04       2.37 f
-  dcache0_n2350 (net)                           1         0.03                0.00       2.37 f
-  dcache0_U3490/Y (NOR2X8)                                          0.10      0.07       2.44 r
-  dcache0_n2579 (net)                           1         0.05                0.00       2.44 r
-  dcache0_U2756/Y (INVX16)                                          0.06      0.06       2.50 f
-  dcache0_n6108 (net)                           6         0.17                0.00       2.50 f
-  dcache0_U1735/Y (BUFX20)                                          0.07      0.11       2.61 f
-  dcache0_n7432 (net)                          14         0.25                0.00       2.61 f
-  U17390/Y (BUFX20)                                                 0.03      0.08       2.69 f
-  n11464 (net)                                  4         0.07                0.00       2.69 f
-  U16400/Y (OAI2BB1X4)                                              0.06      0.11       2.80 f
-  dcache0_n7453 (net)                           1         0.02                0.00       2.80 f
-  U2851/Y (NOR3X4)                                                  0.13      0.08       2.88 r
-  n11393 (net)                                  1         0.02                0.00       2.88 r
-  U17591/Y (NAND4BX4)                                               0.07      0.06       2.94 f
-  dcache0_n8978 (net)                           1         0.01                0.00       2.94 f
-  dcache0_mem_wdata_r_reg_104_/D (DFFHQX4)                          0.07      0.00       2.94 f
-  data arrival time                                                                      2.94
-
-  clock CLK (rise edge)                                                       2.50       2.50
-  clock network delay (ideal)                                                 0.50       3.00
-  clock uncertainty                                                          -0.15       2.85
-  dcache0_mem_wdata_r_reg_104_/CK (DFFHQX4)                                   0.00       2.85 r
-  library setup time                                                         -0.09       2.76
-  data required time                                                                     2.76
-  ----------------------------------------------------------------------------------------------
-  data required time                                                                     2.76
-  data arrival time                                                                     -2.94
-  ----------------------------------------------------------------------------------------------
-  slack (VIOLATED)                                                                      -0.19
-
-
-  Startpoint: rst_n (input port clocked by CLK)
-  Endpoint: dcache0_mem_wdata_r_reg_90_
-            (rising edge-triggered flip-flop clocked by CLK)
-  Path Group: CLK
-  Path Type: max
-
-  Des/Clust/Port     Wire Load Model       Library
-  ------------------------------------------------
-  CHIP               tsmc13_wl10           slow
-
-  Point                                       Fanout       Cap     Trans      Incr       Path
-  ----------------------------------------------------------------------------------------------
-  clock CLK (rise edge)                                                       0.00       0.00
-  clock network delay (ideal)                                                 0.50       0.50
-  input external delay                                                        1.50       2.00 f
-  rst_n (in)                                                        0.05      0.05       2.05 f
-  rst_n (net)                                   1         0.05                0.00       2.05 f
-  U4962/Y (INVX16)                                                  0.07      0.05       2.10 r
-  n6481 (net)                                   3         0.11                0.00       2.10 r
-  U5706/Y (INVX20)                                                  0.05      0.05       2.14 f
-  n8799 (net)                                   6         0.16                0.00       2.14 f
-  dcache0_U3532/Y (NAND2X8)                                         0.11      0.07       2.22 r
-  dcache0_n2358 (net)                           3         0.08                0.00       2.22 r
-  dcache0_U4441/Y (BUFX20)                                          0.10      0.11       2.33 r
-  dcache0_n2368 (net)                           8         0.22                0.00       2.33 r
-  U17966/Y (INVX16)                                                 0.04      0.03       2.36 f
-  n10002 (net)                                  1         0.05                0.00       2.36 f
-  U11464/Y (CLKINVX12)                                              0.03      0.03       2.39 r
-  dcache0_n844 (net)                            2         0.06                0.00       2.39 r
-  dcache0_U2302/Y (NOR2X8)                                          0.05      0.03       2.42 f
-  dcache0_n2384 (net)                           1         0.03                0.00       2.42 f
-  dcache0_U3241/Y (NOR2X8)                                          0.10      0.07       2.49 r
-  dcache0_n1436 (net)                           1         0.05                0.00       2.49 r
-  dcache0_U2971/Y (INVX16)                                          0.06      0.06       2.55 f
-  dcache0_n7457 (net)                           5         0.15                0.00       2.55 f
-  dcache0_U1732/Y (BUFX20)                                          0.11      0.13       2.69 f
-  dcache0_n7164 (net)                          23         0.43                0.00       2.69 f
-  U17465/Y (AOI22X2)                                                0.24      0.18       2.87 r
-  dcache0_n7166 (net)                           1         0.02                0.00       2.87 r
-  dcache0_U3029/Y (NAND4X4)                                         0.07      0.07       2.94 f
-  dcache0_n9216 (net)                           1         0.01                0.00       2.94 f
-  dcache0_mem_wdata_r_reg_90_/D (DFFHQX4)                           0.07      0.00       2.94 f
-  data arrival time                                                                      2.94
-
-  clock CLK (rise edge)                                                       2.50       2.50
-  clock network delay (ideal)                                                 0.50       3.00
-  clock uncertainty                                                          -0.15       2.85
-  dcache0_mem_wdata_r_reg_90_/CK (DFFHQX4)                                    0.00       2.85 r
-  library setup time                                                         -0.10       2.75
-  data required time                                                                     2.75
-  ----------------------------------------------------------------------------------------------
-  data required time                                                                     2.75
-  data arrival time                                                                     -2.94
-  ----------------------------------------------------------------------------------------------
-  slack (VIOLATED)                                                                      -0.19
-
-
-  Startpoint: rst_n (input port clocked by CLK)
-  Endpoint: dcache0_mem_wdata_r_reg_59_
-            (rising edge-triggered flip-flop clocked by CLK)
-  Path Group: CLK
-  Path Type: max
-
-  Des/Clust/Port     Wire Load Model       Library
-  ------------------------------------------------
-  CHIP               tsmc13_wl10           slow
-
-  Point                                       Fanout       Cap     Trans      Incr       Path
-  ----------------------------------------------------------------------------------------------
-  clock CLK (rise edge)                                                       0.00       0.00
-  clock network delay (ideal)                                                 0.50       0.50
-  input external delay                                                        1.50       2.00 f
-  rst_n (in)                                                        0.05      0.05       2.05 f
-  rst_n (net)                                   1         0.05                0.00       2.05 f
-  U4962/Y (INVX16)                                                  0.07      0.05       2.10 r
-  n6481 (net)                                   3         0.11                0.00       2.10 r
-  U5706/Y (INVX20)                                                  0.05      0.05       2.14 f
-  n8799 (net)                                   6         0.16                0.00       2.14 f
-  dcache0_U3532/Y (NAND2X8)                                         0.11      0.07       2.22 r
-  dcache0_n2358 (net)                           3         0.08                0.00       2.22 r
-  dcache0_U4441/Y (BUFX20)                                          0.10      0.11       2.33 r
-  dcache0_n2368 (net)                           8         0.22                0.00       2.33 r
-  U17966/Y (INVX16)                                                 0.04      0.03       2.36 f
-  n10002 (net)                                  1         0.05                0.00       2.36 f
-  U11464/Y (CLKINVX12)                                              0.03      0.03       2.39 r
-  dcache0_n844 (net)                            2         0.06                0.00       2.39 r
-  dcache0_U2302/Y (NOR2X8)                                          0.05      0.03       2.42 f
-  dcache0_n2384 (net)                           1         0.03                0.00       2.42 f
-  dcache0_U3241/Y (NOR2X8)                                          0.10      0.07       2.49 r
-  dcache0_n1436 (net)                           1         0.05                0.00       2.49 r
-  dcache0_U2971/Y (INVX16)                                          0.06      0.06       2.55 f
-  dcache0_n7457 (net)                           5         0.15                0.00       2.55 f
-  dcache0_U1732/Y (BUFX20)                                          0.11      0.13       2.69 f
-  dcache0_n7164 (net)                          23         0.43                0.00       2.69 f
-  dcache0_U1749/Y (AOI22X2)                                         0.24      0.18       2.87 r
-  dcache0_n6722 (net)                           1         0.02                0.00       2.87 r
-  U14159/Y (NAND4X4)                                                0.07      0.07       2.94 f
-  dcache0_n9743 (net)                           1         0.01                0.00       2.94 f
-  dcache0_mem_wdata_r_reg_59_/D (DFFHQX4)                           0.07      0.00       2.94 f
-  data arrival time                                                                      2.94
-
-  clock CLK (rise edge)                                                       2.50       2.50
-  clock network delay (ideal)                                                 0.50       3.00
-  clock uncertainty                                                          -0.15       2.85
-  dcache0_mem_wdata_r_reg_59_/CK (DFFHQX4)                                    0.00       2.85 r
-  library setup time                                                         -0.10       2.75
-  data required time                                                                     2.75
-  ----------------------------------------------------------------------------------------------
-  data required time                                                                     2.75
-  data arrival time                                                                     -2.94
-  ----------------------------------------------------------------------------------------------
-  slack (VIOLATED)                                                                      -0.19
-
-
-  Startpoint: rst_n (input port clocked by CLK)
-  Endpoint: dcache0_mem_wdata_r_reg_20_
-            (rising edge-triggered flip-flop clocked by CLK)
-  Path Group: CLK
-  Path Type: max
-
-  Des/Clust/Port     Wire Load Model       Library
-  ------------------------------------------------
-  CHIP               tsmc13_wl10           slow
-
-  Point                                       Fanout       Cap     Trans      Incr       Path
-  ----------------------------------------------------------------------------------------------
-  clock CLK (rise edge)                                                       0.00       0.00
-  clock network delay (ideal)                                                 0.50       0.50
-  input external delay                                                        1.50       2.00 f
-  rst_n (in)                                                        0.05      0.05       2.05 f
-  rst_n (net)                                   1         0.05                0.00       2.05 f
-  U4962/Y (INVX16)                                                  0.07      0.05       2.10 r
-  n6481 (net)                                   3         0.11                0.00       2.10 r
-  U5706/Y (INVX20)                                                  0.05      0.05       2.14 f
-  n8799 (net)                                   6         0.16                0.00       2.14 f
-  dcache0_U3532/Y (NAND2X8)                                         0.11      0.07       2.22 r
-  dcache0_n2358 (net)                           3         0.08                0.00       2.22 r
-  dcache0_U4441/Y (BUFX20)                                          0.10      0.11       2.33 r
-  dcache0_n2368 (net)                           8         0.22                0.00       2.33 r
-  U17966/Y (INVX16)                                                 0.04      0.03       2.36 f
-  n10002 (net)                                  1         0.05                0.00       2.36 f
-  U11464/Y (CLKINVX12)                                              0.03      0.03       2.39 r
-  dcache0_n844 (net)                            2         0.06                0.00       2.39 r
-  dcache0_U2302/Y (NOR2X8)                                          0.05      0.03       2.42 f
-  dcache0_n2384 (net)                           1         0.03                0.00       2.42 f
-  dcache0_U3241/Y (NOR2X8)                                          0.10      0.07       2.49 r
-  dcache0_n1436 (net)                           1         0.05                0.00       2.49 r
-  dcache0_U2971/Y (INVX16)                                          0.06      0.06       2.55 f
-  dcache0_n7457 (net)                           5         0.15                0.00       2.55 f
-  dcache0_U1732/Y (BUFX20)                                          0.11      0.13       2.69 f
-  dcache0_n7164 (net)                          23         0.43                0.00       2.69 f
-  U16558/Y (AOI22X2)                                                0.24      0.18       2.87 r
-  dcache0_n2397 (net)                           1         0.02                0.00       2.87 r
-  U15182/Y (NAND4X4)                                                0.07      0.07       2.94 f
-  dcache0_n10406 (net)                          1         0.01                0.00       2.94 f
-  dcache0_mem_wdata_r_reg_20_/D (DFFHQX4)                           0.07      0.00       2.94 f
-  data arrival time                                                                      2.94
-
-  clock CLK (rise edge)                                                       2.50       2.50
-  clock network delay (ideal)                                                 0.50       3.00
-  clock uncertainty                                                          -0.15       2.85
-  dcache0_mem_wdata_r_reg_20_/CK (DFFHQX4)                                    0.00       2.85 r
-  library setup time                                                         -0.10       2.75
-  data required time                                                                     2.75
-  ----------------------------------------------------------------------------------------------
-  data required time                                                                     2.75
-  data arrival time                                                                     -2.94
-  ----------------------------------------------------------------------------------------------
-  slack (VIOLATED)                                                                      -0.19
-
-
-  Startpoint: rst_n (input port clocked by CLK)
-  Endpoint: dcache0_mem_wdata_r_reg_41_
+  Endpoint: core0_id_stage0_register_file0_data_r_reg_25__11_
             (rising edge-triggered flip-flop clocked by CLK)
   Path Group: CLK
   Path Type: max
@@ -902,50 +141,47 @@ Wire Load Model Mode: top
   clock CLK (rise edge)                                                       0.00       0.00
   clock network delay (ideal)                                                 0.50       0.50
   input external delay                                                        1.50       2.00 r
-  rst_n (in)                                                        0.05      0.05       2.05 r
-  rst_n (net)                                   1         0.05                0.00       2.05 r
-  U4962/Y (INVX16)                                                  0.04      0.04       2.08 f
-  n6481 (net)                                   3         0.11                0.00       2.08 f
-  U5706/Y (INVX20)                                                  0.08      0.06       2.14 r
-  n8799 (net)                                   6         0.16                0.00       2.14 r
-  dcache0_U3532/Y (NAND2X8)                                         0.07      0.06       2.20 f
-  dcache0_n2358 (net)                           3         0.08                0.00       2.20 f
-  dcache0_U3779/Y (BUFX20)                                          0.05      0.10       2.30 f
-  dcache0_n2386 (net)                           6         0.16                0.00       2.30 f
-  U17749/Y (OAI22X4)                                                0.22      0.14       2.44 r
-  dcache0_n814 (net)                            1         0.04                0.00       2.44 r
-  dcache0_U1843/Y (INVX12)                                          0.08      0.08       2.52 f
-  dcache0_n2393 (net)                           3         0.12                0.00       2.52 f
-  dcache0_U3007/Y (INVX16)                                          0.08      0.07       2.59 r
-  dcache0_n7023 (net)                           5         0.14                0.00       2.59 r
-  dcache0_U3255/Y (BUFX20)                                          0.11      0.11       2.70 r
-  dcache0_n7364 (net)                          13         0.23                0.00       2.70 r
-  U15107/Y (NAND2X4)                                                0.05      0.05       2.75 f
-  n9407 (net)                                   1         0.02                0.00       2.75 f
-  U15106/Y (OAI2BB1X4)                                              0.08      0.06       2.81 r
-  dcache0_n2466 (net)                           1         0.02                0.00       2.81 r
-  U15812/Y (NOR3X4)                                                 0.06      0.07       2.87 f
-  dcache0_n2469 (net)                           1         0.02                0.00       2.87 f
-  dcache0_U2087/Y (NAND4X4)                                         0.09      0.08       2.96 r
-  dcache0_n10049 (net)                          1         0.01                0.00       2.96 r
-  dcache0_mem_wdata_r_reg_41_/D (DFFHQX4)                           0.09      0.00       2.96 r
-  data arrival time                                                                      2.96
+  rst_n (in)                                                        0.08      0.08       2.08 r
+  rst_n (net)                                   3         0.08                0.00       2.08 r
+  U5792/Y (INVX8)                                                   0.05      0.05       2.13 f
+  n7762 (net)                                   3         0.08                0.00       2.13 f
+  U12599/Y (BUFX20)                                                 0.04      0.08       2.21 f
+  icache0_n602 (net)                            2         0.09                0.00       2.21 f
+  U11207/Y (INVX20)                                                 0.04      0.03       2.24 r
+  core0_id_stage0_register_file0_n159 (net)     2         0.06                0.00       2.24 r
+  core0_id_stage0_register_file0_U1383/Y (NAND2X8)                  0.07      0.05       2.30 f
+  core0_id_stage0_register_file0_n88 (net)      2         0.07                0.00       2.30 f
+  U11240/Y (INVX20)                                                 0.09      0.07       2.37 r
+  core0_id_stage0_register_file0_n92 (net)      8         0.20                0.00       2.37 r
+  U13644/Y (NAND2X8)                                                0.07      0.06       2.43 f
+  core0_id_stage0_register_file0_n776 (net)     2         0.06                0.00       2.43 f
+  U13643/Y (INVX12)                                                 0.04      0.04       2.47 r
+  core0_id_stage0_register_file0_n64 (net)      1         0.03                0.00       2.47 r
+  U12391/Y (NOR2X8)                                                 0.05      0.04       2.51 f
+  core0_id_stage0_register_file0_n63 (net)      1         0.05                0.00       2.51 f
+  core0_id_stage0_register_file0_U1183/Y (INVX20)                   0.20      0.13       2.63 r
+  core0_id_stage0_register_file0_n829 (net)    32         0.45                0.00       2.63 r
+  core0_id_stage0_register_file0_U2288/Y (OAI22X1)                  0.14      0.10       2.74 f
+  core0_id_stage0_register_file0_n2807 (net)
+                                                1         0.01                0.00       2.74 f
+  core0_id_stage0_register_file0_data_r_reg_25__11_/D (DFFQXL)      0.14      0.00       2.74 f
+  data arrival time                                                                      2.74
 
   clock CLK (rise edge)                                                       2.50       2.50
   clock network delay (ideal)                                                 0.50       3.00
   clock uncertainty                                                          -0.15       2.85
-  dcache0_mem_wdata_r_reg_41_/CK (DFFHQX4)                                    0.00       2.85 r
-  library setup time                                                         -0.08       2.77
-  data required time                                                                     2.77
+  core0_id_stage0_register_file0_data_r_reg_25__11_/CK (DFFQXL)               0.00       2.85 r
+  library setup time                                                         -0.15       2.70
+  data required time                                                                     2.70
   ----------------------------------------------------------------------------------------------
-  data required time                                                                     2.77
-  data arrival time                                                                     -2.96
+  data required time                                                                     2.70
+  data arrival time                                                                     -2.74
   ----------------------------------------------------------------------------------------------
-  slack (VIOLATED)                                                                      -0.19
+  slack (VIOLATED)                                                                      -0.04
 
 
   Startpoint: rst_n (input port clocked by CLK)
-  Endpoint: dcache0_mem_wdata_r_reg_40_
+  Endpoint: core0_id_stage0_register_file0_data_r_reg_25__25_
             (rising edge-triggered flip-flop clocked by CLK)
   Path Group: CLK
   Path Type: max
@@ -958,51 +194,48 @@ Wire Load Model Mode: top
   ----------------------------------------------------------------------------------------------
   clock CLK (rise edge)                                                       0.00       0.00
   clock network delay (ideal)                                                 0.50       0.50
-  input external delay                                                        1.50       2.00 f
-  rst_n (in)                                                        0.05      0.05       2.05 f
-  rst_n (net)                                   1         0.05                0.00       2.05 f
-  U4962/Y (INVX16)                                                  0.07      0.05       2.10 r
-  n6481 (net)                                   3         0.11                0.00       2.10 r
-  U5706/Y (INVX20)                                                  0.05      0.05       2.14 f
-  n8799 (net)                                   6         0.16                0.00       2.14 f
-  dcache0_U3532/Y (NAND2X8)                                         0.11      0.07       2.22 r
-  dcache0_n2358 (net)                           3         0.08                0.00       2.22 r
-  dcache0_U4441/Y (BUFX20)                                          0.10      0.11       2.33 r
-  dcache0_n2368 (net)                           8         0.22                0.00       2.33 r
-  U17954/Y (NOR2X4)                                                 0.11      0.06       2.39 f
-  dcache0_n768 (net)                            1         0.03                0.00       2.39 f
-  U13929/Y (NOR2X8)                                                 0.12      0.10       2.49 r
-  dcache0_n1301 (net)                           1         0.05                0.00       2.49 r
-  U16677/Y (INVX20)                                                 0.06      0.06       2.55 f
-  dcache0_n7459 (net)                           5         0.16                0.00       2.55 f
-  U11210/Y (CLKINVX12)                                              0.05      0.05       2.59 r
-  dcache0_n759 (net)                            3         0.11                0.00       2.59 r
-  U15448/Y (INVX16)                                                 0.08      0.06       2.66 f
-  n9539 (net)                                  14         0.26                0.00       2.66 f
-  U13071/Y (AO22X4)                                                 0.06      0.17       2.82 f
-  n9033 (net)                                   1         0.03                0.00       2.82 f
-  U10924/Y (NOR2X6)                                                 0.08      0.06       2.89 r
-  dcache0_n709 (net)                            1         0.02                0.00       2.89 r
-  dcache0_U926/Y (NAND4X4)                                          0.07      0.06       2.94 f
-  dcache0_n10066 (net)                          1         0.01                0.00       2.94 f
-  dcache0_mem_wdata_r_reg_40_/D (DFFHQX4)                           0.07      0.00       2.94 f
-  data arrival time                                                                      2.94
+  input external delay                                                        1.50       2.00 r
+  rst_n (in)                                                        0.08      0.08       2.08 r
+  rst_n (net)                                   3         0.08                0.00       2.08 r
+  U5792/Y (INVX8)                                                   0.05      0.05       2.13 f
+  n7762 (net)                                   3         0.08                0.00       2.13 f
+  U12599/Y (BUFX20)                                                 0.04      0.08       2.21 f
+  icache0_n602 (net)                            2         0.09                0.00       2.21 f
+  U11207/Y (INVX20)                                                 0.04      0.03       2.24 r
+  core0_id_stage0_register_file0_n159 (net)     2         0.06                0.00       2.24 r
+  core0_id_stage0_register_file0_U1383/Y (NAND2X8)                  0.07      0.05       2.30 f
+  core0_id_stage0_register_file0_n88 (net)      2         0.07                0.00       2.30 f
+  U11240/Y (INVX20)                                                 0.09      0.07       2.37 r
+  core0_id_stage0_register_file0_n92 (net)      8         0.20                0.00       2.37 r
+  U13644/Y (NAND2X8)                                                0.07      0.06       2.43 f
+  core0_id_stage0_register_file0_n776 (net)     2         0.06                0.00       2.43 f
+  U13643/Y (INVX12)                                                 0.04      0.04       2.47 r
+  core0_id_stage0_register_file0_n64 (net)      1         0.03                0.00       2.47 r
+  U12391/Y (NOR2X8)                                                 0.05      0.04       2.51 f
+  core0_id_stage0_register_file0_n63 (net)      1         0.05                0.00       2.51 f
+  core0_id_stage0_register_file0_U1183/Y (INVX20)                   0.20      0.13       2.63 r
+  core0_id_stage0_register_file0_n829 (net)    32         0.45                0.00       2.63 r
+  core0_id_stage0_register_file0_U2017/Y (OAI22X1)                  0.14      0.10       2.74 f
+  core0_id_stage0_register_file0_n2821 (net)
+                                                1         0.01                0.00       2.74 f
+  core0_id_stage0_register_file0_data_r_reg_25__25_/D (DFFQXL)      0.14      0.00       2.74 f
+  data arrival time                                                                      2.74
 
   clock CLK (rise edge)                                                       2.50       2.50
   clock network delay (ideal)                                                 0.50       3.00
   clock uncertainty                                                          -0.15       2.85
-  dcache0_mem_wdata_r_reg_40_/CK (DFFHQX4)                                    0.00       2.85 r
-  library setup time                                                         -0.09       2.76
-  data required time                                                                     2.76
+  core0_id_stage0_register_file0_data_r_reg_25__25_/CK (DFFQXL)               0.00       2.85 r
+  library setup time                                                         -0.15       2.70
+  data required time                                                                     2.70
   ----------------------------------------------------------------------------------------------
-  data required time                                                                     2.76
-  data arrival time                                                                     -2.94
+  data required time                                                                     2.70
+  data arrival time                                                                     -2.74
   ----------------------------------------------------------------------------------------------
-  slack (VIOLATED)                                                                      -0.19
+  slack (VIOLATED)                                                                      -0.04
 
 
   Startpoint: rst_n (input port clocked by CLK)
-  Endpoint: dcache0_mem_wdata_r_reg_62_
+  Endpoint: core0_id_stage0_register_file0_data_r_reg_25__27_
             (rising edge-triggered flip-flop clocked by CLK)
   Path Group: CLK
   Path Type: max
@@ -1015,53 +248,48 @@ Wire Load Model Mode: top
   ----------------------------------------------------------------------------------------------
   clock CLK (rise edge)                                                       0.00       0.00
   clock network delay (ideal)                                                 0.50       0.50
-  input external delay                                                        1.50       2.00 f
-  rst_n (in)                                                        0.05      0.05       2.05 f
-  rst_n (net)                                   1         0.05                0.00       2.05 f
-  U4962/Y (INVX16)                                                  0.07      0.05       2.10 r
-  n6481 (net)                                   3         0.11                0.00       2.10 r
-  U5706/Y (INVX20)                                                  0.05      0.05       2.14 f
-  n8799 (net)                                   6         0.16                0.00       2.14 f
-  dcache0_U3532/Y (NAND2X8)                                         0.11      0.07       2.22 r
-  dcache0_n2358 (net)                           3         0.08                0.00       2.22 r
-  dcache0_U4441/Y (BUFX20)                                          0.10      0.11       2.33 r
-  dcache0_n2368 (net)                           8         0.22                0.00       2.33 r
-  dcache0_U1753/Y (NOR2X8)                                          0.05      0.04       2.37 f
-  dcache0_n2354 (net)                           1         0.03                0.00       2.37 f
-  U17599/Y (NOR2X8)                                                 0.10      0.07       2.44 r
-  n11365 (net)                                  1         0.05                0.00       2.44 r
-  U17829/Y (INVX16)                                                 0.06      0.06       2.50 f
-  dcache0_n6912 (net)                           4         0.16                0.00       2.50 f
-  U11173/Y (CLKINVX20)                                              0.05      0.04       2.55 r
-  dcache0_n1440 (net)                           4         0.18                0.00       2.55 r
-  dcache0_U2139/Y (INVX20)                                          0.06      0.05       2.60 f
-  dcache0_n6899 (net)                          15         0.25                0.00       2.60 f
-  U12167/Y (OAI2BB1X2)                                              0.08      0.13       2.73 f
-  dcache0_n6835 (net)                           1         0.02                0.00       2.73 f
-  U12090/Y (NOR2X4)                                                 0.09      0.08       2.81 r
-  n11452 (net)                                  1         0.02                0.00       2.81 r
-  U18451/Y (AND2X8)                                                 0.04      0.08       2.89 r
-  n11451 (net)                                  1         0.02                0.00       2.89 r
-  U18450/Y (NAND4X4)                                                0.07      0.05       2.94 f
-  dcache0_n9692 (net)                           1         0.01                0.00       2.94 f
-  dcache0_mem_wdata_r_reg_62_/D (DFFHQX4)                           0.07      0.00       2.94 f
-  data arrival time                                                                      2.94
+  input external delay                                                        1.50       2.00 r
+  rst_n (in)                                                        0.08      0.08       2.08 r
+  rst_n (net)                                   3         0.08                0.00       2.08 r
+  U5792/Y (INVX8)                                                   0.05      0.05       2.13 f
+  n7762 (net)                                   3         0.08                0.00       2.13 f
+  U12599/Y (BUFX20)                                                 0.04      0.08       2.21 f
+  icache0_n602 (net)                            2         0.09                0.00       2.21 f
+  U11207/Y (INVX20)                                                 0.04      0.03       2.24 r
+  core0_id_stage0_register_file0_n159 (net)     2         0.06                0.00       2.24 r
+  core0_id_stage0_register_file0_U1383/Y (NAND2X8)                  0.07      0.05       2.30 f
+  core0_id_stage0_register_file0_n88 (net)      2         0.07                0.00       2.30 f
+  U11240/Y (INVX20)                                                 0.09      0.07       2.37 r
+  core0_id_stage0_register_file0_n92 (net)      8         0.20                0.00       2.37 r
+  U13644/Y (NAND2X8)                                                0.07      0.06       2.43 f
+  core0_id_stage0_register_file0_n776 (net)     2         0.06                0.00       2.43 f
+  U13643/Y (INVX12)                                                 0.04      0.04       2.47 r
+  core0_id_stage0_register_file0_n64 (net)      1         0.03                0.00       2.47 r
+  U12391/Y (NOR2X8)                                                 0.05      0.04       2.51 f
+  core0_id_stage0_register_file0_n63 (net)      1         0.05                0.00       2.51 f
+  core0_id_stage0_register_file0_U1183/Y (INVX20)                   0.20      0.13       2.63 r
+  core0_id_stage0_register_file0_n829 (net)    32         0.45                0.00       2.63 r
+  core0_id_stage0_register_file0_U2015/Y (OAI22X1)                  0.14      0.10       2.74 f
+  core0_id_stage0_register_file0_n2823 (net)
+                                                1         0.01                0.00       2.74 f
+  core0_id_stage0_register_file0_data_r_reg_25__27_/D (DFFQXL)      0.14      0.00       2.74 f
+  data arrival time                                                                      2.74
 
   clock CLK (rise edge)                                                       2.50       2.50
   clock network delay (ideal)                                                 0.50       3.00
   clock uncertainty                                                          -0.15       2.85
-  dcache0_mem_wdata_r_reg_62_/CK (DFFHQX4)                                    0.00       2.85 r
-  library setup time                                                         -0.09       2.76
-  data required time                                                                     2.76
+  core0_id_stage0_register_file0_data_r_reg_25__27_/CK (DFFQXL)               0.00       2.85 r
+  library setup time                                                         -0.15       2.70
+  data required time                                                                     2.70
   ----------------------------------------------------------------------------------------------
-  data required time                                                                     2.76
-  data arrival time                                                                     -2.94
+  data required time                                                                     2.70
+  data arrival time                                                                     -2.74
   ----------------------------------------------------------------------------------------------
-  slack (VIOLATED)                                                                      -0.19
+  slack (VIOLATED)                                                                      -0.04
 
 
   Startpoint: rst_n (input port clocked by CLK)
-  Endpoint: dcache0_mem_wdata_r_reg_68_
+  Endpoint: core0_id_stage0_register_file0_data_r_reg_25__24_
             (rising edge-triggered flip-flop clocked by CLK)
   Path Group: CLK
   Path Type: max
@@ -1074,53 +302,48 @@ Wire Load Model Mode: top
   ----------------------------------------------------------------------------------------------
   clock CLK (rise edge)                                                       0.00       0.00
   clock network delay (ideal)                                                 0.50       0.50
-  input external delay                                                        1.50       2.00 f
-  rst_n (in)                                                        0.05      0.05       2.05 f
-  rst_n (net)                                   1         0.05                0.00       2.05 f
-  U4962/Y (INVX16)                                                  0.07      0.05       2.10 r
-  n6481 (net)                                   3         0.11                0.00       2.10 r
-  U5706/Y (INVX20)                                                  0.05      0.05       2.14 f
-  n8799 (net)                                   6         0.16                0.00       2.14 f
-  dcache0_U3502/Y (NAND2X8)                                         0.11      0.07       2.22 r
-  dcache0_n2356 (net)                           3         0.08                0.00       2.22 r
-  dcache0_U2684/Y (BUFX20)                                          0.09      0.11       2.32 r
-  dcache0_n841 (net)                            7         0.19                0.00       2.32 r
-  dcache0_U1135/Y (NOR2X8)                                          0.06      0.04       2.37 f
-  dcache0_n2363 (net)                           1         0.03                0.00       2.37 f
-  U14080/Y (NOR2X8)                                                 0.10      0.07       2.44 r
-  dcache0_n1599 (net)                           1         0.05                0.00       2.44 r
-  dcache0_U3331/Y (INVX16)                                          0.07      0.07       2.50 f
-  dcache0_n2390 (net)                           7         0.19                0.00       2.50 f
-  dcache0_U1271/Y (BUFX20)                                          0.09      0.12       2.63 f
-  dcache0_n160 (net)                           20         0.34                0.00       2.63 f
-  U17941/Y (NAND2X8)                                                0.06      0.05       2.68 r
-  n9399 (net)                                   1         0.03                0.00       2.68 r
-  U17940/Y (NAND2X6)                                                0.04      0.04       2.72 f
-  n9398 (net)                                   1         0.02                0.00       2.72 f
-  U18373/Y (OR2X8)                                                  0.04      0.11       2.83 f
-  n11397 (net)                                  1         0.03                0.00       2.83 f
-  U17595/Y (NOR3X6)                                                 0.11      0.06       2.89 r
-  dcache0_n2494 (net)                           1         0.02                0.00       2.89 r
-  dcache0_U1546/Y (NAND4X4)                                         0.07      0.05       2.94 f
-  dcache0_n9590 (net)                           1         0.01                0.00       2.94 f
-  dcache0_mem_wdata_r_reg_68_/D (DFFHQX4)                           0.07      0.00       2.94 f
-  data arrival time                                                                      2.94
+  input external delay                                                        1.50       2.00 r
+  rst_n (in)                                                        0.08      0.08       2.08 r
+  rst_n (net)                                   3         0.08                0.00       2.08 r
+  U5792/Y (INVX8)                                                   0.05      0.05       2.13 f
+  n7762 (net)                                   3         0.08                0.00       2.13 f
+  U12599/Y (BUFX20)                                                 0.04      0.08       2.21 f
+  icache0_n602 (net)                            2         0.09                0.00       2.21 f
+  U11207/Y (INVX20)                                                 0.04      0.03       2.24 r
+  core0_id_stage0_register_file0_n159 (net)     2         0.06                0.00       2.24 r
+  core0_id_stage0_register_file0_U1383/Y (NAND2X8)                  0.07      0.05       2.30 f
+  core0_id_stage0_register_file0_n88 (net)      2         0.07                0.00       2.30 f
+  U11240/Y (INVX20)                                                 0.09      0.07       2.37 r
+  core0_id_stage0_register_file0_n92 (net)      8         0.20                0.00       2.37 r
+  U13644/Y (NAND2X8)                                                0.07      0.06       2.43 f
+  core0_id_stage0_register_file0_n776 (net)     2         0.06                0.00       2.43 f
+  U13643/Y (INVX12)                                                 0.04      0.04       2.47 r
+  core0_id_stage0_register_file0_n64 (net)      1         0.03                0.00       2.47 r
+  U12391/Y (NOR2X8)                                                 0.05      0.04       2.51 f
+  core0_id_stage0_register_file0_n63 (net)      1         0.05                0.00       2.51 f
+  core0_id_stage0_register_file0_U1183/Y (INVX20)                   0.20      0.13       2.63 r
+  core0_id_stage0_register_file0_n829 (net)    32         0.45                0.00       2.63 r
+  core0_id_stage0_register_file0_U2023/Y (OAI22X1)                  0.14      0.10       2.74 f
+  core0_id_stage0_register_file0_n2820 (net)
+                                                1         0.01                0.00       2.74 f
+  core0_id_stage0_register_file0_data_r_reg_25__24_/D (DFFQXL)      0.14      0.00       2.74 f
+  data arrival time                                                                      2.74
 
   clock CLK (rise edge)                                                       2.50       2.50
   clock network delay (ideal)                                                 0.50       3.00
   clock uncertainty                                                          -0.15       2.85
-  dcache0_mem_wdata_r_reg_68_/CK (DFFHQX4)                                    0.00       2.85 r
-  library setup time                                                         -0.09       2.76
-  data required time                                                                     2.76
+  core0_id_stage0_register_file0_data_r_reg_25__24_/CK (DFFQXL)               0.00       2.85 r
+  library setup time                                                         -0.15       2.70
+  data required time                                                                     2.70
   ----------------------------------------------------------------------------------------------
-  data required time                                                                     2.76
-  data arrival time                                                                     -2.94
+  data required time                                                                     2.70
+  data arrival time                                                                     -2.74
   ----------------------------------------------------------------------------------------------
-  slack (VIOLATED)                                                                      -0.19
+  slack (VIOLATED)                                                                      -0.04
 
 
   Startpoint: rst_n (input port clocked by CLK)
-  Endpoint: dcache0_mem_wdata_r_reg_79_
+  Endpoint: core0_id_stage0_register_file0_data_r_reg_25__3_
             (rising edge-triggered flip-flop clocked by CLK)
   Path Group: CLK
   Path Type: max
@@ -1133,45 +356,741 @@ Wire Load Model Mode: top
   ----------------------------------------------------------------------------------------------
   clock CLK (rise edge)                                                       0.00       0.00
   clock network delay (ideal)                                                 0.50       0.50
-  input external delay                                                        1.50       2.00 f
-  rst_n (in)                                                        0.05      0.05       2.05 f
-  rst_n (net)                                   1         0.05                0.00       2.05 f
-  U4962/Y (INVX16)                                                  0.07      0.05       2.10 r
-  n6481 (net)                                   3         0.11                0.00       2.10 r
-  U5706/Y (INVX20)                                                  0.05      0.05       2.14 f
-  n8799 (net)                                   6         0.16                0.00       2.14 f
-  dcache0_U3502/Y (NAND2X8)                                         0.11      0.07       2.22 r
-  dcache0_n2356 (net)                           3         0.08                0.00       2.22 r
-  dcache0_U2684/Y (BUFX20)                                          0.09      0.11       2.32 r
-  dcache0_n841 (net)                            7         0.19                0.00       2.32 r
-  dcache0_U1135/Y (NOR2X8)                                          0.06      0.04       2.37 f
-  dcache0_n2363 (net)                           1         0.03                0.00       2.37 f
-  U14080/Y (NOR2X8)                                                 0.10      0.07       2.44 r
-  dcache0_n1599 (net)                           1         0.05                0.00       2.44 r
-  dcache0_U3331/Y (INVX16)                                          0.07      0.07       2.50 f
-  dcache0_n2390 (net)                           7         0.19                0.00       2.50 f
-  dcache0_U4467/Y (BUFX20)                                          0.09      0.12       2.62 f
-  dcache0_n7434 (net)                          19         0.32                0.00       2.62 f
-  dcache0_U2456/Y (AO22X4)                                          0.07      0.17       2.80 f
-  dcache0_n6977 (net)                           1         0.03                0.00       2.80 f
-  U18493/Y (NOR3X6)                                                 0.11      0.09       2.89 r
-  n11476 (net)                                  1         0.02                0.00       2.89 r
-  U18492/Y (NAND4X4)                                                0.08      0.05       2.94 f
-  dcache0_n9403 (net)                           1         0.01                0.00       2.94 f
-  dcache0_mem_wdata_r_reg_79_/D (DFFHQX4)                           0.08      0.00       2.94 f
-  data arrival time                                                                      2.94
+  input external delay                                                        1.50       2.00 r
+  rst_n (in)                                                        0.08      0.08       2.08 r
+  rst_n (net)                                   3         0.08                0.00       2.08 r
+  U5792/Y (INVX8)                                                   0.05      0.05       2.13 f
+  n7762 (net)                                   3         0.08                0.00       2.13 f
+  U12599/Y (BUFX20)                                                 0.04      0.08       2.21 f
+  icache0_n602 (net)                            2         0.09                0.00       2.21 f
+  U11207/Y (INVX20)                                                 0.04      0.03       2.24 r
+  core0_id_stage0_register_file0_n159 (net)     2         0.06                0.00       2.24 r
+  core0_id_stage0_register_file0_U1383/Y (NAND2X8)                  0.07      0.05       2.30 f
+  core0_id_stage0_register_file0_n88 (net)      2         0.07                0.00       2.30 f
+  U11240/Y (INVX20)                                                 0.09      0.07       2.37 r
+  core0_id_stage0_register_file0_n92 (net)      8         0.20                0.00       2.37 r
+  U13644/Y (NAND2X8)                                                0.07      0.06       2.43 f
+  core0_id_stage0_register_file0_n776 (net)     2         0.06                0.00       2.43 f
+  U13643/Y (INVX12)                                                 0.04      0.04       2.47 r
+  core0_id_stage0_register_file0_n64 (net)      1         0.03                0.00       2.47 r
+  U12391/Y (NOR2X8)                                                 0.05      0.04       2.51 f
+  core0_id_stage0_register_file0_n63 (net)      1         0.05                0.00       2.51 f
+  core0_id_stage0_register_file0_U1183/Y (INVX20)                   0.20      0.13       2.63 r
+  core0_id_stage0_register_file0_n829 (net)    32         0.45                0.00       2.63 r
+  core0_id_stage0_register_file0_U2337/Y (OAI22X1)                  0.14      0.10       2.74 f
+  core0_id_stage0_register_file0_n2799 (net)
+                                                1         0.01                0.00       2.74 f
+  core0_id_stage0_register_file0_data_r_reg_25__3_/D (DFFQXL)       0.14      0.00       2.74 f
+  data arrival time                                                                      2.74
 
   clock CLK (rise edge)                                                       2.50       2.50
   clock network delay (ideal)                                                 0.50       3.00
   clock uncertainty                                                          -0.15       2.85
-  dcache0_mem_wdata_r_reg_79_/CK (DFFHQX4)                                    0.00       2.85 r
+  core0_id_stage0_register_file0_data_r_reg_25__3_/CK (DFFQXL)                0.00       2.85 r
+  library setup time                                                         -0.15       2.70
+  data required time                                                                     2.70
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                     2.70
+  data arrival time                                                                     -2.74
+  ----------------------------------------------------------------------------------------------
+  slack (VIOLATED)                                                                      -0.04
+
+
+  Startpoint: rst_n (input port clocked by CLK)
+  Endpoint: core0_id_stage0_register_file0_data_r_reg_25__0_
+            (rising edge-triggered flip-flop clocked by CLK)
+  Path Group: CLK
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  CHIP               tsmc13_wl10           slow
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock CLK (rise edge)                                                       0.00       0.00
+  clock network delay (ideal)                                                 0.50       0.50
+  input external delay                                                        1.50       2.00 r
+  rst_n (in)                                                        0.08      0.08       2.08 r
+  rst_n (net)                                   3         0.08                0.00       2.08 r
+  U5792/Y (INVX8)                                                   0.05      0.05       2.13 f
+  n7762 (net)                                   3         0.08                0.00       2.13 f
+  U12599/Y (BUFX20)                                                 0.04      0.08       2.21 f
+  icache0_n602 (net)                            2         0.09                0.00       2.21 f
+  U11207/Y (INVX20)                                                 0.04      0.03       2.24 r
+  core0_id_stage0_register_file0_n159 (net)     2         0.06                0.00       2.24 r
+  core0_id_stage0_register_file0_U1383/Y (NAND2X8)                  0.07      0.05       2.30 f
+  core0_id_stage0_register_file0_n88 (net)      2         0.07                0.00       2.30 f
+  U11240/Y (INVX20)                                                 0.09      0.07       2.37 r
+  core0_id_stage0_register_file0_n92 (net)      8         0.20                0.00       2.37 r
+  U13644/Y (NAND2X8)                                                0.07      0.06       2.43 f
+  core0_id_stage0_register_file0_n776 (net)     2         0.06                0.00       2.43 f
+  U13643/Y (INVX12)                                                 0.04      0.04       2.47 r
+  core0_id_stage0_register_file0_n64 (net)      1         0.03                0.00       2.47 r
+  U12391/Y (NOR2X8)                                                 0.05      0.04       2.51 f
+  core0_id_stage0_register_file0_n63 (net)      1         0.05                0.00       2.51 f
+  core0_id_stage0_register_file0_U1183/Y (INVX20)                   0.20      0.13       2.63 r
+  core0_id_stage0_register_file0_n829 (net)    32         0.45                0.00       2.63 r
+  core0_id_stage0_register_file0_U2214/Y (OAI22X1)                  0.14      0.10       2.74 f
+  core0_id_stage0_register_file0_n2796 (net)
+                                                1         0.01                0.00       2.74 f
+  core0_id_stage0_register_file0_data_r_reg_25__0_/D (DFFQXL)       0.14      0.00       2.74 f
+  data arrival time                                                                      2.74
+
+  clock CLK (rise edge)                                                       2.50       2.50
+  clock network delay (ideal)                                                 0.50       3.00
+  clock uncertainty                                                          -0.15       2.85
+  core0_id_stage0_register_file0_data_r_reg_25__0_/CK (DFFQXL)                0.00       2.85 r
+  library setup time                                                         -0.15       2.70
+  data required time                                                                     2.70
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                     2.70
+  data arrival time                                                                     -2.74
+  ----------------------------------------------------------------------------------------------
+  slack (VIOLATED)                                                                      -0.04
+
+
+  Startpoint: rst_n (input port clocked by CLK)
+  Endpoint: core0_id_stage0_register_file0_data_r_reg_25__5_
+            (rising edge-triggered flip-flop clocked by CLK)
+  Path Group: CLK
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  CHIP               tsmc13_wl10           slow
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock CLK (rise edge)                                                       0.00       0.00
+  clock network delay (ideal)                                                 0.50       0.50
+  input external delay                                                        1.50       2.00 r
+  rst_n (in)                                                        0.08      0.08       2.08 r
+  rst_n (net)                                   3         0.08                0.00       2.08 r
+  U5792/Y (INVX8)                                                   0.05      0.05       2.13 f
+  n7762 (net)                                   3         0.08                0.00       2.13 f
+  U12599/Y (BUFX20)                                                 0.04      0.08       2.21 f
+  icache0_n602 (net)                            2         0.09                0.00       2.21 f
+  U11207/Y (INVX20)                                                 0.04      0.03       2.24 r
+  core0_id_stage0_register_file0_n159 (net)     2         0.06                0.00       2.24 r
+  core0_id_stage0_register_file0_U1383/Y (NAND2X8)                  0.07      0.05       2.30 f
+  core0_id_stage0_register_file0_n88 (net)      2         0.07                0.00       2.30 f
+  U11240/Y (INVX20)                                                 0.09      0.07       2.37 r
+  core0_id_stage0_register_file0_n92 (net)      8         0.20                0.00       2.37 r
+  U13644/Y (NAND2X8)                                                0.07      0.06       2.43 f
+  core0_id_stage0_register_file0_n776 (net)     2         0.06                0.00       2.43 f
+  U13643/Y (INVX12)                                                 0.04      0.04       2.47 r
+  core0_id_stage0_register_file0_n64 (net)      1         0.03                0.00       2.47 r
+  U12391/Y (NOR2X8)                                                 0.05      0.04       2.51 f
+  core0_id_stage0_register_file0_n63 (net)      1         0.05                0.00       2.51 f
+  core0_id_stage0_register_file0_U1183/Y (INVX20)                   0.20      0.13       2.63 r
+  core0_id_stage0_register_file0_n829 (net)    32         0.45                0.00       2.63 r
+  core0_id_stage0_register_file0_U2330/Y (OAI22X1)                  0.14      0.10       2.74 f
+  core0_id_stage0_register_file0_n2801 (net)
+                                                1         0.01                0.00       2.74 f
+  core0_id_stage0_register_file0_data_r_reg_25__5_/D (DFFQXL)       0.14      0.00       2.74 f
+  data arrival time                                                                      2.74
+
+  clock CLK (rise edge)                                                       2.50       2.50
+  clock network delay (ideal)                                                 0.50       3.00
+  clock uncertainty                                                          -0.15       2.85
+  core0_id_stage0_register_file0_data_r_reg_25__5_/CK (DFFQXL)                0.00       2.85 r
+  library setup time                                                         -0.15       2.70
+  data required time                                                                     2.70
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                     2.70
+  data arrival time                                                                     -2.74
+  ----------------------------------------------------------------------------------------------
+  slack (VIOLATED)                                                                      -0.04
+
+
+  Startpoint: rst_n (input port clocked by CLK)
+  Endpoint: core0_id_stage0_register_file0_data_r_reg_25__6_
+            (rising edge-triggered flip-flop clocked by CLK)
+  Path Group: CLK
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  CHIP               tsmc13_wl10           slow
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock CLK (rise edge)                                                       0.00       0.00
+  clock network delay (ideal)                                                 0.50       0.50
+  input external delay                                                        1.50       2.00 r
+  rst_n (in)                                                        0.08      0.08       2.08 r
+  rst_n (net)                                   3         0.08                0.00       2.08 r
+  U5792/Y (INVX8)                                                   0.05      0.05       2.13 f
+  n7762 (net)                                   3         0.08                0.00       2.13 f
+  U12599/Y (BUFX20)                                                 0.04      0.08       2.21 f
+  icache0_n602 (net)                            2         0.09                0.00       2.21 f
+  U11207/Y (INVX20)                                                 0.04      0.03       2.24 r
+  core0_id_stage0_register_file0_n159 (net)     2         0.06                0.00       2.24 r
+  core0_id_stage0_register_file0_U1383/Y (NAND2X8)                  0.07      0.05       2.30 f
+  core0_id_stage0_register_file0_n88 (net)      2         0.07                0.00       2.30 f
+  U11240/Y (INVX20)                                                 0.09      0.07       2.37 r
+  core0_id_stage0_register_file0_n92 (net)      8         0.20                0.00       2.37 r
+  U13644/Y (NAND2X8)                                                0.07      0.06       2.43 f
+  core0_id_stage0_register_file0_n776 (net)     2         0.06                0.00       2.43 f
+  U13643/Y (INVX12)                                                 0.04      0.04       2.47 r
+  core0_id_stage0_register_file0_n64 (net)      1         0.03                0.00       2.47 r
+  U12391/Y (NOR2X8)                                                 0.05      0.04       2.51 f
+  core0_id_stage0_register_file0_n63 (net)      1         0.05                0.00       2.51 f
+  core0_id_stage0_register_file0_U1183/Y (INVX20)                   0.20      0.13       2.63 r
+  core0_id_stage0_register_file0_n829 (net)    32         0.45                0.00       2.63 r
+  core0_id_stage0_register_file0_U2323/Y (OAI22X1)                  0.14      0.10       2.74 f
+  core0_id_stage0_register_file0_n2802 (net)
+                                                1         0.01                0.00       2.74 f
+  core0_id_stage0_register_file0_data_r_reg_25__6_/D (DFFQXL)       0.14      0.00       2.74 f
+  data arrival time                                                                      2.74
+
+  clock CLK (rise edge)                                                       2.50       2.50
+  clock network delay (ideal)                                                 0.50       3.00
+  clock uncertainty                                                          -0.15       2.85
+  core0_id_stage0_register_file0_data_r_reg_25__6_/CK (DFFQXL)                0.00       2.85 r
+  library setup time                                                         -0.15       2.70
+  data required time                                                                     2.70
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                     2.70
+  data arrival time                                                                     -2.74
+  ----------------------------------------------------------------------------------------------
+  slack (VIOLATED)                                                                      -0.04
+
+
+  Startpoint: rst_n (input port clocked by CLK)
+  Endpoint: core0_id_stage0_register_file0_data_r_reg_25__2_
+            (rising edge-triggered flip-flop clocked by CLK)
+  Path Group: CLK
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  CHIP               tsmc13_wl10           slow
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock CLK (rise edge)                                                       0.00       0.00
+  clock network delay (ideal)                                                 0.50       0.50
+  input external delay                                                        1.50       2.00 r
+  rst_n (in)                                                        0.08      0.08       2.08 r
+  rst_n (net)                                   3         0.08                0.00       2.08 r
+  U5792/Y (INVX8)                                                   0.05      0.05       2.13 f
+  n7762 (net)                                   3         0.08                0.00       2.13 f
+  U12599/Y (BUFX20)                                                 0.04      0.08       2.21 f
+  icache0_n602 (net)                            2         0.09                0.00       2.21 f
+  U11207/Y (INVX20)                                                 0.04      0.03       2.24 r
+  core0_id_stage0_register_file0_n159 (net)     2         0.06                0.00       2.24 r
+  core0_id_stage0_register_file0_U1383/Y (NAND2X8)                  0.07      0.05       2.30 f
+  core0_id_stage0_register_file0_n88 (net)      2         0.07                0.00       2.30 f
+  U11240/Y (INVX20)                                                 0.09      0.07       2.37 r
+  core0_id_stage0_register_file0_n92 (net)      8         0.20                0.00       2.37 r
+  U13644/Y (NAND2X8)                                                0.07      0.06       2.43 f
+  core0_id_stage0_register_file0_n776 (net)     2         0.06                0.00       2.43 f
+  U13643/Y (INVX12)                                                 0.04      0.04       2.47 r
+  core0_id_stage0_register_file0_n64 (net)      1         0.03                0.00       2.47 r
+  U12391/Y (NOR2X8)                                                 0.05      0.04       2.51 f
+  core0_id_stage0_register_file0_n63 (net)      1         0.05                0.00       2.51 f
+  core0_id_stage0_register_file0_U1183/Y (INVX20)                   0.20      0.13       2.63 r
+  core0_id_stage0_register_file0_n829 (net)    32         0.45                0.00       2.63 r
+  core0_id_stage0_register_file0_U2279/Y (OAI22X1)                  0.14      0.10       2.74 f
+  core0_id_stage0_register_file0_n2798 (net)
+                                                1         0.01                0.00       2.74 f
+  core0_id_stage0_register_file0_data_r_reg_25__2_/D (DFFQXL)       0.14      0.00       2.74 f
+  data arrival time                                                                      2.74
+
+  clock CLK (rise edge)                                                       2.50       2.50
+  clock network delay (ideal)                                                 0.50       3.00
+  clock uncertainty                                                          -0.15       2.85
+  core0_id_stage0_register_file0_data_r_reg_25__2_/CK (DFFQXL)                0.00       2.85 r
+  library setup time                                                         -0.15       2.70
+  data required time                                                                     2.70
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                     2.70
+  data arrival time                                                                     -2.74
+  ----------------------------------------------------------------------------------------------
+  slack (VIOLATED)                                                                      -0.04
+
+
+  Startpoint: rst_n (input port clocked by CLK)
+  Endpoint: core0_id_stage0_register_file0_data_r_reg_25__7_
+            (rising edge-triggered flip-flop clocked by CLK)
+  Path Group: CLK
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  CHIP               tsmc13_wl10           slow
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock CLK (rise edge)                                                       0.00       0.00
+  clock network delay (ideal)                                                 0.50       0.50
+  input external delay                                                        1.50       2.00 r
+  rst_n (in)                                                        0.08      0.08       2.08 r
+  rst_n (net)                                   3         0.08                0.00       2.08 r
+  U5792/Y (INVX8)                                                   0.05      0.05       2.13 f
+  n7762 (net)                                   3         0.08                0.00       2.13 f
+  U12599/Y (BUFX20)                                                 0.04      0.08       2.21 f
+  icache0_n602 (net)                            2         0.09                0.00       2.21 f
+  U11207/Y (INVX20)                                                 0.04      0.03       2.24 r
+  core0_id_stage0_register_file0_n159 (net)     2         0.06                0.00       2.24 r
+  core0_id_stage0_register_file0_U1383/Y (NAND2X8)                  0.07      0.05       2.30 f
+  core0_id_stage0_register_file0_n88 (net)      2         0.07                0.00       2.30 f
+  U11240/Y (INVX20)                                                 0.09      0.07       2.37 r
+  core0_id_stage0_register_file0_n92 (net)      8         0.20                0.00       2.37 r
+  U13644/Y (NAND2X8)                                                0.07      0.06       2.43 f
+  core0_id_stage0_register_file0_n776 (net)     2         0.06                0.00       2.43 f
+  U13643/Y (INVX12)                                                 0.04      0.04       2.47 r
+  core0_id_stage0_register_file0_n64 (net)      1         0.03                0.00       2.47 r
+  U12391/Y (NOR2X8)                                                 0.05      0.04       2.51 f
+  core0_id_stage0_register_file0_n63 (net)      1         0.05                0.00       2.51 f
+  core0_id_stage0_register_file0_U1183/Y (INVX20)                   0.20      0.13       2.63 r
+  core0_id_stage0_register_file0_n829 (net)    32         0.45                0.00       2.63 r
+  core0_id_stage0_register_file0_U2315/Y (OAI22X1)                  0.14      0.10       2.74 f
+  core0_id_stage0_register_file0_n2803 (net)
+                                                1         0.01                0.00       2.74 f
+  core0_id_stage0_register_file0_data_r_reg_25__7_/D (DFFQXL)       0.14      0.00       2.74 f
+  data arrival time                                                                      2.74
+
+  clock CLK (rise edge)                                                       2.50       2.50
+  clock network delay (ideal)                                                 0.50       3.00
+  clock uncertainty                                                          -0.15       2.85
+  core0_id_stage0_register_file0_data_r_reg_25__7_/CK (DFFQXL)                0.00       2.85 r
+  library setup time                                                         -0.15       2.70
+  data required time                                                                     2.70
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                     2.70
+  data arrival time                                                                     -2.74
+  ----------------------------------------------------------------------------------------------
+  slack (VIOLATED)                                                                      -0.04
+
+
+  Startpoint: rst_n (input port clocked by CLK)
+  Endpoint: icache0_data_reg_2__40_
+            (rising edge-triggered flip-flop clocked by CLK)
+  Path Group: CLK
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  CHIP               tsmc13_wl10           slow
+
+  Point                        Fanout       Cap     Trans      Incr       Path
+  -------------------------------------------------------------------------------
+  clock CLK (rise edge)                                        0.00       0.00
+  clock network delay (ideal)                                  0.50       0.50
+  input external delay                                         1.50       2.00 f
+  rst_n (in)                                         0.08      0.08       2.08 f
+  rst_n (net)                    3         0.08                0.00       2.08 f
+  U16491/Y (NAND2X8)                                 0.12      0.09       2.17 r
+  icache0_n1736 (net)            2         0.09                0.00       2.17 r
+  U11128/Y (CLKINVX16)                               0.08      0.08       2.25 f
+  n11663 (net)                  10         0.23                0.00       2.25 f
+  icache0_U3042/Y (NAND2X8)                          0.12      0.09       2.33 r
+  icache0_n547 (net)             3         0.08                0.00       2.33 r
+  icache0_U3516/Y (OR2X8)                            0.09      0.11       2.44 r
+  icache0_n521 (net)             1         0.06                0.00       2.44 r
+  icache0_U3515/Y (CLKINVX16)                        0.09      0.08       2.53 f
+  icache0_n2509 (net)           10         0.29                0.00       2.53 f
+  U12108/Y (BUFX20)                                  0.12      0.15       2.67 f
+  icache0_n2109 (net)           19         0.45                0.00       2.67 f
+  U15000/Y (OAI21X2)                                 0.15      0.13       2.80 r
+  icache0_n5670 (net)            1         0.01                0.00       2.80 r
+  icache0_data_reg_2__40_/D (DFFHQX4)                0.15      0.00       2.80 r
+  data arrival time                                                       2.80
+
+  clock CLK (rise edge)                                        2.50       2.50
+  clock network delay (ideal)                                  0.50       3.00
+  clock uncertainty                                           -0.15       2.85
+  icache0_data_reg_2__40_/CK (DFFHQX4)                         0.00       2.85 r
+  library setup time                                          -0.09       2.76
+  data required time                                                      2.76
+  -------------------------------------------------------------------------------
+  data required time                                                      2.76
+  data arrival time                                                      -2.80
+  -------------------------------------------------------------------------------
+  slack (VIOLATED)                                                       -0.04
+
+
+  Startpoint: rst_n (input port clocked by CLK)
+  Endpoint: icache0_data_reg_2__67_
+            (rising edge-triggered flip-flop clocked by CLK)
+  Path Group: CLK
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  CHIP               tsmc13_wl10           slow
+
+  Point                        Fanout       Cap     Trans      Incr       Path
+  -------------------------------------------------------------------------------
+  clock CLK (rise edge)                                        0.00       0.00
+  clock network delay (ideal)                                  0.50       0.50
+  input external delay                                         1.50       2.00 f
+  rst_n (in)                                         0.08      0.08       2.08 f
+  rst_n (net)                    3         0.08                0.00       2.08 f
+  U16491/Y (NAND2X8)                                 0.12      0.09       2.17 r
+  icache0_n1736 (net)            2         0.09                0.00       2.17 r
+  U11128/Y (CLKINVX16)                               0.08      0.08       2.25 f
+  n11663 (net)                  10         0.23                0.00       2.25 f
+  icache0_U3042/Y (NAND2X8)                          0.12      0.09       2.33 r
+  icache0_n547 (net)             3         0.08                0.00       2.33 r
+  icache0_U3516/Y (OR2X8)                            0.09      0.11       2.44 r
+  icache0_n521 (net)             1         0.06                0.00       2.44 r
+  icache0_U3515/Y (CLKINVX16)                        0.09      0.08       2.53 f
+  icache0_n2509 (net)           10         0.29                0.00       2.53 f
+  U12108/Y (BUFX20)                                  0.12      0.15       2.67 f
+  icache0_n2109 (net)           19         0.45                0.00       2.67 f
+  U16400/Y (NAND2X4)                                 0.10      0.07       2.74 r
+  n11911 (net)                   1         0.02                0.00       2.74 r
+  U14233/Y (OAI21X4)                                 0.07      0.05       2.79 f
+  icache0_n6129 (net)            1         0.01                0.00       2.79 f
+  icache0_data_reg_2__67_/D (DFFHQX4)                0.07      0.00       2.79 f
+  data arrival time                                                       2.79
+
+  clock CLK (rise edge)                                        2.50       2.50
+  clock network delay (ideal)                                  0.50       3.00
+  clock uncertainty                                           -0.15       2.85
+  icache0_data_reg_2__67_/CK (DFFHQX4)                         0.00       2.85 r
+  library setup time                                          -0.10       2.75
+  data required time                                                      2.75
+  -------------------------------------------------------------------------------
+  data required time                                                      2.75
+  data arrival time                                                      -2.79
+  -------------------------------------------------------------------------------
+  slack (VIOLATED)                                                       -0.04
+
+
+  Startpoint: core0_ex_stage0_mul_a_reg_reg_21_
+              (rising edge-triggered flip-flop clocked by CLK)
+  Endpoint: core0_ex_stage0_mul_result_reg_reg_31_
+            (rising edge-triggered flip-flop clocked by CLK)
+  Path Group: CLK
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  CHIP               tsmc13_wl10           slow
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock CLK (rise edge)                                                       0.00       0.00
+  clock network delay (ideal)                                                 0.50       0.50
+  core0_ex_stage0_mul_a_reg_reg_21_/CK (DFFHQX8)                    0.00      0.00 #     0.50 r
+  core0_ex_stage0_mul_a_reg_reg_21_/Q (DFFHQX8)                     0.10      0.16       0.66 r
+  core0_ex_stage0_mul_a_reg[21] (net)           4         0.08                0.00       0.66 r
+  U6158/Y (XNOR2X4)                                                 0.11      0.14       0.80 f
+  n6140 (net)                                   2         0.05                0.00       0.80 f
+  U7946/Y (BUFX8)                                                   0.14      0.17       0.96 f
+  n6679 (net)                                  11         0.21                0.00       0.96 f
+  U4127/Y (OAI22X2)                                                 0.29      0.20       1.17 r
+  n6339 (net)                                   1         0.03                0.00       1.17 r
+  U8071/CO (ADDFHX2)                                                0.09      0.20       1.37 r
+  n6369 (net)                                   1         0.02                0.00       1.37 r
+  U8084/CO (ADDFHX2)                                                0.18      0.30       1.67 r
+  n6525 (net)                                   1         0.04                0.00       1.67 r
+  U8129/S (ADDFHX4)                                                 0.07      0.22       1.89 f
+  n6497 (net)                                   1         0.04                0.00       1.89 f
+  U8116/CO (ADDFHX4)                                                0.08      0.19       2.07 f
+  n6764 (net)                                   3         0.05                0.00       2.07 f
+  U16259/Y (XNOR2X4)                                                0.16      0.11       2.18 r
+  n11845 (net)                                  1         0.02                0.00       2.18 r
+  U16258/Y (XNOR2X4)                                                0.10      0.12       2.30 f
+  n6610 (net)                                   2         0.03                0.00       2.30 f
+  U6480/Y (NAND2X2)                                                 0.17      0.13       2.43 r
+  n7192 (net)                                   2         0.03                0.00       2.43 r
+  U3074/Y (AND2X4)                                                  0.06      0.11       2.54 r
+  n3504 (net)                                   1         0.02                0.00       2.54 r
+  U5949/Y (OAI2BB1X4)                                               0.06      0.05       2.59 f
+  n3904 (net)                                   1         0.02                0.00       2.59 f
+  U14722/Y (INVX6)                                                  0.07      0.06       2.64 r
+  n3903 (net)                                   2         0.04                0.00       2.64 r
+  U14703/Y (NAND2X4)                                                0.06      0.05       2.69 f
+  n10058 (net)                                  1         0.03                0.00       2.69 f
+  U12470/Y (NAND3X6)                                                0.07      0.05       2.74 r
+  n11406 (net)                                  1         0.02                0.00       2.74 r
+  U12801/Y (NAND3X2)                                                0.07      0.05       2.79 f
+  n2687 (net)                                   1         0.01                0.00       2.79 f
+  core0_ex_stage0_mul_result_reg_reg_31_/D (DFFHQX4)                0.07      0.00       2.79 f
+  data arrival time                                                                      2.79
+
+  clock CLK (rise edge)                                                       2.50       2.50
+  clock network delay (ideal)                                                 0.50       3.00
+  clock uncertainty                                                          -0.15       2.85
+  core0_ex_stage0_mul_result_reg_reg_31_/CK (DFFHQX4)                         0.00       2.85 r
   library setup time                                                         -0.10       2.75
   data required time                                                                     2.75
   ----------------------------------------------------------------------------------------------
   data required time                                                                     2.75
-  data arrival time                                                                     -2.94
+  data arrival time                                                                     -2.79
   ----------------------------------------------------------------------------------------------
-  slack (VIOLATED)                                                                      -0.19
+  slack (VIOLATED)                                                                      -0.04
+
+
+  Startpoint: rst_n (input port clocked by CLK)
+  Endpoint: core0_id_stage0_register_file0_data_r_reg_29__31_
+            (rising edge-triggered flip-flop clocked by CLK)
+  Path Group: CLK
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  CHIP               tsmc13_wl10           slow
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock CLK (rise edge)                                                       0.00       0.00
+  clock network delay (ideal)                                                 0.50       0.50
+  input external delay                                                        1.50       2.00 r
+  rst_n (in)                                                        0.08      0.08       2.08 r
+  rst_n (net)                                   3         0.08                0.00       2.08 r
+  U5792/Y (INVX8)                                                   0.05      0.05       2.13 f
+  n7762 (net)                                   3         0.08                0.00       2.13 f
+  U12599/Y (BUFX20)                                                 0.04      0.08       2.21 f
+  icache0_n602 (net)                            2         0.09                0.00       2.21 f
+  U11207/Y (INVX20)                                                 0.04      0.03       2.24 r
+  core0_id_stage0_register_file0_n159 (net)     2         0.06                0.00       2.24 r
+  core0_id_stage0_register_file0_U1383/Y (NAND2X8)                  0.07      0.05       2.30 f
+  core0_id_stage0_register_file0_n88 (net)      2         0.07                0.00       2.30 f
+  U11240/Y (INVX20)                                                 0.09      0.07       2.37 r
+  core0_id_stage0_register_file0_n92 (net)      8         0.20                0.00       2.37 r
+  U11171/Y (NAND2X8)                                                0.07      0.05       2.42 f
+  core0_id_stage0_register_file0_n961 (net)     2         0.05                0.00       2.42 f
+  U15262/Y (INVX8)                                                  0.05      0.05       2.47 r
+  n10133 (net)                                  1         0.03                0.00       2.47 r
+  U12414/Y (NOR2X8)                                                 0.05      0.04       2.51 f
+  core0_id_stage0_register_file0_n60 (net)      1         0.05                0.00       2.51 f
+  core0_id_stage0_register_file0_U1180/Y (INVX20)                   0.19      0.12       2.63 r
+  core0_id_stage0_register_file0_n995 (net)    32         0.42                0.00       2.63 r
+  U10273/Y (OAI22X1)                                                0.17      0.10       2.73 f
+  core0_id_stage0_register_file0_n2699 (net)
+                                                1         0.01                0.00       2.73 f
+  core0_id_stage0_register_file0_data_r_reg_29__31_/D (DFFQXL)      0.17      0.00       2.73 f
+  data arrival time                                                                      2.73
+
+  clock CLK (rise edge)                                                       2.50       2.50
+  clock network delay (ideal)                                                 0.50       3.00
+  clock uncertainty                                                          -0.15       2.85
+  core0_id_stage0_register_file0_data_r_reg_29__31_/CK (DFFQXL)               0.00       2.85 r
+  library setup time                                                         -0.16       2.69
+  data required time                                                                     2.69
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                     2.69
+  data arrival time                                                                     -2.73
+  ----------------------------------------------------------------------------------------------
+  slack (VIOLATED)                                                                      -0.04
+
+
+  Startpoint: rst_n (input port clocked by CLK)
+  Endpoint: core0_id_stage0_register_file0_data_r_reg_29__8_
+            (rising edge-triggered flip-flop clocked by CLK)
+  Path Group: CLK
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  CHIP               tsmc13_wl10           slow
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock CLK (rise edge)                                                       0.00       0.00
+  clock network delay (ideal)                                                 0.50       0.50
+  input external delay                                                        1.50       2.00 r
+  rst_n (in)                                                        0.08      0.08       2.08 r
+  rst_n (net)                                   3         0.08                0.00       2.08 r
+  U5792/Y (INVX8)                                                   0.05      0.05       2.13 f
+  n7762 (net)                                   3         0.08                0.00       2.13 f
+  U12599/Y (BUFX20)                                                 0.04      0.08       2.21 f
+  icache0_n602 (net)                            2         0.09                0.00       2.21 f
+  U11207/Y (INVX20)                                                 0.04      0.03       2.24 r
+  core0_id_stage0_register_file0_n159 (net)     2         0.06                0.00       2.24 r
+  core0_id_stage0_register_file0_U1383/Y (NAND2X8)                  0.07      0.05       2.30 f
+  core0_id_stage0_register_file0_n88 (net)      2         0.07                0.00       2.30 f
+  U11240/Y (INVX20)                                                 0.09      0.07       2.37 r
+  core0_id_stage0_register_file0_n92 (net)      8         0.20                0.00       2.37 r
+  U11171/Y (NAND2X8)                                                0.07      0.05       2.42 f
+  core0_id_stage0_register_file0_n961 (net)     2         0.05                0.00       2.42 f
+  U15262/Y (INVX8)                                                  0.05      0.05       2.47 r
+  n10133 (net)                                  1         0.03                0.00       2.47 r
+  U12414/Y (NOR2X8)                                                 0.05      0.04       2.51 f
+  core0_id_stage0_register_file0_n60 (net)      1         0.05                0.00       2.51 f
+  core0_id_stage0_register_file0_U1180/Y (INVX20)                   0.19      0.12       2.63 r
+  core0_id_stage0_register_file0_n995 (net)    32         0.42                0.00       2.63 r
+  U10275/Y (OAI22X1)                                                0.16      0.10       2.73 f
+  core0_id_stage0_register_file0_n2676 (net)
+                                                1         0.01                0.00       2.73 f
+  core0_id_stage0_register_file0_data_r_reg_29__8_/D (DFFQXL)       0.16      0.00       2.73 f
+  data arrival time                                                                      2.73
+
+  clock CLK (rise edge)                                                       2.50       2.50
+  clock network delay (ideal)                                                 0.50       3.00
+  clock uncertainty                                                          -0.15       2.85
+  core0_id_stage0_register_file0_data_r_reg_29__8_/CK (DFFQXL)                0.00       2.85 r
+  library setup time                                                         -0.16       2.69
+  data required time                                                                     2.69
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                     2.69
+  data arrival time                                                                     -2.73
+  ----------------------------------------------------------------------------------------------
+  slack (VIOLATED)                                                                      -0.04
+
+
+  Startpoint: rst_n (input port clocked by CLK)
+  Endpoint: core0_id_stage0_register_file0_data_r_reg_29__4_
+            (rising edge-triggered flip-flop clocked by CLK)
+  Path Group: CLK
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  CHIP               tsmc13_wl10           slow
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock CLK (rise edge)                                                       0.00       0.00
+  clock network delay (ideal)                                                 0.50       0.50
+  input external delay                                                        1.50       2.00 r
+  rst_n (in)                                                        0.08      0.08       2.08 r
+  rst_n (net)                                   3         0.08                0.00       2.08 r
+  U5792/Y (INVX8)                                                   0.05      0.05       2.13 f
+  n7762 (net)                                   3         0.08                0.00       2.13 f
+  U12599/Y (BUFX20)                                                 0.04      0.08       2.21 f
+  icache0_n602 (net)                            2         0.09                0.00       2.21 f
+  U11207/Y (INVX20)                                                 0.04      0.03       2.24 r
+  core0_id_stage0_register_file0_n159 (net)     2         0.06                0.00       2.24 r
+  core0_id_stage0_register_file0_U1383/Y (NAND2X8)                  0.07      0.05       2.30 f
+  core0_id_stage0_register_file0_n88 (net)      2         0.07                0.00       2.30 f
+  U11240/Y (INVX20)                                                 0.09      0.07       2.37 r
+  core0_id_stage0_register_file0_n92 (net)      8         0.20                0.00       2.37 r
+  U11171/Y (NAND2X8)                                                0.07      0.05       2.42 f
+  core0_id_stage0_register_file0_n961 (net)     2         0.05                0.00       2.42 f
+  U15262/Y (INVX8)                                                  0.05      0.05       2.47 r
+  n10133 (net)                                  1         0.03                0.00       2.47 r
+  U12414/Y (NOR2X8)                                                 0.05      0.04       2.51 f
+  core0_id_stage0_register_file0_n60 (net)      1         0.05                0.00       2.51 f
+  core0_id_stage0_register_file0_U1180/Y (INVX20)                   0.19      0.12       2.63 r
+  core0_id_stage0_register_file0_n995 (net)    32         0.42                0.00       2.63 r
+  U10277/Y (OAI22X1)                                                0.16      0.10       2.73 f
+  core0_id_stage0_register_file0_n2672 (net)
+                                                1         0.01                0.00       2.73 f
+  core0_id_stage0_register_file0_data_r_reg_29__4_/D (DFFQXL)       0.16      0.00       2.73 f
+  data arrival time                                                                      2.73
+
+  clock CLK (rise edge)                                                       2.50       2.50
+  clock network delay (ideal)                                                 0.50       3.00
+  clock uncertainty                                                          -0.15       2.85
+  core0_id_stage0_register_file0_data_r_reg_29__4_/CK (DFFQXL)                0.00       2.85 r
+  library setup time                                                         -0.16       2.69
+  data required time                                                                     2.69
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                     2.69
+  data arrival time                                                                     -2.73
+  ----------------------------------------------------------------------------------------------
+  slack (VIOLATED)                                                                      -0.04
+
+
+  Startpoint: rst_n (input port clocked by CLK)
+  Endpoint: core0_id_stage0_register_file0_data_r_reg_29__29_
+            (rising edge-triggered flip-flop clocked by CLK)
+  Path Group: CLK
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  CHIP               tsmc13_wl10           slow
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock CLK (rise edge)                                                       0.00       0.00
+  clock network delay (ideal)                                                 0.50       0.50
+  input external delay                                                        1.50       2.00 r
+  rst_n (in)                                                        0.08      0.08       2.08 r
+  rst_n (net)                                   3         0.08                0.00       2.08 r
+  U5792/Y (INVX8)                                                   0.05      0.05       2.13 f
+  n7762 (net)                                   3         0.08                0.00       2.13 f
+  U12599/Y (BUFX20)                                                 0.04      0.08       2.21 f
+  icache0_n602 (net)                            2         0.09                0.00       2.21 f
+  U11207/Y (INVX20)                                                 0.04      0.03       2.24 r
+  core0_id_stage0_register_file0_n159 (net)     2         0.06                0.00       2.24 r
+  core0_id_stage0_register_file0_U1383/Y (NAND2X8)                  0.07      0.05       2.30 f
+  core0_id_stage0_register_file0_n88 (net)      2         0.07                0.00       2.30 f
+  U11240/Y (INVX20)                                                 0.09      0.07       2.37 r
+  core0_id_stage0_register_file0_n92 (net)      8         0.20                0.00       2.37 r
+  U11171/Y (NAND2X8)                                                0.07      0.05       2.42 f
+  core0_id_stage0_register_file0_n961 (net)     2         0.05                0.00       2.42 f
+  U15262/Y (INVX8)                                                  0.05      0.05       2.47 r
+  n10133 (net)                                  1         0.03                0.00       2.47 r
+  U12414/Y (NOR2X8)                                                 0.05      0.04       2.51 f
+  core0_id_stage0_register_file0_n60 (net)      1         0.05                0.00       2.51 f
+  core0_id_stage0_register_file0_U1180/Y (INVX20)                   0.19      0.12       2.63 r
+  core0_id_stage0_register_file0_n995 (net)    32         0.42                0.00       2.63 r
+  U10276/Y (OAI22X1)                                                0.16      0.10       2.73 f
+  core0_id_stage0_register_file0_n2697 (net)
+                                                1         0.01                0.00       2.73 f
+  core0_id_stage0_register_file0_data_r_reg_29__29_/D (DFFQXL)      0.16      0.00       2.73 f
+  data arrival time                                                                      2.73
+
+  clock CLK (rise edge)                                                       2.50       2.50
+  clock network delay (ideal)                                                 0.50       3.00
+  clock uncertainty                                                          -0.15       2.85
+  core0_id_stage0_register_file0_data_r_reg_29__29_/CK (DFFQXL)               0.00       2.85 r
+  library setup time                                                         -0.16       2.69
+  data required time                                                                     2.69
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                     2.69
+  data arrival time                                                                     -2.73
+  ----------------------------------------------------------------------------------------------
+  slack (VIOLATED)                                                                      -0.04
+
+
+  Startpoint: rst_n (input port clocked by CLK)
+  Endpoint: icache0_data_reg_2__38_
+            (rising edge-triggered flip-flop clocked by CLK)
+  Path Group: CLK
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  CHIP               tsmc13_wl10           slow
+
+  Point                        Fanout       Cap     Trans      Incr       Path
+  -------------------------------------------------------------------------------
+  clock CLK (rise edge)                                        0.00       0.00
+  clock network delay (ideal)                                  0.50       0.50
+  input external delay                                         1.50       2.00 f
+  rst_n (in)                                         0.08      0.08       2.08 f
+  rst_n (net)                    3         0.08                0.00       2.08 f
+  U16491/Y (NAND2X8)                                 0.12      0.09       2.17 r
+  icache0_n1736 (net)            2         0.09                0.00       2.17 r
+  U11128/Y (CLKINVX16)                               0.08      0.08       2.25 f
+  n11663 (net)                  10         0.23                0.00       2.25 f
+  icache0_U3042/Y (NAND2X8)                          0.12      0.09       2.33 r
+  icache0_n547 (net)             3         0.08                0.00       2.33 r
+  icache0_U3516/Y (OR2X8)                            0.09      0.11       2.44 r
+  icache0_n521 (net)             1         0.06                0.00       2.44 r
+  icache0_U3515/Y (CLKINVX16)                        0.09      0.08       2.53 f
+  icache0_n2509 (net)           10         0.29                0.00       2.53 f
+  icache0_U3190/Y (BUFX20)                           0.11      0.14       2.67 f
+  icache0_n2222 (net)           18         0.41                0.00       2.67 f
+  U10406/Y (NAND2X2)                                 0.12      0.09       2.75 r
+  n10502 (net)                   1         0.02                0.00       2.75 r
+  U12380/Y (OAI2BB1X4)                               0.05      0.05       2.80 f
+  icache0_n5636 (net)            1         0.01                0.00       2.80 f
+  icache0_data_reg_2__38_/D (DFFHQX4)                0.05      0.00       2.80 f
+  data arrival time                                                       2.80
+
+  clock CLK (rise edge)                                        2.50       2.50
+  clock network delay (ideal)                                  0.50       3.00
+  clock uncertainty                                           -0.15       2.85
+  icache0_data_reg_2__38_/CK (DFFHQX4)                         0.00       2.85 r
+  library setup time                                          -0.09       2.76
+  data required time                                                      2.76
+  -------------------------------------------------------------------------------
+  data required time                                                      2.76
+  data arrival time                                                      -2.80
+  -------------------------------------------------------------------------------
+  slack (VIOLATED)                                                       -0.04
 
 
 1

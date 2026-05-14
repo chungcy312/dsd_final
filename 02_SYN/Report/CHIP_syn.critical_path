@@ -10,7 +10,7 @@ Report : timing
         -capacitance
 Design : CHIP
 Version: U-2022.12
-Date   : Wed May 13 15:29:48 2026
+Date   : Thu May 14 02:50:50 2026
 ****************************************
 
  # A fanout number of 1000 was used for high fanout net computations.
@@ -19,7 +19,7 @@ Operating Conditions: slow   Library: slow
 Wire Load Model Mode: top
 
   Startpoint: rst_n (input port clocked by CLK)
-  Endpoint: dcache0_mem_wdata_r_reg_127_
+  Endpoint: core0_id_stage0_register_file0_data_r_reg_25__26_
             (rising edge-triggered flip-flop clocked by CLK)
   Path Group: CLK
   Path Type: max
@@ -32,62 +32,54 @@ Wire Load Model Mode: top
   ----------------------------------------------------------------------------------------------
   clock CLK (rise edge)                                                       0.00       0.00
   clock network delay (ideal)                                                 0.50       0.50
-  input external delay                                                        1.50       2.00 f
-  rst_n (in)                                                        0.05      0.05       2.05 f
-  rst_n (net)                                   1         0.05                0.00       2.05 f
-  U4962/A (INVX16)                                                  0.05      0.00       2.05 f
-  U4962/Y (INVX16)                                                  0.07      0.05       2.10 r
-  n6481 (net)                                   3         0.11                0.00       2.10 r
-  U5706/A (INVX20)                                                  0.07      0.00       2.10 r
-  U5706/Y (INVX20)                                                  0.05      0.05       2.14 f
-  n8799 (net)                                   6         0.16                0.00       2.14 f
-  dcache0_U3532/A (NAND2X8)                                         0.05      0.00       2.14 f
-  dcache0_U3532/Y (NAND2X8)                                         0.11      0.07       2.22 r
-  dcache0_n2358 (net)                           3         0.08                0.00       2.22 r
-  dcache0_U4441/A (BUFX20)                                          0.11      0.00       2.22 r
-  dcache0_U4441/Y (BUFX20)                                          0.10      0.11       2.33 r
-  dcache0_n2368 (net)                           8         0.22                0.00       2.33 r
-  dcache0_U1753/A (NOR2X8)                                          0.10      0.00       2.33 r
-  dcache0_U1753/Y (NOR2X8)                                          0.05      0.04       2.37 f
-  dcache0_n2354 (net)                           1         0.03                0.00       2.37 f
-  U17599/A (NOR2X8)                                                 0.05      0.00       2.37 f
-  U17599/Y (NOR2X8)                                                 0.10      0.07       2.44 r
-  n11365 (net)                                  1         0.05                0.00       2.44 r
-  U17829/A (INVX16)                                                 0.10      0.00       2.44 r
-  U17829/Y (INVX16)                                                 0.06      0.06       2.50 f
-  dcache0_n6912 (net)                           4         0.16                0.00       2.50 f
-  dcache0_U2201/A (BUFX20)                                          0.06      0.00       2.50 f
-  dcache0_U2201/Y (BUFX20)                                          0.10      0.13       2.63 f
-  dcache0_n7566 (net)                          22         0.39                0.00       2.63 f
-  U3893/A (CLKAND2X12)                                              0.10      0.00       2.63 f
-  U3893/Y (CLKAND2X12)                                              0.04      0.09       2.73 f
-  n10090 (net)                                  1         0.03                0.00       2.73 f
-  U17600/A (NOR2X8)                                                 0.04      0.00       2.73 f
-  U17600/Y (NOR2X8)                                                 0.07      0.05       2.78 r
-  dcache0_n77 (net)                             1         0.03                0.00       2.78 r
-  U13917/A (NAND2X6)                                                0.07      0.00       2.78 r
-  U13917/Y (NAND2X6)                                                0.06      0.04       2.82 f
-  dcache0_n599 (net)                            1         0.03                0.00       2.82 f
-  U15010/A (NOR3X6)                                                 0.06      0.00       2.82 f
-  U15010/Y (NOR3X6)                                                 0.11      0.07       2.89 r
-  n9349 (net)                                   1         0.02                0.00       2.89 r
-  U15009/A (NAND4X4)                                                0.11      0.00       2.89 r
-  U15009/Y (NAND4X4)                                                0.07      0.05       2.94 f
-  dcache0_n8587 (net)                           1         0.01                0.00       2.94 f
-  dcache0_mem_wdata_r_reg_127_/D (DFFHQX4)                          0.07      0.00       2.94 f
-  data arrival time                                                                      2.94
+  input external delay                                                        1.50       2.00 r
+  rst_n (in)                                                        0.08      0.08       2.08 r
+  rst_n (net)                                   3         0.08                0.00       2.08 r
+  U5792/A (INVX8)                                                   0.08      0.00       2.08 r
+  U5792/Y (INVX8)                                                   0.05      0.05       2.13 f
+  n7762 (net)                                   3         0.08                0.00       2.13 f
+  U12599/A (BUFX20)                                                 0.05      0.00       2.13 f
+  U12599/Y (BUFX20)                                                 0.04      0.08       2.21 f
+  icache0_n602 (net)                            2         0.09                0.00       2.21 f
+  U11207/A (INVX20)                                                 0.04      0.00       2.21 f
+  U11207/Y (INVX20)                                                 0.04      0.03       2.24 r
+  core0_id_stage0_register_file0_n159 (net)     2         0.06                0.00       2.24 r
+  core0_id_stage0_register_file0_U1383/A (NAND2X8)                  0.04      0.00       2.24 r
+  core0_id_stage0_register_file0_U1383/Y (NAND2X8)                  0.07      0.05       2.30 f
+  core0_id_stage0_register_file0_n88 (net)      2         0.07                0.00       2.30 f
+  U11240/A (INVX20)                                                 0.07      0.00       2.30 f
+  U11240/Y (INVX20)                                                 0.09      0.07       2.37 r
+  core0_id_stage0_register_file0_n92 (net)      8         0.20                0.00       2.37 r
+  U13644/A (NAND2X8)                                                0.09      0.00       2.37 r
+  U13644/Y (NAND2X8)                                                0.07      0.06       2.43 f
+  core0_id_stage0_register_file0_n776 (net)     2         0.06                0.00       2.43 f
+  U13643/A (INVX12)                                                 0.07      0.00       2.43 f
+  U13643/Y (INVX12)                                                 0.04      0.04       2.47 r
+  core0_id_stage0_register_file0_n64 (net)      1         0.03                0.00       2.47 r
+  U12391/A (NOR2X8)                                                 0.04      0.00       2.47 r
+  U12391/Y (NOR2X8)                                                 0.05      0.04       2.51 f
+  core0_id_stage0_register_file0_n63 (net)      1         0.05                0.00       2.51 f
+  core0_id_stage0_register_file0_U1183/A (INVX20)                   0.05      0.00       2.51 f
+  core0_id_stage0_register_file0_U1183/Y (INVX20)                   0.20      0.13       2.63 r
+  core0_id_stage0_register_file0_n829 (net)    32         0.45                0.00       2.63 r
+  core0_id_stage0_register_file0_U2007/A0 (OAI22X1)                 0.20      0.00       2.63 r
+  core0_id_stage0_register_file0_U2007/Y (OAI22X1)                  0.14      0.10       2.74 f
+  core0_id_stage0_register_file0_n2822 (net)
+                                                1         0.01                0.00       2.74 f
+  core0_id_stage0_register_file0_data_r_reg_25__26_/D (DFFQXL)      0.14      0.00       2.74 f
+  data arrival time                                                                      2.74
 
   clock CLK (rise edge)                                                       2.50       2.50
   clock network delay (ideal)                                                 0.50       3.00
   clock uncertainty                                                          -0.15       2.85
-  dcache0_mem_wdata_r_reg_127_/CK (DFFHQX4)                                   0.00       2.85 r
-  library setup time                                                         -0.10       2.75
-  data required time                                                                     2.75
+  core0_id_stage0_register_file0_data_r_reg_25__26_/CK (DFFQXL)               0.00       2.85 r
+  library setup time                                                         -0.15       2.70
+  data required time                                                                     2.70
   ----------------------------------------------------------------------------------------------
-  data required time                                                                     2.75
-  data arrival time                                                                     -2.94
+  data required time                                                                     2.70
+  data arrival time                                                                     -2.74
   ----------------------------------------------------------------------------------------------
-  slack (VIOLATED)                                                                      -0.19
+  slack (VIOLATED)                                                                      -0.04
 
 
 1

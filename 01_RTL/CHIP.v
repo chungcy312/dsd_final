@@ -1171,12 +1171,14 @@ endfunction
 
 localparam SET_BITS = clog2(BLOCKS);
 localparam TAG_BITS = 28 - SET_BITS;
-localparam S_IDLE   = 1'b0;
-localparam S_REFILL = 1'b1;
+localparam S_IDLE   = 2'd0;
+localparam S_REFILL = 2'd1;
+localparam S_FILL   = 2'd2;
 
-reg state;
+reg [1:0] state;
 reg [31:0] addr_r;
 reg [31:4] mem_addr_r;
+reg [127:0] mem_rdata_r;
 reg [127:0] data [0:BLOCKS-1];
 reg [TAG_BITS-1:0] tag [0:BLOCKS-1];
 reg valid [0:BLOCKS-1];
@@ -1186,15 +1188,12 @@ wire [SET_BITS-1:0] set_idx_r = addr_r[4 + SET_BITS - 1:4];
 wire [TAG_BITS-1:0] tag_addr = addr[31:4 + SET_BITS];
 wire [TAG_BITS-1:0] tag_addr_r = addr_r[31:4 + SET_BITS];
 wire [1:0] word_idx = addr[3:2];
-wire [1:0] word_idx_r = addr_r[3:2];
 wire hit = valid[set_idx] && (tag[set_idx] == tag_addr);
 wire [31:0] hit_word = select_word(data[set_idx], word_idx);
-wire [31:0] refill_word = select_word(mem_rdata, word_idx_r);
 integer si;
 
-assign rdata = (state == S_REFILL) ? refill_word : hit_word;
-assign ready = (state == S_IDLE && req && hit) ||
-               (state == S_REFILL && mem_ready);
+assign rdata = hit_word;
+assign ready = state == S_IDLE && req && hit;
 assign mem_read = (state == S_REFILL);
 assign mem_write = 1'b0;
 assign mem_addr = mem_addr_r;
@@ -1215,9 +1214,15 @@ always @(posedge clk) begin
             end
             S_REFILL: begin
                 if (mem_ready) begin
-                    valid[set_idx_r] <= 1'b1;
-                    state <= S_IDLE;
+                    mem_rdata_r <= mem_rdata;
+                    state <= S_FILL;
                 end
+            end
+            S_FILL: begin
+                data[set_idx_r] <= mem_rdata_r;
+                tag[set_idx_r] <= tag_addr_r;
+                valid[set_idx_r] <= 1'b1;
+                state <= S_IDLE;
             end
         endcase
     end
@@ -1227,10 +1232,6 @@ always @(posedge clk) begin
     if (state == S_IDLE && req && !hit) begin
         addr_r <= addr;
         mem_addr_r <= addr[31:4];
-    end
-    if (state == S_REFILL && mem_ready) begin
-        data[set_idx_r] <= mem_rdata;
-        tag[set_idx_r] <= tag_addr_r;
     end
 end
 

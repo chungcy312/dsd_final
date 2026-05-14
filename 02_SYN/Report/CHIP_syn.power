@@ -7,7 +7,7 @@ Report : power
         -analysis_effort low
 Design : CHIP
 Version: U-2022.12
-Date   : Wed May 13 15:29:57 2026
+Date   : Thu May 14 02:50:59 2026
 ****************************************
 
 
@@ -38,12 +38,12 @@ Attributes
 i - Including register clock pin internal power
 
 
-  Cell Internal Power  = 130.6925 mW   (97%)
-  Net Switching Power  =   4.6851 mW    (3%)
+  Cell Internal Power  =  89.1603 mW   (96%)
+  Net Switching Power  =   3.8067 mW    (4%)
                          ---------
-Total Dynamic Power    = 135.3776 mW  (100%)
+Total Dynamic Power    =  92.9670 mW  (100%)
 
-Cell Leakage Power     = 129.0751 uW
+Cell Leakage Power     = 100.1928 uW
 
 
                  Internal         Switching           Leakage            Total
@@ -52,10 +52,10 @@ Power Group      Power            Power               Power              Power  
 io_pad             0.0000            0.0000            0.0000            0.0000  (   0.00%)
 memory             0.0000            0.0000            0.0000            0.0000  (   0.00%)
 black_box          0.0000            0.0000            0.0000            0.0000  (   0.00%)
-clock_network    128.5608            0.0000            0.0000          128.5608  (  94.87%)  i
-register           0.4900            0.2072        7.0185e+07            0.7668  (   0.57%)
+clock_network     87.2715            0.0000            0.0000           87.2715  (  93.77%)  i
+register           0.3959            0.2487        5.2085e+07            0.6966  (   0.75%)
 sequential         0.0000            0.0000            0.0000            0.0000  (   0.00%)
-combinational      1.6424            4.4779        5.8890e+07            6.1792  (   4.56%)
+combinational      1.4935            3.5581        4.8108e+07            5.0996  (   5.48%)
 --------------------------------------------------------------------------------------------------
-Total            130.6932 mW         4.6851 mW     1.2908e+08 pW       135.5069 mW
+Total             89.1609 mW         3.8067 mW     1.0019e+08 pW        93.0677 mW
 1

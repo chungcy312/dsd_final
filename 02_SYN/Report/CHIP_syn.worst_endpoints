@@ -7,7 +7,7 @@ Report : timing
         -max_paths 10
 Design : CHIP
 Version: U-2022.12
-Date   : Wed May 13 15:29:48 2026
+Date   : Thu May 14 02:50:50 2026
 ****************************************
 
  # A fanout number of 1000 was used for high fanout net computations.
@@ -17,25 +17,25 @@ Wire Load Model Mode: top
 
 Endpoint                         Path Delay     Path Required     Slack
 ------------------------------------------------------------------------
-dcache0_mem_wdata_r_reg_127_/D (DFFHQX4)
-                                    2.94 f            2.75        -0.19
-dcache0_mem_wdata_r_reg_52_/D (DFFHQX4)
-                                    2.96 r            2.77        -0.19
-dcache0_mem_wdata_r_reg_63_/D (DFFHQX4)
-                                    2.94 f            2.75        -0.19
-dcache0_mem_wdata_r_reg_127_/D (DFFHQX4)
-                                    2.94 f            2.75        -0.19
-dcache0_mem_wdata_r_reg_91_/D (DFFHQX4)
-                                    2.94 f            2.76        -0.19
-dcache0_mem_wdata_r_reg_97_/D (DFFHQX4)
-                                    2.94 f            2.75        -0.19
-dcache0_mem_wdata_r_reg_0_/D (DFFHQX4)
-                                    2.96 r            2.77        -0.19
-dcache0_mem_wdata_r_reg_86_/D (DFFHQX4)
-                                    2.94 f            2.76        -0.19
-dcache0_mem_wdata_r_reg_73_/D (DFFHQX4)
-                                    2.94 f            2.75        -0.19
-dcache0_mem_wdata_r_reg_101_/D (DFFHQX4)
-                                    2.94 f            2.76        -0.19
+core0_id_stage0_register_file0_data_r_reg_25__26_/D (DFFQXL)
+                                    2.74 f            2.70        -0.04
+core0_id_stage0_register_file0_data_r_reg_25__10_/D (DFFQXL)
+                                    2.74 f            2.70        -0.04
+core0_id_stage0_register_file0_data_r_reg_25__11_/D (DFFQXL)
+                                    2.74 f            2.70        -0.04
+core0_id_stage0_register_file0_data_r_reg_25__25_/D (DFFQXL)
+                                    2.74 f            2.70        -0.04
+core0_id_stage0_register_file0_data_r_reg_25__27_/D (DFFQXL)
+                                    2.74 f            2.70        -0.04
+core0_id_stage0_register_file0_data_r_reg_25__24_/D (DFFQXL)
+                                    2.74 f            2.70        -0.04
+core0_id_stage0_register_file0_data_r_reg_25__3_/D (DFFQXL)
+                                    2.74 f            2.70        -0.04
+core0_id_stage0_register_file0_data_r_reg_25__0_/D (DFFQXL)
+                                    2.74 f            2.70        -0.04
+core0_id_stage0_register_file0_data_r_reg_25__5_/D (DFFQXL)
+                                    2.74 f            2.70        -0.04
+core0_id_stage0_register_file0_data_r_reg_25__2_/D (DFFQXL)
+                                    2.74 f            2.70        -0.04
 
 1

@@ -47,7 +47,7 @@ set_output_delay -min 0.0                -clock CLK $done_output_port
 
 # The provided TB only toggles reset during initialization.  Do not let
 # synchronous reset release dominate runtime setup optimization.
-set_false_path -from $reset_input_port
+# set_false_path -from $reset_input_port
 #####################################################
 
 # Multicycle MUL block.
