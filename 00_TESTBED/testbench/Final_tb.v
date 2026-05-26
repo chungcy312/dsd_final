@@ -50,14 +50,85 @@ module Final_tb;
 	// ======================================= //
 	integer cycle_count;
 	integer report_cycle_count = 1000;
+	integer stall_total_count;
+	integer stall_load_use_count;
+	integer stall_mem_count;
+	integer stall_mul_count;
+	integer stall_ifetch_count;
+	integer stall_dmem_count;
+	integer stall_imem_count;
 	initial cycle_count = 0;
 
-	// always @(posedge clk) begin
-	// 	cycle_count = cycle_count + 1;
-	// 	if (cycle_count % report_cycle_count == 0) begin
-	// 		$display("Current cycle = %0d", cycle_count);
-	// 	end
-	// end
+	always @(posedge clk) begin
+		if (!rst_n) begin
+			cycle_count <= 0;
+		end else if (!done) begin
+			cycle_count <= cycle_count + 1;
+			if ((cycle_count != 0) && (cycle_count % report_cycle_count == 0)) begin
+				$display("Current cycle = %0d", cycle_count);
+			end
+		end
+	end
+
+	initial begin
+		stall_total_count = 0;
+		stall_load_use_count = 0;
+		stall_mem_count = 0;
+		stall_mul_count = 0;
+		stall_ifetch_count = 0;
+		stall_dmem_count = 0;
+		stall_imem_count = 0;
+	end
+
+	always @(posedge clk) begin
+		if (!rst_n) begin
+			stall_total_count <= 0;
+			stall_load_use_count <= 0;
+			stall_mem_count <= 0;
+			stall_mul_count <= 0;
+			stall_ifetch_count <= 0;
+			stall_dmem_count <= 0;
+			stall_imem_count <= 0;
+		end else if (!done) begin
+`ifdef SDF
+			if ((mem_read_D || mem_write_D) && !mem_ready_D) begin
+				stall_dmem_count <= stall_dmem_count + 1;
+			end
+			if ((mem_read_I || mem_write_I) && !mem_ready_I) begin
+				stall_imem_count <= stall_imem_count + 1;
+				stall_ifetch_count <= stall_ifetch_count + 1;
+			end
+			if (((mem_read_D || mem_write_D) && !mem_ready_D) ||
+			    ((mem_read_I || mem_write_I) && !mem_ready_I)) begin
+				stall_mem_count <= stall_mem_count + 1;
+			end
+			if (chip0.core0_ex_stage0_mul_busy) begin
+				stall_mul_count <= stall_mul_count + 1;
+			end
+			if (((mem_read_D || mem_write_D) && !mem_ready_D) ||
+			    ((mem_read_I || mem_write_I) && !mem_ready_I) ||
+			    chip0.core0_ex_stage0_mul_busy) begin
+				stall_total_count <= stall_total_count + 1;
+			end
+`else
+			if (chip0.core0.if_stall) begin
+				stall_total_count <= stall_total_count + 1;
+			end
+			if (chip0.core0.load_use_stall) begin
+				stall_load_use_count <= stall_load_use_count + 1;
+			end
+			if (chip0.core0.mem_busy) begin
+				stall_mem_count <= stall_mem_count + 1;
+			end
+			if (chip0.core0.mul_stall) begin
+				stall_mul_count <= stall_mul_count + 1;
+			end
+			if (!chip0.core0.done_r && !chip0.core0.if_ready) begin
+				stall_ifetch_count <= stall_ifetch_count + 1;
+			end
+`endif
+		end
+	end
 
 
 	
@@ -277,6 +348,7 @@ task RESET_DESIGN;
 		$display("==================================");
 		#(`CYCLE*1.6) rst_n = 1'b0;
 		#(`CYCLE*5.0) rst_n = 1'b1;
+		$display("[%0t] Reset done", $time);
 	end
 endtask
 
@@ -333,6 +405,7 @@ endtask
 
 task REPORT_RESULT;
 	begin
+		DISPLAY_STALL_SUMMARY;
 		if (error_cnt == 0) begin
 			$system("../00_TESTBED/info/success");
 			DISPLAY_SUCCESS_INFO;
@@ -341,6 +414,22 @@ task REPORT_RESULT;
 			$system("../00_TESTBED/info/failed");
 			DISPLAY_FAILED_INFO;
 		end
+	end
+endtask
+
+task DISPLAY_STALL_SUMMARY;
+	begin
+		$display("============================================================================");
+`ifdef SDF
+		$display("STALL_SUMMARY cycles=%0d total=%0d load_use=%0d mem=%0d mul=%0d ifetch=%0d dmem=%0d imem=%0d",
+		         cycle_count, stall_total_count, stall_load_use_count, stall_mem_count, stall_mul_count,
+		         stall_ifetch_count, stall_dmem_count, stall_imem_count);
+`else
+		$display("STALL_SUMMARY cycles=%0d total=%0d load_use=%0d mem=%0d mul=%0d ifetch=%0d dmem=%0d imem=%0d",
+		         cycle_count, stall_total_count, stall_load_use_count, stall_mem_count, stall_mul_count,
+		         stall_ifetch_count, stall_dmem_count, stall_imem_count);
+`endif
+		$display("============================================================================");
 	end
 endtask
 

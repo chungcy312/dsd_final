@@ -7,7 +7,7 @@ Report : timing
         -max_paths 10
 Design : CHIP
 Version: U-2022.12
-Date   : Thu May 14 02:50:50 2026
+Date   : Thu May 14 15:31:27 2026
 ****************************************
 
  # A fanout number of 1000 was used for high fanout net computations.
@@ -17,25 +17,25 @@ Wire Load Model Mode: top
 
 Endpoint                         Path Delay     Path Required     Slack
 ------------------------------------------------------------------------
-core0_id_stage0_register_file0_data_r_reg_25__26_/D (DFFQXL)
-                                    2.74 f            2.70        -0.04
-core0_id_stage0_register_file0_data_r_reg_25__10_/D (DFFQXL)
-                                    2.74 f            2.70        -0.04
-core0_id_stage0_register_file0_data_r_reg_25__11_/D (DFFQXL)
-                                    2.74 f            2.70        -0.04
-core0_id_stage0_register_file0_data_r_reg_25__25_/D (DFFQXL)
-                                    2.74 f            2.70        -0.04
-core0_id_stage0_register_file0_data_r_reg_25__27_/D (DFFQXL)
-                                    2.74 f            2.70        -0.04
-core0_id_stage0_register_file0_data_r_reg_25__24_/D (DFFQXL)
-                                    2.74 f            2.70        -0.04
-core0_id_stage0_register_file0_data_r_reg_25__3_/D (DFFQXL)
-                                    2.74 f            2.70        -0.04
-core0_id_stage0_register_file0_data_r_reg_25__0_/D (DFFQXL)
-                                    2.74 f            2.70        -0.04
-core0_id_stage0_register_file0_data_r_reg_25__5_/D (DFFQXL)
-                                    2.74 f            2.70        -0.04
-core0_id_stage0_register_file0_data_r_reg_25__2_/D (DFFQXL)
-                                    2.74 f            2.70        -0.04
+core0_if_stage0_pc_reg_21_/D (DFFHQX4)
+                                    2.75 r            2.31        -0.43
+core0_if_stage0_pc_reg_21_/D (DFFHQX4)
+                                    2.75 r            2.31        -0.43
+core0_ex_stage0_mul_result_reg_reg_31_/D (DFFHQX4)
+                                    2.75 r            2.32        -0.43
+core0_ex_stage0_mul_result_reg_reg_30_/D (DFFHQX4)
+                                    2.75 r            2.32        -0.43
+core0_ex_stage0_mul_result_reg_reg_31_/D (DFFHQX4)
+                                    2.75 r            2.32        -0.43
+core0_ex_stage0_mul_result_reg_reg_30_/D (DFFHQX4)
+                                    2.75 r            2.32        -0.43
+core0_ex_stage0_mul_result_reg_reg_31_/D (DFFHQX4)
+                                    2.75 r            2.32        -0.43
+core0_ex_stage0_mul_result_reg_reg_30_/D (DFFHQX4)
+                                    2.75 r            2.32        -0.43
+core0_if_stage0_pc_reg_21_/D (DFFHQX4)
+                                    2.75 r            2.31        -0.43
+core0_if_stage0_pc_reg_8_/D (DFFHQX4)
+                                    2.76 r            2.33        -0.43
 
 1

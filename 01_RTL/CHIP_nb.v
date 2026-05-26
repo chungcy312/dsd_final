@@ -145,9 +145,6 @@ localparam WB_IMM = 2'd3;
 reg done_r;
 
 wire        if_stall;
-wire        id_predict_taken;
-wire        id_predict_redirect;
-wire [31:0] id_predict_pc;
 wire        if_redirect;
 wire [31:0] if_redirect_pc;
 wire [31:0] if_pc;
@@ -201,8 +198,6 @@ reg        idex_jal;
 reg        idex_jalr;
 reg        idex_is_mul;
 reg        idex_flush_instr;
-reg        idex_pred_taken;
-reg [31:0] idex_pred_pc;
 reg [1:0]  idex_wb_sel;
 
 wire        ex_redirect;
@@ -250,11 +245,8 @@ assign load_use_stall = ifid_valid & idex_valid & idex_mem_read & (idex_rd != 5'
                          (id_use_rs2 & (id_rs2 == idex_rd)));
 assign ex_redirect_valid = idex_valid & ex_redirect;
 assign idex_insert_bubble = ex_redirect_valid | load_use_stall;
-assign id_predict_taken = ifid_valid & id_branch & ifid_inst[31];
-assign id_predict_pc = ifid_pc + id_imm_aux;
-assign id_predict_redirect = id_predict_taken & ~global_stall & ~load_use_stall & ~mul_stall & ~ex_redirect_valid;
-assign if_redirect = ex_redirect_valid | id_predict_redirect;
-assign if_redirect_pc = ex_redirect_valid ? ex_redirect_pc : id_predict_pc;
+assign if_redirect = ex_redirect_valid;
+assign if_redirect_pc = ex_redirect_pc;
 assign o_flush = done_r;
 assign o_done = done_r;
 
@@ -345,8 +337,6 @@ ex_stage #(
     .jal            (idex_jal),
     .jalr           (idex_jalr),
     .is_mul         (idex_is_mul),
-    .pred_taken     (idex_pred_taken),
-    .pred_pc        (idex_pred_pc),
     .wb_sel         (idex_wb_sel),
     .redirect       (ex_redirect),
     .redirect_pc    (ex_redirect_pc),
@@ -393,7 +383,6 @@ always @(posedge clk) begin
         idex_jalr <= 1'b0;
         idex_is_mul <= 1'b0;
         idex_flush_instr <= 1'b0;
-        idex_pred_taken <= 1'b0;
         idex_wb_sel <= WB_ALU;
         exmem_valid <= 1'b0;
         exmem_mem_read <= 1'b0;
@@ -443,7 +432,6 @@ always @(posedge clk) begin
                 idex_jalr <= 1'b0;
                 idex_is_mul <= 1'b0;
                 idex_flush_instr <= 1'b0;
-                idex_pred_taken <= 1'b0;
             end else begin
                 idex_valid <= ifid_valid;
                 idex_alu_src_imm <= id_alu_src_imm;
@@ -455,7 +443,6 @@ always @(posedge clk) begin
                 idex_jalr <= id_jalr;
                 idex_is_mul <= id_is_mul;
                 idex_flush_instr <= id_flush_instr;
-                idex_pred_taken <= id_predict_taken;
                 idex_wb_sel <= id_wb_sel;
             end
 
@@ -489,7 +476,6 @@ always @(posedge clk) begin
             idex_rd <= id_rd;
             idex_funct3 <= id_funct3;
             idex_alu_ctrl <= id_alu_ctrl;
-            idex_pred_pc <= id_predict_pc;
         end
 
         if (!if_redirect && !load_use_stall && !mul_stall) begin
@@ -863,8 +849,6 @@ module ex_stage #(
     input         jal,
     input         jalr,
     input         is_mul,
-    input         pred_taken,
-    input  [31:0] pred_pc,
     input  [1:0]  wb_sel,
     output        redirect,
     output [31:0] redirect_pc,
@@ -884,7 +868,6 @@ wire [31:0] pc4;
 wire [31:0] branch_target;
 wire [31:0] branch_next_pc;
 wire branch_taken;
-wire branch_mispredict;
 wire mul_active;
 wire mul_done;
 wire [31:0] mul_product;
@@ -903,10 +886,7 @@ assign branch_taken = branch &&
                        (funct3 == 3'b001 && rdata1 != rdata2));
 assign branch_target = pc + imm_aux;
 assign branch_next_pc = branch_taken ? branch_target : pc4;
-assign branch_mispredict = branch &&
-                           ((branch_taken != pred_taken) ||
-                            (branch_taken && (pred_pc != branch_target)));
-assign redirect = jal | jalr | branch_mispredict;
+assign redirect = jal | jalr | branch_taken;
 assign redirect_pc = jal ? (pc + imm_aux) :
                      jalr ? ((rdata1 + imm_alu) & 32'hffff_fffe) :
                      branch_next_pc;
@@ -960,9 +940,8 @@ alu alu0 (
 `ifdef DEBUG_PC
 always @(posedge clk) begin
     if (rst_n && redirect) begin
-        $display("[EX_REDIRECT] t=%0t pc=%h target=%h jal=%0b jalr=%0b branch=%0b taken=%0b pred_taken=%0b pred_pc=%h rs1=%h rs2=%h imm_alu=%h imm_aux=%h",
-                 $time, pc, redirect_pc, jal, jalr, branch, branch_taken,
-                 pred_taken, pred_pc, rdata1, rdata2, imm_alu, imm_aux);
+        $display("[EX_REDIRECT] t=%0t pc=%h target=%h jal=%0b jalr=%0b branch=%0b taken=%0b rs1=%h rs2=%h imm_alu=%h imm_aux=%h",
+                 $time, pc, redirect_pc, jal, jalr, branch, branch_taken, rdata1, rdata2, imm_alu, imm_aux);
     end
 end
 `endif

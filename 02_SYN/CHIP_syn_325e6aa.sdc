@@ -1,9 +1,6 @@
 # TODO: You may modified the clock constraints or add more constraints for your design
 ####################################################
-set cycle 2.0  
-if {[info exists ::env(CYCLE_TIME)]} {
-    set cycle $::env(CYCLE_TIME)
-}
+set cycle 3.0      
 ####################################################
 
 
@@ -14,7 +11,7 @@ create_clock -name CLK -period $cycle [get_ports clk]
 set_fix_hold                          [get_clocks CLK]
 set_dont_touch_network                [get_clocks CLK]
 set_ideal_network                     [get_ports clk]
-set_clock_uncertainty            0.1 [get_clocks CLK] 
+set_clock_uncertainty            0.15 [get_clocks CLK] 
 set_clock_latency                0.5  [get_clocks CLK] 
 
 set_max_fanout 6 [all_inputs] 
@@ -31,6 +28,7 @@ set_load         1     [all_outputs]
 #####################################################
 set mem_input_delay   [expr $cycle * 0.5]
 set mem_output_delay  [expr $cycle * 0.5]
+set reset_input_delay [expr $cycle * 0.6]
 set done_output_delay  0.0
 
 set mem_input_ports  [get_ports {mem_ready_D mem_ready_I mem_rdata_D[*] mem_rdata_I[*]}]
@@ -40,14 +38,12 @@ set done_output_port [get_ports o_done]
 
 set_input_delay  -max $mem_input_delay   -clock CLK $mem_input_ports
 set_input_delay  -min 0.0                -clock CLK $mem_input_ports
+set_input_delay  -max $reset_input_delay -clock CLK $reset_input_port
+set_input_delay  -min 0.0                -clock CLK $reset_input_port
 set_output_delay -max $mem_output_delay  -clock CLK $mem_output_ports
 set_output_delay -min 0.0                -clock CLK $mem_output_ports
 set_output_delay -max $done_output_delay -clock CLK $done_output_port
 set_output_delay -min 0.0                -clock CLK $done_output_port
-
-# The provided TB only toggles reset during initialization.  Do not let
-# reset release dominate runtime setup/hold optimization.
-set_false_path -from $reset_input_port
 #####################################################
 
 # Multicycle MUL block.

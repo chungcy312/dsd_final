@@ -145,9 +145,6 @@ localparam WB_IMM = 2'd3;
 reg done_r;
 
 wire        if_stall;
-wire        id_predict_taken;
-wire        id_predict_redirect;
-wire [31:0] id_predict_pc;
 wire        if_redirect;
 wire [31:0] if_redirect_pc;
 wire [31:0] if_pc;
@@ -189,6 +186,8 @@ reg [31:0] idex_rdata1;
 reg [31:0] idex_rdata2;
 reg [31:0] idex_imm_alu;
 reg [31:0] idex_imm_aux;
+reg [4:0]  idex_rs1;
+reg [4:0]  idex_rs2;
 reg [4:0]  idex_rd;
 reg [2:0]  idex_funct3;
 reg [3:0]  idex_alu_ctrl;
@@ -201,10 +200,12 @@ reg        idex_jal;
 reg        idex_jalr;
 reg        idex_is_mul;
 reg        idex_flush_instr;
-reg        idex_pred_taken;
-reg [31:0] idex_pred_pc;
 reg [1:0]  idex_wb_sel;
+reg        idex_fwd_rs1_exmem;
+reg        idex_fwd_rs2_exmem;
 
+wire [31:0] exmem_forward_data;
+wire [31:0] memwb_forward_data;
 wire        ex_redirect;
 wire [31:0] ex_redirect_pc;
 wire [31:0] ex_result;
@@ -236,12 +237,6 @@ wire mul_stall;
 wire global_stall;
 wire idex_insert_bubble;
 wire ex_redirect_valid;
-wire id_rs1_from_ex;
-wire id_rs2_from_ex;
-wire id_rs1_from_mem;
-wire id_rs2_from_mem;
-wire [31:0] id_operand1;
-wire [31:0] id_operand2;
 
 assign mem_busy = exmem_valid & (exmem_mem_read | exmem_mem_write) & ~dmem_ready;
 assign global_stall = (~done_r & ~if_ready) | mem_busy;
@@ -250,32 +245,10 @@ assign load_use_stall = ifid_valid & idex_valid & idex_mem_read & (idex_rd != 5'
                          (id_use_rs2 & (id_rs2 == idex_rd)));
 assign ex_redirect_valid = idex_valid & ex_redirect;
 assign idex_insert_bubble = ex_redirect_valid | load_use_stall;
-assign id_predict_taken = ifid_valid & id_branch & ifid_inst[31];
-assign id_predict_pc = ifid_pc + id_imm_aux;
-assign id_predict_redirect = id_predict_taken & ~global_stall & ~load_use_stall & ~mul_stall & ~ex_redirect_valid;
-assign if_redirect = ex_redirect_valid | id_predict_redirect;
-assign if_redirect_pc = ex_redirect_valid ? ex_redirect_pc : id_predict_pc;
+assign if_redirect = ex_redirect_valid;
+assign if_redirect_pc = ex_redirect_pc;
 assign o_flush = done_r;
 assign o_done = done_r;
-
-assign id_rs1_from_ex = ifid_valid & id_use_rs1 & idex_valid &
-                        idex_reg_wen & ~idex_mem_read &
-                        (idex_rd != 5'b0) & (id_rs1 == idex_rd);
-assign id_rs2_from_ex = ifid_valid & id_use_rs2 & idex_valid &
-                        idex_reg_wen & ~idex_mem_read &
-                        (idex_rd != 5'b0) & (id_rs2 == idex_rd);
-assign id_rs1_from_mem = ifid_valid & id_use_rs1 & exmem_valid &
-                         exmem_reg_wen & (exmem_rd != 5'b0) &
-                         (id_rs1 == exmem_rd);
-assign id_rs2_from_mem = ifid_valid & id_use_rs2 & exmem_valid &
-                         exmem_reg_wen & (exmem_rd != 5'b0) &
-                         (id_rs2 == exmem_rd);
-assign id_operand1 = id_rs1_from_ex ? ex_result :
-                     id_rs1_from_mem ? mem_wb_data :
-                     id_rdata1;
-assign id_operand2 = id_rs2_from_ex ? ex_result :
-                     id_rs2_from_mem ? mem_wb_data :
-                     id_rdata2;
 
 if_stage if_stage0 (
     .clk            (clk),
@@ -338,6 +311,8 @@ ex_stage #(
     .rdata2         (idex_rdata2),
     .imm_alu        (idex_imm_alu),
     .imm_aux        (idex_imm_aux),
+    .rs1            (idex_rs1),
+    .rs2            (idex_rs2),
     .funct3         (idex_funct3),
     .alu_ctrl       (idex_alu_ctrl),
     .alu_src_imm    (idex_alu_src_imm),
@@ -345,9 +320,13 @@ ex_stage #(
     .jal            (idex_jal),
     .jalr           (idex_jalr),
     .is_mul         (idex_is_mul),
-    .pred_taken     (idex_pred_taken),
-    .pred_pc        (idex_pred_pc),
     .wb_sel         (idex_wb_sel),
+    .exmem_wdata    (exmem_forward_data),
+    .exmem_fwd_rs1  (idex_fwd_rs1_exmem),
+    .exmem_fwd_rs2  (idex_fwd_rs2_exmem),
+    .memwb_wen      (memwb_valid & memwb_reg_wen),
+    .memwb_rd       (memwb_rd),
+    .memwb_wdata    (memwb_forward_data),
     .redirect       (ex_redirect),
     .redirect_pc    (ex_redirect_pc),
     .mul_stall      (mul_stall),
@@ -379,6 +358,9 @@ wb_stage wb_stage0 (
     .wb_wdata       (wb_wdata)
 );
 
+assign exmem_forward_data = exmem_result;
+assign memwb_forward_data = memwb_wb_data;
+
 always @(posedge clk) begin
     if (!rst_n) begin
         done_r <= 1'b0;
@@ -393,8 +375,9 @@ always @(posedge clk) begin
         idex_jalr <= 1'b0;
         idex_is_mul <= 1'b0;
         idex_flush_instr <= 1'b0;
-        idex_pred_taken <= 1'b0;
         idex_wb_sel <= WB_ALU;
+        idex_fwd_rs1_exmem <= 1'b0;
+        idex_fwd_rs2_exmem <= 1'b0;
         exmem_valid <= 1'b0;
         exmem_mem_read <= 1'b0;
         exmem_mem_write <= 1'b0;
@@ -414,17 +397,25 @@ always @(posedge clk) begin
             end
 
             memwb_valid <= exmem_valid;
+            memwb_wb_data <= mem_wb_data;
+            memwb_rd <= exmem_rd;
             memwb_reg_wen <= exmem_reg_wen;
             memwb_flush_instr <= exmem_flush_instr;
 
             if (mul_stall) begin
                 exmem_valid <= 1'b0;
+                exmem_result <= 32'b0;
+                exmem_store_data <= 32'b0;
+                exmem_rd <= 5'b0;
                 exmem_mem_read <= 1'b0;
                 exmem_mem_write <= 1'b0;
                 exmem_reg_wen <= 1'b0;
                 exmem_flush_instr <= 1'b0;
             end else begin
                 exmem_valid <= idex_valid;
+                exmem_result <= ex_result;
+                exmem_store_data <= ex_store_data;
+                exmem_rd <= idex_rd;
                 exmem_mem_read <= idex_mem_read;
                 exmem_mem_write <= idex_mem_write;
                 exmem_reg_wen <= idex_reg_wen;
@@ -443,9 +434,21 @@ always @(posedge clk) begin
                 idex_jalr <= 1'b0;
                 idex_is_mul <= 1'b0;
                 idex_flush_instr <= 1'b0;
-                idex_pred_taken <= 1'b0;
+                idex_fwd_rs1_exmem <= 1'b0;
+                idex_fwd_rs2_exmem <= 1'b0;
             end else begin
                 idex_valid <= ifid_valid;
+                idex_pc <= ifid_pc;
+                idex_pc_inc <= ifid_pc_inc;
+                idex_rdata1 <= id_rdata1;
+                idex_rdata2 <= id_rdata2;
+                idex_imm_alu <= id_imm_alu;
+                idex_imm_aux <= id_imm_aux;
+                idex_rs1 <= id_rs1;
+                idex_rs2 <= id_rs2;
+                idex_rd <= id_rd;
+                idex_funct3 <= id_funct3;
+                idex_alu_ctrl <= id_alu_ctrl;
                 idex_alu_src_imm <= id_alu_src_imm;
                 idex_mem_read <= id_mem_read;
                 idex_mem_write <= id_mem_write;
@@ -455,47 +458,23 @@ always @(posedge clk) begin
                 idex_jalr <= id_jalr;
                 idex_is_mul <= id_is_mul;
                 idex_flush_instr <= id_flush_instr;
-                idex_pred_taken <= id_predict_taken;
                 idex_wb_sel <= id_wb_sel;
+                idex_fwd_rs1_exmem <= ifid_valid & id_use_rs1 & idex_valid &
+                                      idex_reg_wen & ~idex_mem_read &
+                                      (idex_rd != 5'b0) & (id_rs1 == idex_rd);
+                idex_fwd_rs2_exmem <= ifid_valid & id_use_rs2 & idex_valid &
+                                      idex_reg_wen & ~idex_mem_read &
+                                      (idex_rd != 5'b0) & (id_rs2 == idex_rd);
             end
 
             if (if_redirect) begin
                 ifid_valid <= 1'b0;
             end else if (!load_use_stall && !mul_stall) begin
                 ifid_valid <= if_ready & ~done_r;
+                ifid_pc <= if_pc;
+                ifid_pc_inc <= if_pc_inc;
+                ifid_inst <= if_inst;
             end
-        end
-    end
-end
-
-always @(posedge clk) begin
-    if (!global_stall) begin
-        memwb_wb_data <= mem_wb_data;
-        memwb_rd <= exmem_rd;
-
-        if (!mul_stall) begin
-            exmem_result <= ex_result;
-            exmem_store_data <= ex_store_data;
-            exmem_rd <= idex_rd;
-        end
-
-        if (!mul_stall && !idex_insert_bubble) begin
-            idex_pc <= ifid_pc;
-            idex_pc_inc <= ifid_pc_inc;
-            idex_rdata1 <= id_operand1;
-            idex_rdata2 <= id_operand2;
-            idex_imm_alu <= id_imm_alu;
-            idex_imm_aux <= id_imm_aux;
-            idex_rd <= id_rd;
-            idex_funct3 <= id_funct3;
-            idex_alu_ctrl <= id_alu_ctrl;
-            idex_pred_pc <= id_predict_pc;
-        end
-
-        if (!if_redirect && !load_use_stall && !mul_stall) begin
-            ifid_pc <= if_pc;
-            ifid_pc_inc <= if_pc_inc;
-            ifid_inst <= if_inst;
         end
     end
 end
@@ -566,6 +545,8 @@ always @(posedge clk) begin
                 pc <= redirect_pc;
                 state <= S_FETCH0;
             end else if (!stall && imem_ready && pc[1] && first_is_32) begin
+                saved_upper_half <= first_half;
+                saved_pc <= pc;
                 state <= S_FETCH1;
             end else if (!stall && imem_ready) begin
                 pc <= redirect ? redirect_pc :
@@ -577,14 +558,6 @@ always @(posedge clk) begin
                 state <= S_FETCH0;
             end
         end
-    end
-end
-
-always @(posedge clk) begin
-    if (!done && state == S_FETCH0 && !stall && imem_ready && pc[1] && first_is_32 &&
-        !(redirect && (redirect_pc != pc))) begin
-        saved_upper_half <= first_half;
-        saved_pc <= pc;
     end
 end
 
@@ -856,6 +829,8 @@ module ex_stage #(
     input  [31:0] rdata2,
     input  [31:0] imm_alu,
     input  [31:0] imm_aux,
+    input  [4:0]  rs1,
+    input  [4:0]  rs2,
     input  [2:0]  funct3,
     input  [3:0]  alu_ctrl,
     input         alu_src_imm,
@@ -863,9 +838,13 @@ module ex_stage #(
     input         jal,
     input         jalr,
     input         is_mul,
-    input         pred_taken,
-    input  [31:0] pred_pc,
     input  [1:0]  wb_sel,
+    input  [31:0] exmem_wdata,
+    input         exmem_fwd_rs1,
+    input         exmem_fwd_rs2,
+    input         memwb_wen,
+    input  [4:0]  memwb_rd,
+    input  [31:0] memwb_wdata,
     output        redirect,
     output [31:0] redirect_pc,
     output        mul_stall,
@@ -878,13 +857,14 @@ localparam WB_PC4 = 2'd2;
 localparam WB_IMM = 2'd3;
 localparam [3:0] MUL_CYCLES_4 = MUL_CYCLES;
 
+wire [31:0] fwd_rs1;
+wire [31:0] fwd_rs2;
 wire [31:0] alu_input2;
 wire [31:0] alu_result;
 wire [31:0] pc4;
 wire [31:0] branch_target;
 wire [31:0] branch_next_pc;
 wire branch_taken;
-wire branch_mispredict;
 wire mul_active;
 wire mul_done;
 wire [31:0] mul_product;
@@ -895,20 +875,23 @@ reg [3:0]  mul_count;
 reg        mul_busy;
 reg        mul_done_r;
 
+assign fwd_rs1 = exmem_fwd_rs1 ? exmem_wdata :
+                 (memwb_wen && memwb_rd != 5'b0 && memwb_rd == rs1) ? memwb_wdata :
+                 rdata1;
+assign fwd_rs2 = exmem_fwd_rs2 ? exmem_wdata :
+                 (memwb_wen && memwb_rd != 5'b0 && memwb_rd == rs2) ? memwb_wdata :
+                 rdata2;
 assign pc4 = pc + pc_inc;
-assign alu_input2 = alu_src_imm ? imm_alu : rdata2;
-assign store_data = rdata2;
+assign alu_input2 = alu_src_imm ? imm_alu : fwd_rs2;
+assign store_data = fwd_rs2;
 assign branch_taken = branch &&
-                      ((funct3 == 3'b000 && rdata1 == rdata2) ||
-                       (funct3 == 3'b001 && rdata1 != rdata2));
+                      ((funct3 == 3'b000 && fwd_rs1 == fwd_rs2) ||
+                       (funct3 == 3'b001 && fwd_rs1 != fwd_rs2));
 assign branch_target = pc + imm_aux;
 assign branch_next_pc = branch_taken ? branch_target : pc4;
-assign branch_mispredict = branch &&
-                           ((branch_taken != pred_taken) ||
-                            (branch_taken && (pred_pc != branch_target)));
-assign redirect = jal | jalr | branch_mispredict;
+assign redirect = jal | jalr | branch_taken;
 assign redirect_pc = jal ? (pc + imm_aux) :
-                     jalr ? ((rdata1 + imm_alu) & 32'hffff_fffe) :
+                     jalr ? ((fwd_rs1 + imm_alu) & 32'hffff_fffe) :
                      branch_next_pc;
 assign mul_active = valid & is_mul;
 assign mul_done = mul_done_r;
@@ -934,8 +917,8 @@ always @(posedge clk) begin
             mul_busy <= 1'b0;
             mul_count <= 4'b0;
         end else if (!mul_busy) begin
-            mul_a_reg <= rdata1;
-            mul_b_reg <= rdata2;
+            mul_a_reg <= fwd_rs1;
+            mul_b_reg <= fwd_rs2;
             mul_busy <= 1'b1;
             mul_count <= 4'd1;
         end else if (mul_busy) begin
@@ -951,7 +934,7 @@ always @(posedge clk) begin
 end
 
 alu alu0 (
-    .input1     (rdata1),
+    .input1     (fwd_rs1),
     .input2     (alu_input2),
     .alu_ctrl   (alu_ctrl),
     .result     (alu_result)
@@ -960,9 +943,8 @@ alu alu0 (
 `ifdef DEBUG_PC
 always @(posedge clk) begin
     if (rst_n && redirect) begin
-        $display("[EX_REDIRECT] t=%0t pc=%h target=%h jal=%0b jalr=%0b branch=%0b taken=%0b pred_taken=%0b pred_pc=%h rs1=%h rs2=%h imm_alu=%h imm_aux=%h",
-                 $time, pc, redirect_pc, jal, jalr, branch, branch_taken,
-                 pred_taken, pred_pc, rdata1, rdata2, imm_alu, imm_aux);
+        $display("[EX_REDIRECT] t=%0t pc=%h target=%h jal=%0b jalr=%0b branch=%0b taken=%0b rs1=%h rs2=%h imm_alu=%h imm_aux=%h",
+                 $time, pc, redirect_pc, jal, jalr, branch, branch_taken, fwd_rs1, fwd_rs2, imm_alu, imm_aux);
     end
 end
 `endif
@@ -1179,11 +1161,9 @@ reg [1:0] state;
 reg [31:0] addr_r;
 reg [31:4] mem_addr_r;
 reg [127:0] mem_rdata_r;
-reg miss_req_r;
 reg [127:0] data [0:BLOCKS-1];
 reg [TAG_BITS-1:0] tag [0:BLOCKS-1];
 reg valid [0:BLOCKS-1];
-reg fill_valid [0:BLOCKS-1];
 
 wire [SET_BITS-1:0] set_idx = addr[4 + SET_BITS - 1:4];
 wire [SET_BITS-1:0] set_idx_r = addr_r[4 + SET_BITS - 1:4];
@@ -1193,12 +1173,10 @@ wire [1:0] word_idx = addr[3:2];
 wire [1:0] word_idx_r = addr_r[3:2];
 wire hit = valid[set_idx] && (tag[set_idx] == tag_addr);
 wire [31:0] hit_word = select_word(data[set_idx], word_idx);
-wire [31:0] refill_word = select_word(mem_rdata, word_idx_r);
 integer si;
 
-assign rdata = (state == S_REFILL) ? refill_word : hit_word;
-assign ready = (state == S_IDLE && req && hit) ||
-               (state == S_REFILL && mem_ready);
+assign rdata = hit_word;
+assign ready = state == S_IDLE && req && hit;
 assign mem_read = (state == S_REFILL);
 assign mem_write = 1'b0;
 assign mem_addr = mem_addr_r;
@@ -1207,49 +1185,31 @@ assign mem_wdata = 128'b0;
 always @(posedge clk) begin
     if (!rst_n) begin
         state <= S_IDLE;
-        miss_req_r <= 1'b0;
         for (si = 0; si < BLOCKS; si = si + 1) begin
             valid[si] <= 1'b0;
-            fill_valid[si] <= 1'b0;
         end
     end else begin
-        for (si = 0; si < BLOCKS; si = si + 1) begin
-            fill_valid[si] <= 1'b0;
-        end
-
         case (state)
             S_IDLE: begin
-                miss_req_r <= req && !hit;
-                if (miss_req_r) begin
+                if (req && !hit) begin
+                    addr_r <= addr;
+                    mem_addr_r <= addr[31:4];
                     state <= S_REFILL;
                 end
             end
             S_REFILL: begin
-                miss_req_r <= 1'b0;
                 if (mem_ready) begin
                     mem_rdata_r <= mem_rdata;
-                    fill_valid[set_idx_r] <= 1'b1;
                     state <= S_FILL;
                 end
             end
             S_FILL: begin
-                for (si = 0; si < BLOCKS; si = si + 1) begin
-                    if (fill_valid[si]) begin
-                        data[si] <= mem_rdata_r;
-                        tag[si] <= tag_addr_r;
-                        valid[si] <= 1'b1;
-                    end
-                end
-                state <= S_IDLE;
+                    data[set_idx_r] <= mem_rdata_r;
+                    tag[set_idx_r] <= tag_addr_r;
+                    valid[set_idx_r] <= 1'b1;
+                    state <= S_IDLE;
             end
         endcase
-    end
-end
-
-always @(posedge clk) begin
-    if (state == S_IDLE && req) begin
-        addr_r <= addr;
-        mem_addr_r <= addr[31:4];
     end
 end
 
@@ -1438,14 +1398,11 @@ endfunction
 
 localparam SET_BITS  = clog2(BLOCKS);
 localparam TAG_BITS  = 28 - SET_BITS;
-localparam S_IDLE        = 3'd0;
-localparam S_WB_MISS     = 3'd1;
-localparam S_REFILL      = 3'd2;
-localparam S_FLUSH       = 3'd3;
-localparam S_FLUSH_WB    = 3'd4;
-localparam S_MISS        = 3'd5;
-localparam S_FILL        = 3'd6;
-localparam S_FLUSH_CHECK = 3'd7;
+localparam S_IDLE     = 3'd0;
+localparam S_WB_MISS  = 3'd1;
+localparam S_REFILL   = 3'd2;
+localparam S_FLUSH    = 3'd3;
+localparam S_FLUSH_WB = 3'd4;
 
 reg [2:0] state;
 reg [31:0] addr_r;
@@ -1455,9 +1412,6 @@ reg [31:4] mem_addr_r;
 reg [127:0] mem_wdata_r;
 reg [SET_BITS-1:0] flush_set;
 reg flush_done_r;
-reg flush_dirty_r;
-reg flush_last_r;
-reg [127:0] mem_rdata_r;
 reg [127:0] data [0:BLOCKS-1];
 reg [TAG_BITS-1:0] tag [0:BLOCKS-1];
 reg valid [0:BLOCKS-1];
@@ -1470,10 +1424,10 @@ wire [TAG_BITS-1:0] tag_addr_r = addr_r[31:4 + SET_BITS];
 wire [1:0] word_idx = addr[3:2];
 wire [1:0] word_idx_r = addr_r[3:2];
 wire hit = valid[set_idx] && (tag[set_idx] == tag_addr);
-wire victim_dirty_r = valid[set_idx_r] && dirty[set_idx_r];
-wire [31:4] victim_addr_r = {tag[set_idx_r], set_idx_r};
+wire victim_dirty = valid[set_idx] && dirty[set_idx];
+wire [31:4] victim_addr = {tag[set_idx], set_idx};
 wire [31:4] flush_addr = {tag[flush_set], flush_set};
-wire [127:0] refill_line = wen_r ? update_word(mem_rdata_r, word_idx_r, wdata_r) : mem_rdata_r;
+wire [127:0] refill_line = wen_r ? update_word(mem_rdata, word_idx_r, wdata_r) : mem_rdata;
 wire [31:0] hit_word = select_word(data[set_idx], word_idx);
 wire [31:0] refill_word = select_word(mem_rdata, word_idx_r);
 integer si;
@@ -1493,8 +1447,6 @@ always @(posedge clk) begin
         wen_r <= 1'b0;
         flush_set <= {SET_BITS{1'b0}};
         flush_done_r <= 1'b0;
-        flush_dirty_r <= 1'b0;
-        flush_last_r <= 1'b0;
         for (si = 0; si < BLOCKS; si = si + 1) begin
             valid[si] <= 1'b0;
             dirty[si] <= 1'b0;
@@ -1509,60 +1461,56 @@ always @(posedge clk) begin
                     flush_set <= {SET_BITS{1'b0}};
                     state <= S_FLUSH;
                 end else if (req && !flush) begin
+                    addr_r <= addr;
+                    wdata_r <= wdata;
                     wen_r <= wen;
                     if (hit) begin
                         if (wen) begin
+                            data[set_idx] <= update_word(data[set_idx], word_idx, wdata);
                             dirty[set_idx] <= 1'b1;
                         end
+                    end else if (victim_dirty) begin
+                        mem_addr_r <= victim_addr;
+                        mem_wdata_r <= data[set_idx];
+                        state <= S_WB_MISS;
                     end else begin
-                        state <= S_MISS;
+                        mem_addr_r <= addr[31:4];
+                        state <= S_REFILL;
                     end
-                end
-            end
-            S_MISS: begin
-                if (victim_dirty_r) begin
-                    state <= S_WB_MISS;
-                end else begin
-                    state <= S_REFILL;
                 end
             end
             S_WB_MISS: begin
                 if (mem_ready) begin
                     dirty[set_idx_r] <= 1'b0;
+                    mem_addr_r <= addr_r[31:4];
                     state <= S_REFILL;
                 end
             end
             S_REFILL: begin
                 if (mem_ready) begin
-                    mem_rdata_r <= mem_rdata;
-                    state <= S_FILL;
+                    data[set_idx_r] <= refill_line;
+                    tag[set_idx_r] <= tag_addr_r;
+                    valid[set_idx_r] <= 1'b1;
+                    dirty[set_idx_r] <= wen_r;
+                    state <= S_IDLE;
                 end
             end
-            S_FILL: begin
-                valid[set_idx_r] <= 1'b1;
-                dirty[set_idx_r] <= wen_r;
-                state <= S_IDLE;
-            end
             S_FLUSH: begin
-                flush_dirty_r <= valid[flush_set] && dirty[flush_set];
-                flush_last_r <= (flush_set == BLOCKS-1);
-                state <= S_FLUSH_CHECK;
-            end
-            S_FLUSH_CHECK: begin
-                if (flush_dirty_r) begin
+                if (valid[flush_set] && dirty[flush_set]) begin
+                    mem_addr_r <= flush_addr;
+                    mem_wdata_r <= data[flush_set];
                     state <= S_FLUSH_WB;
-                end else if (flush_last_r) begin
+                end else if (flush_set == BLOCKS-1) begin
                     flush_done_r <= 1'b1;
                     state <= S_IDLE;
                 end else begin
                     flush_set <= flush_set + 1'b1;
-                    state <= S_FLUSH;
                 end
             end
             S_FLUSH_WB: begin
                 if (mem_ready) begin
                     dirty[flush_set] <= 1'b0;
-                    if (flush_last_r) begin
+                    if (flush_set == BLOCKS-1) begin
                         flush_done_r <= 1'b1;
                         state <= S_IDLE;
                     end else begin
@@ -1572,39 +1520,6 @@ always @(posedge clk) begin
                 end
             end
         endcase
-    end
-end
-
-always @(posedge clk) begin
-    if (state == S_IDLE && req && !flush) begin
-        addr_r <= addr;
-        wdata_r <= wdata;
-        if (hit && wen) begin
-            data[set_idx] <= update_word(data[set_idx], word_idx, wdata);
-        end
-    end
-
-    if (state == S_MISS) begin
-        if (victim_dirty_r) begin
-            mem_addr_r <= victim_addr_r;
-            mem_wdata_r <= data[set_idx_r];
-        end else begin
-            mem_addr_r <= addr_r[31:4];
-        end
-    end
-
-    if (state == S_WB_MISS && mem_ready) begin
-        mem_addr_r <= addr_r[31:4];
-    end
-
-    if (state == S_FILL) begin
-        data[set_idx_r] <= refill_line;
-        tag[set_idx_r] <= tag_addr_r;
-    end
-
-    if (state == S_FLUSH && valid[flush_set] && dirty[flush_set]) begin
-        mem_addr_r <= flush_addr;
-        mem_wdata_r <= data[flush_set];
     end
 end
 

@@ -1179,26 +1179,21 @@ reg [1:0] state;
 reg [31:0] addr_r;
 reg [31:4] mem_addr_r;
 reg [127:0] mem_rdata_r;
-reg miss_req_r;
 reg [127:0] data [0:BLOCKS-1];
 reg [TAG_BITS-1:0] tag [0:BLOCKS-1];
 reg valid [0:BLOCKS-1];
-reg fill_valid [0:BLOCKS-1];
 
 wire [SET_BITS-1:0] set_idx = addr[4 + SET_BITS - 1:4];
 wire [SET_BITS-1:0] set_idx_r = addr_r[4 + SET_BITS - 1:4];
 wire [TAG_BITS-1:0] tag_addr = addr[31:4 + SET_BITS];
 wire [TAG_BITS-1:0] tag_addr_r = addr_r[31:4 + SET_BITS];
 wire [1:0] word_idx = addr[3:2];
-wire [1:0] word_idx_r = addr_r[3:2];
 wire hit = valid[set_idx] && (tag[set_idx] == tag_addr);
 wire [31:0] hit_word = select_word(data[set_idx], word_idx);
-wire [31:0] refill_word = select_word(mem_rdata, word_idx_r);
 integer si;
 
-assign rdata = (state == S_REFILL) ? refill_word : hit_word;
-assign ready = (state == S_IDLE && req && hit) ||
-               (state == S_REFILL && mem_ready);
+assign rdata = hit_word;
+assign ready = state == S_IDLE && req && hit;
 assign mem_read = (state == S_REFILL);
 assign mem_write = 1'b0;
 assign mem_addr = mem_addr_r;
@@ -1207,39 +1202,26 @@ assign mem_wdata = 128'b0;
 always @(posedge clk) begin
     if (!rst_n) begin
         state <= S_IDLE;
-        miss_req_r <= 1'b0;
         for (si = 0; si < BLOCKS; si = si + 1) begin
             valid[si] <= 1'b0;
-            fill_valid[si] <= 1'b0;
         end
     end else begin
-        for (si = 0; si < BLOCKS; si = si + 1) begin
-            fill_valid[si] <= 1'b0;
-        end
-
         case (state)
             S_IDLE: begin
-                miss_req_r <= req && !hit;
-                if (miss_req_r) begin
+                if (req && !hit) begin
                     state <= S_REFILL;
                 end
             end
             S_REFILL: begin
-                miss_req_r <= 1'b0;
                 if (mem_ready) begin
                     mem_rdata_r <= mem_rdata;
-                    fill_valid[set_idx_r] <= 1'b1;
                     state <= S_FILL;
                 end
             end
             S_FILL: begin
-                for (si = 0; si < BLOCKS; si = si + 1) begin
-                    if (fill_valid[si]) begin
-                        data[si] <= mem_rdata_r;
-                        tag[si] <= tag_addr_r;
-                        valid[si] <= 1'b1;
-                    end
-                end
+                data[set_idx_r] <= mem_rdata_r;
+                tag[set_idx_r] <= tag_addr_r;
+                valid[set_idx_r] <= 1'b1;
                 state <= S_IDLE;
             end
         endcase
@@ -1247,7 +1229,7 @@ always @(posedge clk) begin
 end
 
 always @(posedge clk) begin
-    if (state == S_IDLE && req) begin
+    if (state == S_IDLE && req && !hit) begin
         addr_r <= addr;
         mem_addr_r <= addr[31:4];
     end
@@ -1438,14 +1420,12 @@ endfunction
 
 localparam SET_BITS  = clog2(BLOCKS);
 localparam TAG_BITS  = 28 - SET_BITS;
-localparam S_IDLE        = 3'd0;
-localparam S_WB_MISS     = 3'd1;
-localparam S_REFILL      = 3'd2;
-localparam S_FLUSH       = 3'd3;
-localparam S_FLUSH_WB    = 3'd4;
-localparam S_MISS        = 3'd5;
-localparam S_FILL        = 3'd6;
-localparam S_FLUSH_CHECK = 3'd7;
+localparam S_IDLE     = 3'd0;
+localparam S_WB_MISS  = 3'd1;
+localparam S_REFILL   = 3'd2;
+localparam S_FLUSH    = 3'd3;
+localparam S_FLUSH_WB = 3'd4;
+localparam S_MISS     = 3'd5;
 
 reg [2:0] state;
 reg [31:0] addr_r;
@@ -1455,9 +1435,6 @@ reg [31:4] mem_addr_r;
 reg [127:0] mem_wdata_r;
 reg [SET_BITS-1:0] flush_set;
 reg flush_done_r;
-reg flush_dirty_r;
-reg flush_last_r;
-reg [127:0] mem_rdata_r;
 reg [127:0] data [0:BLOCKS-1];
 reg [TAG_BITS-1:0] tag [0:BLOCKS-1];
 reg valid [0:BLOCKS-1];
@@ -1473,7 +1450,7 @@ wire hit = valid[set_idx] && (tag[set_idx] == tag_addr);
 wire victim_dirty_r = valid[set_idx_r] && dirty[set_idx_r];
 wire [31:4] victim_addr_r = {tag[set_idx_r], set_idx_r};
 wire [31:4] flush_addr = {tag[flush_set], flush_set};
-wire [127:0] refill_line = wen_r ? update_word(mem_rdata_r, word_idx_r, wdata_r) : mem_rdata_r;
+wire [127:0] refill_line = wen_r ? update_word(mem_rdata, word_idx_r, wdata_r) : mem_rdata;
 wire [31:0] hit_word = select_word(data[set_idx], word_idx);
 wire [31:0] refill_word = select_word(mem_rdata, word_idx_r);
 integer si;
@@ -1493,8 +1470,6 @@ always @(posedge clk) begin
         wen_r <= 1'b0;
         flush_set <= {SET_BITS{1'b0}};
         flush_done_r <= 1'b0;
-        flush_dirty_r <= 1'b0;
-        flush_last_r <= 1'b0;
         for (si = 0; si < BLOCKS; si = si + 1) begin
             valid[si] <= 1'b0;
             dirty[si] <= 1'b0;
@@ -1534,35 +1509,25 @@ always @(posedge clk) begin
             end
             S_REFILL: begin
                 if (mem_ready) begin
-                    mem_rdata_r <= mem_rdata;
-                    state <= S_FILL;
+                    valid[set_idx_r] <= 1'b1;
+                    dirty[set_idx_r] <= wen_r;
+                    state <= S_IDLE;
                 end
             end
-            S_FILL: begin
-                valid[set_idx_r] <= 1'b1;
-                dirty[set_idx_r] <= wen_r;
-                state <= S_IDLE;
-            end
             S_FLUSH: begin
-                flush_dirty_r <= valid[flush_set] && dirty[flush_set];
-                flush_last_r <= (flush_set == BLOCKS-1);
-                state <= S_FLUSH_CHECK;
-            end
-            S_FLUSH_CHECK: begin
-                if (flush_dirty_r) begin
+                if (valid[flush_set] && dirty[flush_set]) begin
                     state <= S_FLUSH_WB;
-                end else if (flush_last_r) begin
+                end else if (flush_set == BLOCKS-1) begin
                     flush_done_r <= 1'b1;
                     state <= S_IDLE;
                 end else begin
                     flush_set <= flush_set + 1'b1;
-                    state <= S_FLUSH;
                 end
             end
             S_FLUSH_WB: begin
                 if (mem_ready) begin
                     dirty[flush_set] <= 1'b0;
-                    if (flush_last_r) begin
+                    if (flush_set == BLOCKS-1) begin
                         flush_done_r <= 1'b1;
                         state <= S_IDLE;
                     end else begin
@@ -1597,7 +1562,7 @@ always @(posedge clk) begin
         mem_addr_r <= addr_r[31:4];
     end
 
-    if (state == S_FILL) begin
+    if (state == S_REFILL && mem_ready) begin
         data[set_idx_r] <= refill_line;
         tag[set_idx_r] <= tag_addr_r;
     end
