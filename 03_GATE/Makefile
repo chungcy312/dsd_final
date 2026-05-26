@@ -6,14 +6,25 @@ PATTERN ?= QSort
 PATTERNS ?= noHazard hasHazard BrPred Scaling compression compression_uncompressed QSort_uncompressed QSort Conv Conv_uncompressed Mul LFSR_HIST LFSR_HIST_short
 PATTERNS3 ?= QSort Conv LFSR_HIST
 VCS_WARN_OPTS ?= +warn=noTFIPC
-CHIP ?= CHIP.v
-FOLDER ?= Netlist
+FOLDER ?= ../02_SYN/Netlist
+FOLDER_NOSLASH := $(patsubst %/,%,$(FOLDER))
+FOLDER_BASE := $(notdir $(FOLDER_NOSLASH))
+RUN_NAME := $(patsubst Netlist_%,%,$(FOLDER_BASE))
+ifeq ($(FOLDER_BASE),Netlist)
+SYN_CYCLE := default
+CHIP_BASE := CHIP
 SIM_TIME ?= 3.0
-SYN_CYCLE ?= $(lastword $(subst _, ,$(FOLDER)))
-CHIP_BASE := $(basename $(notdir $(CHIP)))
-NETLIST_FILE ?= ../02_SYN/$(FOLDER)/$(CHIP_BASE)_syn.v
-SDF_FILE ?= ../02_SYN/$(FOLDER)/$(CHIP_BASE)_syn.sdf
-SUMMARY_PREFIX ?= gate_summary_$(CHIP_BASE)_syn$(SYN_CYCLE)_sim$(SIM_TIME)
+REPORT_FOLDER ?= $(subst Netlist,Report,$(FOLDER_NOSLASH))
+else
+SYN_CYCLE := $(lastword $(subst _, ,$(RUN_NAME)))
+CHIP_BASE := $(patsubst %_$(SYN_CYCLE),%,$(RUN_NAME))
+SIM_TIME ?= $(SYN_CYCLE)
+REPORT_FOLDER ?= $(subst /Netlist_,/Report_,$(subst Netlist_,Report_,$(FOLDER_NOSLASH)))
+endif
+AREA_FILE ?= $(REPORT_FOLDER)/$(CHIP_BASE)_syn.area
+NETLIST_FILE ?= $(FOLDER_NOSLASH)/$(CHIP_BASE)_syn.v
+SDF_FILE ?= $(FOLDER_NOSLASH)/$(CHIP_BASE)_syn.sdf
+SUMMARY_PREFIX ?= gate_summary
 SUMMARY_TMP ?= $(SUMMARY_PREFIX)_running.csv
 SUMMARY ?= $(SUMMARY_TMP)
 GATE_FILES = ../00_TESTBED/testbench/Final_tb.v \
@@ -44,10 +55,10 @@ run_all:
 	overall=pass; \
 	for pat in $(PATTERNS); do \
 		echo "============================================================"; \
-		echo "[GATE] Running $$pat with FOLDER=$(FOLDER), CHIP=$(CHIP), SIM_TIME=$(SIM_TIME)"; \
+		echo "[GATE] Running $$pat with FOLDER=$(FOLDER), SIM_TIME=$(SIM_TIME)"; \
 		echo "============================================================"; \
 		$(MAKE) clean >/dev/null; \
-		$(MAKE) run PATTERN=$$pat CHIP=$(CHIP) FOLDER=$(FOLDER) SIM_TIME=$(SIM_TIME); \
+		$(MAKE) run PATTERN=$$pat FOLDER=$(FOLDER) SIM_TIME=$(SIM_TIME); \
 		if grep -q "CONGRATULATIONS" vcs_$$pat.log; then functional=PASS; \
 		elif grep -q "FAIL" vcs_$$pat.log; then functional=FAIL; \
 		else functional=UNKNOWN; fi; \
@@ -61,7 +72,7 @@ run_all:
 		stalls=$$(awk '/STALL_SUMMARY/ {for (i=1;i<=NF;i++) {split($$i,a,"="); v[a[1]]=a[2]}} END {printf "%s,%s,%s,%s,%s,%s,%s,%s", v["total"]+0, v["load_use"]+0, v["mem"]+0, v["mul"]+0, v["ifetch"]+0, v["dmem"]+0, v["imem"]+0, v["cycles"]+0}' vcs_$$pat.log); \
 		printf "%s,%s,%s,%s,%s,%s\n" "$$pat" "$$result" "$$time" "$$viol" "$$eff_viol" "$$stalls" | tee -a $(SUMMARY); \
 	done; \
-	final_summary="$(SUMMARY_PREFIX)_$${overall}.csv"; \
+	final_summary="$(SUMMARY_PREFIX)_$(CHIP_BASE)_$(SYN_CYCLE)_$(SIM_TIME)_$${overall}.csv"; \
 	mv $(SUMMARY) "$$final_summary"; \
 	echo "============================================================"; \
 	echo "[GATE] Summary written to $$final_summary"; \
@@ -74,10 +85,10 @@ run3:
 	overall=pass; \
 	for pat in $(PATTERNS3); do \
 		echo "============================================================"; \
-		echo "[GATE] Running $$pat with FOLDER=$(FOLDER), CHIP=$(CHIP), SIM_TIME=$(SIM_TIME)"; \
+		echo "[GATE] Running $$pat with FOLDER=$(FOLDER), SIM_TIME=$(SIM_TIME)"; \
 		echo "============================================================"; \
 		$(MAKE) clean >/dev/null; \
-		$(MAKE) run PATTERN=$$pat CHIP=$(CHIP) FOLDER=$(FOLDER) SIM_TIME=$(SIM_TIME); \
+		$(MAKE) run PATTERN=$$pat FOLDER=$(FOLDER) SIM_TIME=$(SIM_TIME); \
 		if grep -q "CONGRATULATIONS" vcs_$$pat.log; then functional=PASS; \
 		elif grep -q "FAIL" vcs_$$pat.log; then functional=FAIL; \
 		else functional=UNKNOWN; fi; \
@@ -91,7 +102,13 @@ run3:
 		stalls=$$(awk '/STALL_SUMMARY/ {for (i=1;i<=NF;i++) {split($$i,a,"="); v[a[1]]=a[2]}} END {printf "%s,%s,%s,%s,%s,%s,%s,%s", v["total"]+0, v["load_use"]+0, v["mem"]+0, v["mul"]+0, v["ifetch"]+0, v["dmem"]+0, v["imem"]+0, v["cycles"]+0}' vcs_$$pat.log); \
 		printf "%s,%s,%s,%s,%s,%s\n" "$$pat" "$$result" "$$time" "$$viol" "$$eff_viol" "$$stalls" | tee -a $(SUMMARY); \
 	done; \
-	final_summary="$(SUMMARY_PREFIX)_$${overall}.csv"; \
+	if [ "$$overall" = "pass" ]; then \
+		area=$$(awk '/Total cell area:/ {print $$NF; exit}' "$(AREA_FILE)"); \
+		score=$$(awk -F, -v area="$$area" 'NR>1 {t[$$1]=$$3} END {printf "%.3e", area * t["QSort"] * t["Conv"] * t["LFSR_HIST"]}' $(SUMMARY) | sed 's/e+//'); \
+		final_summary="$(SUMMARY_PREFIX)_$(CHIP_BASE)_$(SYN_CYCLE)_$(SIM_TIME)_$${score}.csv"; \
+	else \
+		final_summary="$(SUMMARY_PREFIX)_$(CHIP_BASE)_$(SYN_CYCLE)_$(SIM_TIME)_$${overall}.csv"; \
+	fi; \
 	mv $(SUMMARY) "$$final_summary"; \
 	echo "============================================================"; \
 	echo "[GATE] Summary written to $$final_summary"; \
@@ -102,7 +119,9 @@ help:
 	@echo "make run PATTERN=QSort: run one gate simulation pattern"
 	@echo "make run_all: run all score/check patterns in PATTERNS"
 	@echo "make run3: run QSort, Conv, and LFSR_HIST"
-	@echo "FOLDER=Netlist_CHIP_xxxxx_2.9 CHIP=CHIP_xxxxx.v SIM_TIME=3.0 make run_all"
+	@echo "Default FOLDER=../02_SYN/Netlist uses CHIP_syn.v and SIM_TIME=3.0"
+	@echo "FOLDER=../02_SYN/Netlist_CHIP_xxxxx_2.9 make run_all"
+	@echo "SIM_TIME=3.0 can override the default simulation cycle from FOLDER"
 	@echo "SUMMARY_PREFIX=name can override the summary output prefix"
 
 .PHONY: all run clean run_all run3
