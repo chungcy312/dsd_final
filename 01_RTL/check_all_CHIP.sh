@@ -11,17 +11,11 @@ cd "$(dirname "$0")"
 # nohup env CHIP=CHIP_db95602.v make run_all > output6.log 2>&1 &
 
 # CHIP=CHIP.v make run_all
-CHIP=CHIP_6636cb2.v make run_all
+CHIP=CHIP_db95602_nb_i32d64.v make run3
+CHIP=CHIP_db95602_nb_i64d32.v make run3
+CHIP=CHIP_db95602_nb_i64d64.v make run3
+# CHIP=CHIP_db95602_nb_i16d32.v make run3
+# CHIP=CHIP_db95602_nb_i32d16.v make run3
 
-CHIP=CHIP_6636cb2_nb.v make run_all
-CHIP=CHIP_b028792_nb.v make run_all
-CHIP=CHIP_c2ad7a8_nb.v make run_all
-CHIP=CHIP_cccb5c4_nb.v make run_all
-CHIP=CHIP_db95602_nb.v make run_all
-
-CHIP=CHIP_b028792.v make run_all
-CHIP=CHIP_c2ad7a8.v make run_all
-CHIP=CHIP_cccb5c4.v make run_all
-CHIP=CHIP_db95602.v make run_all
 
 # CHIP=CHIP_nb.v make run_all

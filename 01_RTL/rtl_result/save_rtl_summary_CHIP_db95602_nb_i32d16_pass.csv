@@ -1,0 +1,4 @@
+pattern,result,sim_time,timing_violations,stall_total,stall_load_use,stall_mem,stall_mul,stall_ifetch,stall_dmem,stall_imem,cycle_count
+QSort_uncompressed,PASS,21956250,0,24932,4655,20277,0,573,19538,545,87807
+Conv,PASS,5222750,0,14459,2085,12257,1744,1583,11754,566,20873
+LFSR_HIST,PASS,69559500,0,19646,0,19646,0,635,18891,604,278220

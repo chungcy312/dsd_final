@@ -5,18 +5,12 @@ cd "$(dirname "$0")"
 
 chips=(
   # CHIP.v
-  CHIP_c2ad7a8_nb.v
-  CHIP_db95602_nb.v  
-  CHIP_6636cb2_nb.v
-  CHIP_b028792_nb.v
-  CHIP_cccb5c4_nb.v
-  CHIP_c2ad7a8.v
-  CHIP_cccb5c4.v
-  CHIP_db95602.v
+  CHIP_db95602_nb_i32d32.v
+  CHIP_db95602_nb_i32d16.v 
 )
 
 cycles=(
-  2.2 2.3 2.4 2.5 2.6 2.7 2.8 2.9
+  2.6 2.62 2.64 2.66 2.52 2.56 2.58 
 )
 
 max_jobs="${MAX_JOBS:-10}"
