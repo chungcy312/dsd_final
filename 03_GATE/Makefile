@@ -29,8 +29,6 @@ SUMMARY_TMP ?= $(SUMMARY_PREFIX)_running.csv
 SUMMARY ?= $(SUMMARY_TMP)
 GATE_FILES = ../00_TESTBED/testbench/Final_tb.v \
              ../00_MEMORY/slow_memory_random_latency.v \
-             ../00_MEMORY/slow_memory.v \
-             ../00_MEMORY/fast_memory.v \
              ../00_TESTBED/testbench/flush_inst_define.v \
              $(NETLIST_FILE) \
              -v /home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/Verilog/tsmc13.v

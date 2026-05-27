@@ -120,6 +120,12 @@ module Final_tb;
 			if (chip0.core0.mem_busy) begin
 				stall_mem_count <= stall_mem_count + 1;
 			end
+			if ((mem_read_D || mem_write_D) && !mem_ready_D) begin
+				stall_dmem_count <= stall_dmem_count + 1;
+			end
+			if ((mem_read_I || mem_write_I) && !mem_ready_I) begin
+				stall_imem_count <= stall_imem_count + 1;
+			end
 			if (chip0.core0.mul_stall) begin
 				stall_mul_count <= stall_mul_count + 1;
 			end

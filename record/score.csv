@@ -1,2 +1,7 @@
-CHIP commit, tcl commit, syn clk, sim clk, score
-b028792,a29ad3c,2.5,2.5,2.54e22
+CHIP commit, tcl commit, syn clk, sim clk, score, area
+b028792,a29ad3c,2.5,2.5,2.54e22,488988
+b028792_nb, a29ad3c, 2.5, f,f,477743 fail
+6636cb2_nb, a29ad3c, 2.6, 2.6 ,2.489e22,458808
+cccb5c4, a29ad3c, 2.5, 2.5,2.370e22,503504
+cccb5c4_nb, a29ad3c, 2.5, f,f,485217 fail
+db95602_nb, a29ad3c, 2.6, 2.6,2.299e22,468928
