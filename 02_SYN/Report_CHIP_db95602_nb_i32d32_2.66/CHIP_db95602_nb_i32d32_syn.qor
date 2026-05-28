@@ -1,0 +1,86 @@
+Information: Updating design information... (UID-85)
+Warning: Design 'CHIP' contains 1 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
+ 
+****************************************
+Report : qor
+Design : CHIP
+Version: U-2022.12
+Date   : Wed May 27 19:59:58 2026
+****************************************
+
+
+  Timing Path Group 'CLK'
+  -----------------------------------
+  Levels of Logic:              24.00
+  Critical Path Length:          2.47
+  Critical Path Slack:           0.00
+  Critical Path Clk Period:      2.66
+  Total Negative Slack:          0.00
+  No. of Violating Paths:        0.00
+  Worst Hold Violation:          0.00
+  Total Hold Violation:          0.00
+  No. of Hold Violations:        0.00
+  -----------------------------------
+
+
+  Cell Count
+  -----------------------------------
+  Hierarchical Cell Count:          0
+  Hierarchical Port Count:          0
+  Leaf Cell Count:              45209
+  Buf/Inv Cell Count:            4196
+  Buf Cell Count:                1270
+  Inv Cell Count:                2926
+  CT Buf/Inv Cell Count:            0
+  Combinational Cell Count:     33666
+  Sequential Cell Count:        11543
+  Macro Count:                      0
+  -----------------------------------
+
+
+  Area
+  -----------------------------------
+  Combinational Area:   403236.042672
+  Noncombinational Area:
+                        374901.338377
+  Buf/Inv Area:          42358.617516
+  Total Buffer Area:         23787.36
+  Total Inverter Area:       18571.25
+  Macro/Black Box Area:      0.000000
+  Net Area:            5752536.246429
+  -----------------------------------
+  Cell Area:            778137.381049
+  Design Area:         6530673.627479
+
+
+  Design Rules
+  -----------------------------------
+  Total Number of Nets:         50475
+  Nets With Violations:             0
+  Max Trans Violations:             0
+  Max Cap Violations:               0
+  -----------------------------------
+
+
+  Hostname: cad33
+
+  Compile CPU Statistics
+  -----------------------------------------
+  Resource Sharing:                    0.08
+  Logic Optimization:                 15.21
+  Mapping Optimization:              701.49
+  -----------------------------------------
+  Overall Compile Time:              954.81
+  Overall Compile Wall Clock Time:  1621.53
+
+  --------------------------------------------------------------------
+
+  Design  WNS: 0.00  TNS: 0.00  Number of Violating Paths: 0
+
+
+  Design (Hold)  WNS: 0.00  TNS: 0.00  Number of Violating Paths: 0
+
+  --------------------------------------------------------------------
+
+
+1

@@ -30,6 +30,7 @@ set_load         1     [all_outputs]
 # Note: You may also add more constraints for your design (but do not overwrite the existing ones in above section)
 #####################################################
 set mem_input_delay   [expr $cycle * 0.5]
+set reset_input_delay [expr $cycle * 0.5]
 set mem_output_delay  [expr $cycle * 0.5]
 set done_output_delay  0.0
 
@@ -40,22 +41,29 @@ set done_output_port [get_ports o_done]
 
 set_input_delay  -max $mem_input_delay   -clock CLK $mem_input_ports
 set_input_delay  -min 0.0                -clock CLK $mem_input_ports
+set_input_delay  -max $reset_input_delay -clock CLK $reset_input_port
+set_input_delay  -min 0.0                -clock CLK $reset_input_port
 set_output_delay -max $mem_output_delay  -clock CLK $mem_output_ports
 set_output_delay -min 0.0                -clock CLK $mem_output_ports
 set_output_delay -max $done_output_delay -clock CLK $done_output_port
 set_output_delay -min 0.0                -clock CLK $done_output_port
 
-# The provided TB only toggles reset during initialization.  Do not let
-# reset release dominate runtime setup/hold optimization.
-set_false_path -from $reset_input_port
+# Reset is only used during initialization, but keep it constrained so the
+# synthesized netlist still has a bounded reset-release path.
+set reset_cycles 4
+set_multicycle_path $reset_cycles -setup -from $reset_input_port
+set_multicycle_path [expr $reset_cycles - 1] -hold -from $reset_input_port
 #####################################################
 
 # Multicycle MUL block.
 # RTL default CHIP.MUL_CYCLES must match this value.  The independent
 # mul_a_reg/mul_b_reg launch registers capture forwarded operands, and
 # mul_result_reg captures the multiplier output after multiple cycles.
-set mul_cycles 3
-set mul_from_regs [concat [get_registers -hier *mul_a_reg*] [get_registers -hier *mul_b_reg*]]
-set mul_to_regs   [get_registers -hier *mul_result_reg*]
-set_multicycle_path $mul_cycles -setup -from $mul_from_regs -to $mul_to_regs
-set_multicycle_path [expr $mul_cycles - 1] -hold -from $mul_from_regs -to $mul_to_regs
+set mul_cycles 2
+set mul_from_regs [get_cells -hier *mul_a_reg*]
+set mul_from_regs [add_to_collection $mul_from_regs [get_cells -hier *mul_b_reg*]]
+set mul_to_regs   [get_cells -hier *mul_result_reg*]
+if {([sizeof_collection $mul_from_regs] > 0) && ([sizeof_collection $mul_to_regs] > 0)} {
+    set_multicycle_path $mul_cycles -setup -from $mul_from_regs -to $mul_to_regs
+    set_multicycle_path [expr $mul_cycles - 1] -hold -from $mul_from_regs -to $mul_to_regs
+}

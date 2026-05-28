@@ -25,8 +25,9 @@ current_design $DESIGN
 link
 uniquify
 
-# Keep all timing/design constraints in one place.
-read_sdc ./CHIP_syn.sdc
+# Keep all timing/design constraints in one place.  This file contains a few
+# DC Tcl commands in addition to plain SDC, so source it instead of read_sdc.
+source ./CHIP_syn.sdc
 
 # Timing-first flow.  Keep area recovery out of the main loop until setup
 # paths are clean; aggressive area optimization was downsizing marginal paths.
