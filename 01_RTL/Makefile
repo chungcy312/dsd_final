@@ -38,7 +38,7 @@ clean:
 
 run_all:
 	@rm -f $(SUMMARY); \
-	echo "pattern,result,sim_time,timing_violations,stall_total,stall_load_use,stall_mem,stall_mul,stall_ifetch,stall_dmem,stall_imem,cycle_count" > $(SUMMARY)
+	echo "pattern,result,sim_time,timing_violations,stall_total,stall_load_use,stall_mem,stall_mul,stall_ifetch,stall_dmem,stall_imem,branch_wrong,branch_wrong_cycles,cycle_count" > $(SUMMARY)
 	@set -e; \
 	overall=pass; \
 	for pat in $(PATTERNS); do \
@@ -53,7 +53,7 @@ run_all:
 		if [ "$$result" != "PASS" ]; then overall=fail; fi; \
 		time=$$(awk '/\$$finish at simulation time/ {t=$$NF} END {print t}' "$$log"); \
 		viol=$$(grep -c "Timing violation" "$$log" || true); \
-		stalls=$$(awk '/STALL_SUMMARY/ {for (i=1;i<=NF;i++) {split($$i,a,"="); v[a[1]]=a[2]}} END {printf "%s,%s,%s,%s,%s,%s,%s,%s", v["total"]+0, v["load_use"]+0, v["mem"]+0, v["mul"]+0, v["ifetch"]+0, v["dmem"]+0, v["imem"]+0, v["cycles"]+0}' "$$log"); \
+		stalls=$$(awk '/STALL_SUMMARY/ {for (i=1;i<=NF;i++) {split($$i,a,"="); v[a[1]]=a[2]}} END {printf "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s", v["total"]+0, v["load_use"]+0, v["mem"]+0, v["mul"]+0, v["ifetch"]+0, v["dmem"]+0, v["imem"]+0, v["branch_wrong"]+0, v["branch_wrong_cycles"]+0, v["cycles"]+0}' "$$log"); \
 		printf "%s,%s,%s,%s,%s\n" "$$pat" "$$result" "$$time" "$$viol" "$$stalls" | tee -a $(SUMMARY); \
 	done; \
 	final_summary="$(SUMMARY_PREFIX)_$${overall}.csv"; \
@@ -64,7 +64,7 @@ run_all:
 
 run3:
 	@rm -f $(SUMMARY); \
-	echo "pattern,result,sim_time,timing_violations,stall_total,stall_load_use,stall_mem,stall_mul,stall_ifetch,stall_dmem,stall_imem,cycle_count" > $(SUMMARY)
+	echo "pattern,result,sim_time,timing_violations,stall_total,stall_load_use,stall_mem,stall_mul,stall_ifetch,stall_dmem,stall_imem,branch_wrong,branch_wrong_cycles,cycle_count" > $(SUMMARY)
 	@set -e; \
 	overall=pass; \
 	for pat in $(PATTERNS3); do \
@@ -79,7 +79,7 @@ run3:
 		if [ "$$result" != "PASS" ]; then overall=fail; fi; \
 		time=$$(awk '/\$$finish at simulation time/ {t=$$NF} END {print t}' "$$log"); \
 		viol=$$(grep -c "Timing violation" "$$log" || true); \
-		stalls=$$(awk '/STALL_SUMMARY/ {for (i=1;i<=NF;i++) {split($$i,a,"="); v[a[1]]=a[2]}} END {printf "%s,%s,%s,%s,%s,%s,%s,%s", v["total"]+0, v["load_use"]+0, v["mem"]+0, v["mul"]+0, v["ifetch"]+0, v["dmem"]+0, v["imem"]+0, v["cycles"]+0}' "$$log"); \
+		stalls=$$(awk '/STALL_SUMMARY/ {for (i=1;i<=NF;i++) {split($$i,a,"="); v[a[1]]=a[2]}} END {printf "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s", v["total"]+0, v["load_use"]+0, v["mem"]+0, v["mul"]+0, v["ifetch"]+0, v["dmem"]+0, v["imem"]+0, v["branch_wrong"]+0, v["branch_wrong_cycles"]+0, v["cycles"]+0}' "$$log"); \
 		printf "%s,%s,%s,%s,%s\n" "$$pat" "$$result" "$$time" "$$viol" "$$stalls" | tee -a $(SUMMARY); \
 	done; \
 	final_summary="$(SUMMARY_PREFIX)_$${overall}.csv"; \

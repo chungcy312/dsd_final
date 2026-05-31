@@ -1,0 +1,38 @@
+ 
+****************************************
+Report : constraint
+        -all_violators
+Design : CHIP
+Version: U-2022.12
+Date   : Sat May 30 22:16:02 2026
+****************************************
+
+
+   min_delay/hold ('CLK' group)
+
+                             Required        Actual
+   Endpoint                 Path Delay     Path Delay        Slack
+   -----------------------------------------------------------------
+   icache0_data_reg_20__98_/D
+                                0.53           0.53 r         0.00  (VIOLATED: increase significant digits)
+
+
+   max_area
+
+                             Required        Actual
+   Design                      Area           Area           Slack
+   -----------------------------------------------------------------
+   CHIP                         0.00       6443794.50     -6443794.50
+                                                                    (VIOLATED)
+
+
+   max_leakage_power
+
+                             Required        Actual
+   Design                   Leakage Power  Leakage Power     Slack
+   -----------------------------------------------------------------
+   CHIP                         0.00       123652232.00   -123652232.00
+                                                                    (VIOLATED)
+
+
+1

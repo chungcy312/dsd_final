@@ -1,0 +1,43 @@
+ 
+****************************************
+Report : area
+Design : CHIP
+Version: U-2022.12
+Date   : Sat May 30 22:16:04 2026
+****************************************
+
+Library(s) Used:
+
+    typical (File: /home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/typical.db)
+
+Number of ports:                          577
+Number of nets:                         49148
+Number of cells:                        44786
+Number of combinational cells:          33113
+Number of sequential cells:             11543
+Number of macros/black boxes:               0
+Number of buf/inv:                       4511
+Number of references:                     212
+
+Combinational area:             388332.868974
+Buf/Inv area:                    40515.240933
+Noncombinational area:          342172.077785
+Macro/Black Box area:                0.000000
+Net Interconnect area:         5713289.342041
+
+Total cell area:                730504.946760
+Total area:                    6443794.288801
+
+Hierarchical area distribution
+------------------------------
+
+                                  Global cell area              Local cell area
+                                  --------------------  -------------------------------- 
+Hierarchical cell                 Absolute     Percent  Combi-       Noncombi-    Black-
+                                  Total        Total    national     national     boxes   Design
+--------------------------------  -----------  -------  -----------  -----------  ------  ---------
+CHIP                              730504.9468    100.0  388332.8690  342172.0778  0.0000  CHIP
+--------------------------------  -----------  -------  -----------  -----------  ------  ---------
+Total                                                   388332.8690  342172.0778  0.0000
+
+1

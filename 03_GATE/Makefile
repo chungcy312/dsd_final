@@ -4,7 +4,7 @@ all:
 
 PATTERN ?= QSort
 PATTERNS ?= noHazard hasHazard BrPred Scaling compression compression_uncompressed QSort_uncompressed QSort Conv Conv_uncompressed Mul LFSR_HIST LFSR_HIST_short
-PATTERNS3 ?= QSort Conv LFSR_HIST
+PATTERNS3 ?= QSort_uncompressed Conv LFSR_HIST
 VCS_WARN_OPTS ?= +warn=noTFIPC
 FOLDER ?= ../02_SYN/Netlist
 FOLDER_NOSLASH := $(patsubst %/,%,$(FOLDER))
@@ -48,7 +48,7 @@ clean:
 
 run_all:
 	@rm -f $(SUMMARY); \
-	echo "pattern,result,sim_time,timing_violations,timing_violations_after_reset,stall_total,stall_load_use,stall_mem,stall_mul,stall_ifetch,stall_dmem,stall_imem,cycle_count" > $(SUMMARY)
+	echo "pattern,result,sim_time,timing_violations,timing_violations_after_reset,stall_total,stall_load_use,stall_mem,stall_mul,stall_ifetch,stall_dmem,stall_imem,branch_wrong,branch_wrong_cycles,cycle_count" > $(SUMMARY)
 	@set -e; \
 	overall=pass; \
 	for pat in $(PATTERNS); do \
@@ -67,7 +67,7 @@ run_all:
 		else result=$$functional; fi; \
 		if [ "$$result" = "FAIL" ] || [ "$$result" = "UNKNOWN" ]; then overall=fail; \
 		elif [ "$$result" = "FAIL_TIMING" ] && [ "$$overall" = "pass" ]; then overall='fail(timing violation)'; fi; \
-		stalls=$$(awk '/STALL_SUMMARY/ {for (i=1;i<=NF;i++) {split($$i,a,"="); v[a[1]]=a[2]}} END {printf "%s,%s,%s,%s,%s,%s,%s,%s", v["total"]+0, v["load_use"]+0, v["mem"]+0, v["mul"]+0, v["ifetch"]+0, v["dmem"]+0, v["imem"]+0, v["cycles"]+0}' vcs_$$pat.log); \
+		stalls=$$(awk '/STALL_SUMMARY/ {for (i=1;i<=NF;i++) {split($$i,a,"="); v[a[1]]=a[2]}} END {printf "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s", v["total"]+0, v["load_use"]+0, v["mem"]+0, v["mul"]+0, v["ifetch"]+0, v["dmem"]+0, v["imem"]+0, v["branch_wrong"]+0, v["branch_wrong_cycles"]+0, v["cycles"]+0}' vcs_$$pat.log); \
 		printf "%s,%s,%s,%s,%s,%s\n" "$$pat" "$$result" "$$time" "$$viol" "$$eff_viol" "$$stalls" | tee -a $(SUMMARY); \
 	done; \
 	final_summary="$(SUMMARY_PREFIX)_$(CHIP_BASE)_$(SYN_CYCLE)_$(SIM_TIME)_$${overall}.csv"; \
@@ -78,7 +78,7 @@ run_all:
 
 run3:
 	@rm -f $(SUMMARY); \
-	echo "pattern,result,sim_time,timing_violations,timing_violations_after_reset,stall_total,stall_load_use,stall_mem,stall_mul,stall_ifetch,stall_dmem,stall_imem,cycle_count" > $(SUMMARY)
+	echo "pattern,result,sim_time,timing_violations,timing_violations_after_reset,stall_total,stall_load_use,stall_mem,stall_mul,stall_ifetch,stall_dmem,stall_imem,branch_wrong,branch_wrong_cycles,cycle_count" > $(SUMMARY)
 	@set -e; \
 	overall=pass; \
 	for pat in $(PATTERNS3); do \
@@ -97,7 +97,7 @@ run3:
 		else result=$$functional; fi; \
 		if [ "$$result" = "FAIL" ] || [ "$$result" = "UNKNOWN" ]; then overall=fail; \
 		elif [ "$$result" = "FAIL_TIMING" ] && [ "$$overall" = "pass" ]; then overall='fail(timing violation)'; fi; \
-		stalls=$$(awk '/STALL_SUMMARY/ {for (i=1;i<=NF;i++) {split($$i,a,"="); v[a[1]]=a[2]}} END {printf "%s,%s,%s,%s,%s,%s,%s,%s", v["total"]+0, v["load_use"]+0, v["mem"]+0, v["mul"]+0, v["ifetch"]+0, v["dmem"]+0, v["imem"]+0, v["cycles"]+0}' vcs_$$pat.log); \
+		stalls=$$(awk '/STALL_SUMMARY/ {for (i=1;i<=NF;i++) {split($$i,a,"="); v[a[1]]=a[2]}} END {printf "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s", v["total"]+0, v["load_use"]+0, v["mem"]+0, v["mul"]+0, v["ifetch"]+0, v["dmem"]+0, v["imem"]+0, v["branch_wrong"]+0, v["branch_wrong_cycles"]+0, v["cycles"]+0}' vcs_$$pat.log); \
 		printf "%s,%s,%s,%s,%s,%s\n" "$$pat" "$$result" "$$time" "$$viol" "$$eff_viol" "$$stalls" | tee -a $(SUMMARY); \
 	done; \
 	if [ "$$overall" = "pass" ]; then \

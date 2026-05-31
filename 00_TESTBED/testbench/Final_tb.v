@@ -57,6 +57,8 @@ module Final_tb;
 	integer stall_ifetch_count;
 	integer stall_dmem_count;
 	integer stall_imem_count;
+	integer branch_wrong_count;
+	integer branch_wrong_cycle_count;
 	initial cycle_count = 0;
 
 	always @(posedge clk) begin
@@ -78,6 +80,8 @@ module Final_tb;
 		stall_ifetch_count = 0;
 		stall_dmem_count = 0;
 		stall_imem_count = 0;
+		branch_wrong_count = 0;
+		branch_wrong_cycle_count = 0;
 	end
 
 	always @(posedge clk) begin
@@ -89,8 +93,14 @@ module Final_tb;
 			stall_ifetch_count <= 0;
 			stall_dmem_count <= 0;
 			stall_imem_count <= 0;
+			branch_wrong_count <= 0;
+			branch_wrong_cycle_count <= 0;
 		end else if (!done) begin
 `ifdef SDF
+			if (chip0.core0_branch_wrong_pulse) begin
+				branch_wrong_count <= branch_wrong_count + 1;
+				branch_wrong_cycle_count <= branch_wrong_cycle_count + 2;
+			end
 			if ((mem_read_D || mem_write_D) && !mem_ready_D) begin
 				stall_dmem_count <= stall_dmem_count + 1;
 			end
@@ -131,6 +141,10 @@ module Final_tb;
 			end
 			if (!chip0.core0.done_r && !chip0.core0.if_ready) begin
 				stall_ifetch_count <= stall_ifetch_count + 1;
+			end
+			if (chip0.core0.branch_wrong_pulse) begin
+				branch_wrong_count <= branch_wrong_count + 1;
+				branch_wrong_cycle_count <= branch_wrong_cycle_count + 2;
 			end
 `endif
 		end
@@ -427,13 +441,13 @@ task DISPLAY_STALL_SUMMARY;
 	begin
 		$display("============================================================================");
 `ifdef SDF
-		$display("STALL_SUMMARY cycles=%0d total=%0d load_use=%0d mem=%0d mul=%0d ifetch=%0d dmem=%0d imem=%0d",
+		$display("STALL_SUMMARY cycles=%0d total=%0d load_use=%0d mem=%0d mul=%0d ifetch=%0d dmem=%0d imem=%0d branch_wrong=%0d branch_wrong_cycles=%0d",
 		         cycle_count, stall_total_count, stall_load_use_count, stall_mem_count, stall_mul_count,
-		         stall_ifetch_count, stall_dmem_count, stall_imem_count);
+		         stall_ifetch_count, stall_dmem_count, stall_imem_count, branch_wrong_count, branch_wrong_cycle_count);
 `else
-		$display("STALL_SUMMARY cycles=%0d total=%0d load_use=%0d mem=%0d mul=%0d ifetch=%0d dmem=%0d imem=%0d",
+		$display("STALL_SUMMARY cycles=%0d total=%0d load_use=%0d mem=%0d mul=%0d ifetch=%0d dmem=%0d imem=%0d branch_wrong=%0d branch_wrong_cycles=%0d",
 		         cycle_count, stall_total_count, stall_load_use_count, stall_mem_count, stall_mul_count,
-		         stall_ifetch_count, stall_dmem_count, stall_imem_count);
+		         stall_ifetch_count, stall_dmem_count, stall_imem_count, branch_wrong_count, branch_wrong_cycle_count);
 `endif
 		$display("============================================================================");
 	end
