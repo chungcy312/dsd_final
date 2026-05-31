@@ -4,14 +4,14 @@ set -eu
 cd "$(dirname "$0")"
 
 chips="
-CHIP.v
+CHIP_d16.v
 "
 
 cycles="
-2.6 2.62 2.64 2.66 2.52 2.56 2.58
+2.66 2.68 2.7 2.72 2.6 2.62 2.64 
 "
 
-max_jobs="${MAX_JOBS:-10}"
+max_jobs="${MAX_JOBS:-4}"
 
 mkdir -p logs
 
