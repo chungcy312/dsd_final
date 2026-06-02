@@ -1,4 +1,4 @@
 pattern,result,sim_time,timing_violations,timing_violations_after_reset,stall_total,stall_load_use,stall_mem,stall_mul,stall_ifetch,stall_dmem,stall_imem,branch_wrong,branch_wrong_cycles,cycle_count
-QSort_uncompressed,PASS,213220214,1246,0,11595,0,11595,0,510,11101,510,0,0,78952
-Conv,PASS,37452914,1246,0,6835,0,5963,872,529,5489,529,0,0,13853
-LFSR_HIST,PASS,746856314,1246,0,17820,0,17820,0,564,17309,564,0,0,276595
+QSort_uncompressed,PASS,213220214,1246,0,11595,0,11595,0,510,11101,510,7375,14750,78952
+Conv,PASS,37452914,1246,0,6835,0,5963,872,529,5489,529,180,360,13853
+LFSR_HIST,PASS,746856314,1246,0,17820,0,17820,0,564,17309,564,28212,56424,276595

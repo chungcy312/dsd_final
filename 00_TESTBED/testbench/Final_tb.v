@@ -59,6 +59,15 @@ module Final_tb;
 	integer stall_imem_count;
 	integer branch_wrong_count;
 	integer branch_wrong_cycle_count;
+`ifdef SDF
+	reg        sdf_branch_seen;
+	reg [31:0] sdf_branch_pc_seen;
+	wire       sdf_branch_in_ex;
+	wire [31:0] sdf_branch_pc;
+
+	assign sdf_branch_in_ex = chip0.core0_idex_valid && chip0.core0_idex_branch;
+	assign sdf_branch_pc = {chip0.core0_idex_pc, 1'b0};
+`endif
 	initial cycle_count = 0;
 
 	always @(posedge clk) begin
@@ -95,11 +104,21 @@ module Final_tb;
 			stall_imem_count <= 0;
 			branch_wrong_count <= 0;
 			branch_wrong_cycle_count <= 0;
+`ifdef SDF
+			sdf_branch_seen <= 1'b0;
+			sdf_branch_pc_seen <= 32'b0;
+`endif
 		end else if (!done) begin
 `ifdef SDF
-			if (chip0.core0_branch_wrong_pulse) begin
-				branch_wrong_count <= branch_wrong_count + 1;
-				branch_wrong_cycle_count <= branch_wrong_cycle_count + 2;
+			if (sdf_branch_in_ex) begin
+				if (!sdf_branch_seen || (sdf_branch_pc_seen != sdf_branch_pc)) begin
+					branch_wrong_count <= branch_wrong_count + 1;
+					branch_wrong_cycle_count <= branch_wrong_cycle_count + 2;
+				end
+				sdf_branch_seen <= 1'b1;
+				sdf_branch_pc_seen <= sdf_branch_pc;
+			end else begin
+				sdf_branch_seen <= 1'b0;
 			end
 			if ((mem_read_D || mem_write_D) && !mem_ready_D) begin
 				stall_dmem_count <= stall_dmem_count + 1;
@@ -142,7 +161,7 @@ module Final_tb;
 			if (!chip0.core0.done_r && !chip0.core0.if_ready) begin
 				stall_ifetch_count <= stall_ifetch_count + 1;
 			end
-			if (chip0.core0.branch_wrong_pulse) begin
+			if (chip0.core0.ex_redirect_valid && chip0.core0.idex_branch) begin
 				branch_wrong_count <= branch_wrong_count + 1;
 				branch_wrong_cycle_count <= branch_wrong_cycle_count + 2;
 			end

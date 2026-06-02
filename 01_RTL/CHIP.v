@@ -245,7 +245,7 @@ assign load_use_stall = ifid_valid & idex_valid & idex_mem_read & (idex_rd != 5'
                         ((id_use_rs1 & (id_rs1 == idex_rd)) |
                          (id_use_rs2 & (id_rs2 == idex_rd)));
 assign ex_redirect_valid = idex_valid & ex_redirect;
-assign branch_wrong_pulse = ex_redirect_valid;
+assign branch_wrong_pulse = ex_redirect_valid & idex_branch;
 assign idex_insert_bubble = ex_redirect_valid | load_use_stall;
 assign if_redirect = ex_redirect_valid;
 assign if_redirect_pc = ex_redirect_pc;
