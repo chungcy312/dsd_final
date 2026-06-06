@@ -239,16 +239,34 @@ wire idex_insert_bubble;
 wire ex_redirect_valid;
 (* keep = "true" *) wire branch_wrong_pulse /* synthesis keep */;
 
+// jal
+wire id_jal_redirect;
+wire [31:0] id_jal_redirect_pc;
+
 assign mem_busy = exmem_valid & (exmem_mem_read | exmem_mem_write) & ~dmem_ready;
 assign global_stall = (~done_r & ~if_ready) | mem_busy;
 assign load_use_stall = ifid_valid & idex_valid & idex_mem_read & (idex_rd != 5'b0) &
                         ((id_use_rs1 & (id_rs1 == idex_rd)) |
                          (id_use_rs2 & (id_rs2 == idex_rd)));
+
+// jal
+assign id_jal_redirect = ifid_valid & id_jal & ~global_stall & ~mul_stall;
+// assign id_jal_redirect_pc = ifid_pc + id_imm_aux;
+// 專屬 imm
+wire [31:0] fast_jal_imm;
+assign fast_jal_imm = {{11{ifid_inst[31]}}, ifid_inst[31], ifid_inst[19:12], ifid_inst[20], ifid_inst[30:21], 1'b0};
+assign id_jal_redirect_pc = ifid_pc + fast_jal_imm;
+
 assign ex_redirect_valid = idex_valid & ex_redirect;
 assign branch_wrong_pulse = ex_redirect_valid & idex_branch;
 assign idex_insert_bubble = ex_redirect_valid | load_use_stall;
-assign if_redirect = ex_redirect_valid;
-assign if_redirect_pc = ex_redirect_pc;
+
+// jal
+// assign if_redirect = ex_redirect_valid;
+// assign if_redirect_pc = ex_redirect_pc;
+assign if_redirect = ex_redirect_valid | id_jal_redirect;
+assign if_redirect_pc = ex_redirect_valid ? ex_redirect_pc : id_jal_redirect_pc;
+
 assign o_flush = done_r;
 assign o_done = done_r;
 
@@ -780,8 +798,10 @@ assign imm_b = {{19{inst[31]}}, inst[31], inst[7], inst[30:25], inst[11:8], 1'b0
 assign imm_j = {{11{inst[31]}}, inst[31], inst[19:12], inst[20], inst[30:21], 1'b0};
 assign imm_u = {inst[31:12], 12'b0};
 assign imm_alu = is_store ? imm_s : imm_i;
-assign imm_aux = is_jal ? imm_j :
-                 is_branch ? imm_b : imm_u;
+// assign imm_aux = is_jal ? imm_j :
+//                  is_branch ? imm_b : imm_u;
+// jal 不再需要 imm_aux
+assign imm_aux = is_branch ? imm_b : imm_u;
 
 assign use_rs1 = is_rtype | is_itype | is_load | is_store | is_branch | is_jalr;
 assign use_rs2 = is_rtype | is_store | is_branch;
@@ -891,10 +911,16 @@ assign branch_taken = branch &&
                        (funct3 == 3'b001 && fwd_rs1 != fwd_rs2));
 assign branch_target = pc + imm_aux;
 assign branch_next_pc = branch_taken ? branch_target : pc4;
-assign redirect = jal | jalr | branch_taken;
-assign redirect_pc = jal ? (pc + imm_aux) :
-                     jalr ? ((fwd_rs1 + imm_alu) & 32'hffff_fffe) :
+
+// move jal to ID stage
+// assign redirect = jal | jalr | branch_taken;
+// assign redirect_pc = jal ? (pc + imm_aux) :
+//                      jalr ? ((fwd_rs1 + imm_alu) & 32'hffff_fffe) :
+//                      branch_next_pc;
+assign redirect = jalr | branch_taken;
+assign redirect_pc = jalr ? ((fwd_rs1 + imm_alu) & 32'hffff_fffe) :
                      branch_next_pc;
+
 assign mul_active = valid & is_mul;
 assign mul_done = mul_done_r;
 assign mul_stall = mul_active & ~mul_done;

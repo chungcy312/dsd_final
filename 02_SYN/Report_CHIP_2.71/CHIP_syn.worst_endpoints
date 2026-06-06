@@ -1,0 +1,41 @@
+ 
+****************************************
+Report : timing
+        -path end
+        -delay max
+        -nworst 3
+        -max_paths 10
+Design : CHIP
+Version: U-2022.12
+Date   : Sat Jun  6 23:33:28 2026
+****************************************
+
+ # A fanout number of 1000 was used for high fanout net computations.
+
+Operating Conditions: slow   Library: slow
+Wire Load Model Mode: top
+
+Endpoint                         Path Delay     Path Required     Slack
+------------------------------------------------------------------------
+dcache0_data_reg_0__69_/D (DFFQX1)
+                                    2.94 f            2.94         0.00
+core0_exmem_result_reg_13_/D (DFFHQX4)
+                                    3.03 r            3.03         0.00
+core0_ifid_inst_reg_22_/D (DFFHQX4)
+                                    3.02 f            3.02         0.00
+core0_exmem_result_reg_1_/D (DFFHQX4)
+                                    3.02 f            3.02         0.00
+core0_exmem_result_reg_27_/D (DFFHQX4)
+                                    3.03 r            3.03         0.00
+core0_exmem_result_reg_13_/D (DFFHQX4)
+                                    3.03 r            3.03         0.00
+core0_exmem_result_reg_13_/D (DFFHQX4)
+                                    3.03 r            3.03         0.00
+core0_ifid_inst_reg_7_/D (DFFHQX4)
+                                    3.03 r            3.03         0.00
+core0_if_stage0_pc_reg_13_/D (DFFHQX4)
+                                    3.01 f            3.01         0.00
+core0_ifid_inst_reg_7_/D (DFFHQX4)
+                                    3.03 r            3.03         0.00
+
+1

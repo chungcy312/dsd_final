@@ -1,0 +1,115 @@
+ 
+****************************************
+Report : timing
+        -path full_clock_expanded
+        -delay max
+        -input_pins
+        -nets
+        -max_paths 1
+        -transition_time
+        -capacitance
+Design : CHIP
+Version: U-2022.12
+Date   : Sat Jun  6 23:33:27 2026
+****************************************
+
+ # A fanout number of 1000 was used for high fanout net computations.
+
+Operating Conditions: slow   Library: slow
+Wire Load Model Mode: top
+
+  Startpoint: core0_exmem_result_reg_6_
+              (rising edge-triggered flip-flop clocked by CLK)
+  Endpoint: dcache0_data_reg_0__69_
+            (rising edge-triggered flip-flop clocked by CLK)
+  Path Group: CLK
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  CHIP               tsmc13_wl10           slow
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock CLK (rise edge)                                                       0.00       0.00
+  clock network delay (ideal)                                                 0.50       0.50
+  core0_exmem_result_reg_6_/CK (DFFHQX8)                            0.00      0.00 #     0.50 r
+  core0_exmem_result_reg_6_/Q (DFFHQX8)                             0.10      0.18       0.68 f
+  core_d_addr[6] (net)                          4         0.12                0.00       0.68 f
+  U18005/A (INVX12)                                                 0.10      0.00       0.68 f
+  U18005/Y (INVX12)                                                 0.05      0.05       0.73 r
+  dcache0_n771 (net)                            2         0.04                0.00       0.73 r
+  dcache0_U2233/A (NAND2X8)                                         0.05      0.00       0.73 r
+  dcache0_U2233/Y (NAND2X8)                                         0.06      0.05       0.78 f
+  dcache0_n973 (net)                            2         0.05                0.00       0.78 f
+  dcache0_U1602/A (OR2X8)                                           0.06      0.00       0.78 f
+  dcache0_U1602/Y (OR2X8)                                           0.10      0.15       0.93 f
+  dcache0_n772 (net)                            5         0.13                0.00       0.93 f
+  U18379/B (NOR2X8)                                                 0.10      0.00       0.93 f
+  U18379/Y (NOR2X8)                                                 0.13      0.10       1.03 r
+  n20411 (net)                                  1         0.06                0.00       1.03 r
+  U3540/A (CLKINVX16)                                               0.13      0.00       1.03 r
+  U3540/Y (CLKINVX16)                                               0.14      0.12       1.15 f
+  dcache0_n2999 (net)                          27         0.45                0.00       1.15 f
+  dcache0_U2944/A0N (AOI2BB2X2)                                     0.14      0.00       1.15 f
+  dcache0_U2944/Y (AOI2BB2X2)                                       0.12      0.17       1.32 f
+  dcache0_n1403 (net)                           1         0.02                0.00       1.32 f
+  U30328/A (NAND2X2)                                                0.12      0.00       1.32 f
+  U30328/Y (NAND2X2)                                                0.09      0.08       1.40 r
+  n22534 (net)                                  1         0.02                0.00       1.40 r
+  U5280/A (NOR2X2)                                                  0.09      0.00       1.40 r
+  U5280/Y (NOR2X2)                                                  0.07      0.07       1.47 f
+  n22533 (net)                                  1         0.02                0.00       1.47 f
+  U30331/D (NAND4X4)                                                0.07      0.00       1.47 f
+  U30331/Y (NAND4X4)                                                0.14      0.11       1.58 r
+  dcache0_n1650 (net)                           2         0.03                0.00       1.58 r
+  dcache0_U2962/A (XNOR2X4)                                         0.14      0.00       1.58 r
+  dcache0_U2962/Y (XNOR2X4)                                         0.11      0.12       1.69 f
+  dcache0_n1442 (net)                           1         0.04                0.00       1.69 f
+  U24848/D (NAND4X8)                                                0.11      0.00       1.69 f
+  U24848/Y (NAND4X8)                                                0.13      0.11       1.81 r
+  dcache0_n798 (net)                            2         0.05                0.00       1.81 r
+  U24845/B (NOR2X8)                                                 0.13      0.00       1.81 r
+  U24845/Y (NOR2X8)                                                 0.05      0.05       1.86 f
+  dcache0_n792 (net)                            1         0.03                0.00       1.86 f
+  U16850/C (NAND3X8)                                                0.05      0.00       1.86 f
+  U16850/Y (NAND3X8)                                                0.12      0.09       1.95 r
+  dcache0_n694 (net)                            3         0.06                0.00       1.95 r
+  U16836/A (NOR2X8)                                                 0.12      0.00       1.95 r
+  U16836/Y (NOR2X8)                                                 0.07      0.06       2.01 f
+  dcache0_n9981 (net)                           3         0.07                0.00       2.01 f
+  U28303/A (AND2X8)                                                 0.07      0.00       2.01 f
+  U28303/Y (AND2X8)                                                 0.07      0.12       2.13 f
+  dcache0_n12056 (net)                          4         0.09                0.00       2.13 f
+  U24181/A (AND2X8)                                                 0.07      0.00       2.13 f
+  U24181/Y (AND2X8)                                                 0.09      0.13       2.26 f
+  dcache0_n9610 (net)                           8         0.11                0.00       2.26 f
+  U23709/A1 (AOI21X4)                                               0.09      0.00       2.26 f
+  U23709/Y (AOI21X4)                                                0.23      0.16       2.42 r
+  n27043 (net)                                  1         0.05                0.00       2.42 r
+  U3317/A (CLKINVX12)                                               0.23      0.00       2.42 r
+  U3317/Y (CLKINVX12)                                               0.30      0.24       2.66 f
+  dcache0_n9614 (net)                          52         0.74                0.00       2.66 f
+  U29834/A (NAND2X1)                                                0.30      0.00       2.66 f
+  U29834/Y (NAND2X1)                                                0.16      0.16       2.82 r
+  n29012 (net)                                  1         0.01                0.00       2.82 r
+  U12022/B0 (OAI21XL)                                               0.16      0.00       2.82 r
+  U12022/Y (OAI21XL)                                                0.15      0.11       2.94 f
+  dcache0_n14961 (net)                          1         0.01                0.00       2.94 f
+  dcache0_data_reg_0__69_/D (DFFQX1)                                0.15      0.00       2.94 f
+  data arrival time                                                                      2.94
+
+  clock CLK (rise edge)                                                       2.71       2.71
+  clock network delay (ideal)                                                 0.50       3.21
+  clock uncertainty                                                          -0.10       3.11
+  dcache0_data_reg_0__69_/CK (DFFQX1)                                         0.00       3.11 r
+  library setup time                                                         -0.17       2.94
+  data required time                                                                     2.94
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                     2.94
+  data arrival time                                                                     -2.94
+  ----------------------------------------------------------------------------------------------
+  slack (MET)                                                                            0.00
+
+
+1

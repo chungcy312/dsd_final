@@ -1,0 +1,61 @@
+Information: Propagating switching activity (low effort zero delay simulation). (PWR-6)
+Warning: Design has unannotated primary inputs. (PWR-414)
+Warning: Design has unannotated sequential cell outputs. (PWR-415)
+ 
+****************************************
+Report : power
+        -analysis_effort low
+Design : CHIP
+Version: U-2022.12
+Date   : Sat Jun  6 23:34:00 2026
+****************************************
+
+
+Library(s) Used:
+
+    typical (File: /home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/SynopsysDC/db/typical.db)
+
+
+Operating Conditions: slow   Library: slow
+Wire Load Model Mode: top
+
+Design        Wire Load Model            Library
+------------------------------------------------
+CHIP                   tsmc13_wl10       slow
+
+
+Global Operating Voltage = 1.08 
+Power-specific unit information :
+    Voltage Units = 1V
+    Capacitance Units = 1.000000pf
+    Time Units = 1ns
+    Dynamic Power Units = 1mW    (derived from V,C,T units)
+    Leakage Power Units = 1pW
+
+
+Attributes
+----------
+i - Including register clock pin internal power
+
+
+  Cell Internal Power  =  92.7549 mW   (95%)
+  Net Switching Power  =   4.5707 mW    (5%)
+                         ---------
+Total Dynamic Power    =  97.3256 mW  (100%)
+
+Cell Leakage Power     = 125.0514 uW
+
+
+                 Internal         Switching           Leakage            Total
+Power Group      Power            Power               Power              Power   (   %    )  Attrs
+--------------------------------------------------------------------------------------------------
+io_pad             0.0000            0.0000            0.0000            0.0000  (   0.00%)
+memory             0.0000            0.0000            0.0000            0.0000  (   0.00%)
+black_box          0.0000            0.0000            0.0000            0.0000  (   0.00%)
+clock_network     91.0334            0.0000            0.0000           91.0334  (  93.41%)  i
+register           0.3672            0.1958        6.6725e+07            0.6295  (   0.65%)
+sequential         0.0000            0.0000            0.0000            0.0000  (   0.00%)
+combinational      1.3554            4.3749        5.8327e+07            5.7887  (   5.94%)
+--------------------------------------------------------------------------------------------------
+Total             92.7560 mW         4.5707 mW     1.2505e+08 pW        97.4515 mW
+1

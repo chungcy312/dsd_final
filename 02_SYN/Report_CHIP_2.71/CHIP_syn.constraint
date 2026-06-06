@@ -1,0 +1,29 @@
+ 
+****************************************
+Report : constraint
+        -all_violators
+Design : CHIP
+Version: U-2022.12
+Date   : Sat Jun  6 23:33:19 2026
+****************************************
+
+
+   max_area
+
+                             Required        Actual
+   Design                      Area           Area           Slack
+   -----------------------------------------------------------------
+   CHIP                         0.00       7158078.00     -7158078.00
+                                                                    (VIOLATED)
+
+
+   max_leakage_power
+
+                             Required        Actual
+   Design                   Leakage Power  Leakage Power     Slack
+   -----------------------------------------------------------------
+   CHIP                         0.00       131741416.00   -131741416.00
+                                                                    (VIOLATED)
+
+
+1
