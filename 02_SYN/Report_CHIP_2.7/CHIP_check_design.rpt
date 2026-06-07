@@ -2,36 +2,36 @@
 ****************************************
 check_design summary:
 Version:     U-2022.12
-Date:        Sat May 30 20:51:01 2026
+Date:        Sun Jun  7 04:55:15 2026
 ****************************************
 
                    Name                                            Total
 --------------------------------------------------------------------------------
-Inputs/Outputs                                                    494
-    Unconnected ports (LINT-28)                                     4
+Inputs/Outputs                                                    495
+    Unconnected ports (LINT-28)                                     5
     Feedthrough (LINT-29)                                         148
     Shorted outputs (LINT-31)                                     180
     Constant outputs (LINT-52)                                    162
 
-Cells                                                              11
-    Cells do not drive (LINT-1)                                    11
+Cells                                                              10
+    Cells do not drive (LINT-1)                                    10
 --------------------------------------------------------------------------------
 
-Warning: In design 'core_MUL_CYCLES2', cell 'C2711' does not drive any nets. (LINT-1)
-Warning: In design 'dcache_1way_BLOCKS32', cell 'C66497' does not drive any nets. (LINT-1)
-Warning: In design 'dcache_1way_BLOCKS32', cell 'C66504' does not drive any nets. (LINT-1)
+Warning: In design 'core_MUL_CYCLES2', cell 'C2761' does not drive any nets. (LINT-1)
+Warning: In design 'dcache_2way_BLOCKS32', cell 'C78059' does not drive any nets. (LINT-1)
+Warning: In design 'dcache_2way_BLOCKS32', cell 'C78061' does not drive any nets. (LINT-1)
 Warning: In design 'if_stage', cell 'C838' does not drive any nets. (LINT-1)
 Warning: In design 'if_stage', cell 'C854' does not drive any nets. (LINT-1)
-Warning: In design 'ex_stage_MUL_CYCLES2', cell 'B_9' does not drive any nets. (LINT-1)
-Warning: In design 'ex_stage_MUL_CYCLES2', cell 'C679' does not drive any nets. (LINT-1)
-Warning: In design 'ex_stage_MUL_CYCLES2', cell 'C713' does not drive any nets. (LINT-1)
+Warning: In design 'ex_stage_MUL_CYCLES2', cell 'B_10' does not drive any nets. (LINT-1)
+Warning: In design 'ex_stage_MUL_CYCLES2', cell 'C699' does not drive any nets. (LINT-1)
 Warning: In design 'alu', cell 'B_2' does not drive any nets. (LINT-1)
 Warning: In design 'alu', cell 'B_3' does not drive any nets. (LINT-1)
 Warning: In design 'alu', cell 'B_4' does not drive any nets. (LINT-1)
 Warning: In design 'icache_1way_BLOCKS32', port 'addr[1]' is not connected to any nets. (LINT-28)
 Warning: In design 'icache_1way_BLOCKS32', port 'addr[0]' is not connected to any nets. (LINT-28)
-Warning: In design 'dcache_1way_BLOCKS32', port 'addr[1]' is not connected to any nets. (LINT-28)
-Warning: In design 'dcache_1way_BLOCKS32', port 'addr[0]' is not connected to any nets. (LINT-28)
+Warning: In design 'dcache_2way_BLOCKS32', port 'addr[1]' is not connected to any nets. (LINT-28)
+Warning: In design 'dcache_2way_BLOCKS32', port 'addr[0]' is not connected to any nets. (LINT-28)
+Warning: In design 'ex_stage_MUL_CYCLES2', port 'jal' is not connected to any nets. (LINT-28)
 Warning: In design 'id_stage', input port 'inst[31]' is connected directly to output port 'imm_aux[31]'. (LINT-29)
 Warning: In design 'id_stage', input port 'inst[31]' is connected directly to output port 'imm_alu[31]'. (LINT-29)
 Warning: In design 'id_stage', input port 'inst[31]' is connected directly to output port 'imm_alu[30]'. (LINT-29)

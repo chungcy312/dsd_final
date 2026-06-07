@@ -94,7 +94,7 @@ icache_1way #(
 );
 
 // Change this instance to dcache_2way for a 2-way D-cache experiment.
-dcache_1way #(
+dcache_2way #(
     .BLOCKS         (DCACHE_BLOCKS)
 ) dcache0 (
     .clk            (clk),

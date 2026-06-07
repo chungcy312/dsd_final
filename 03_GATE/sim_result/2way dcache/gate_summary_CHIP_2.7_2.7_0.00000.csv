@@ -1,0 +1,4 @@
+pattern,result,sim_time,timing_violations,timing_violations_after_reset,stall_total,icache_miss,icache_stall,dcache_miss,dcache_stall,stall_lu,stall_mul,br_occ,br_taken,br_pen,jal_occ,jal_taken,jal_pen,jalr_occ,jalr_taken,jalr_pen,cycle_count
+QSort_uncompressed,PASS,193798947,1,0,9036,28,510,468,8542,0,0,0,0,0,0,0,0,0,0,0,71759
+Conv,PASS,37657947,1,0,7001,29,529,311,5655,0,872,0,0,0,0,0,0,0,0,0,13929
+LFSR_HIST,PASS,722164647,1,0,17641,31,564,942,17131,0,0,0,0,0,0,0,0,0,0,0,267450

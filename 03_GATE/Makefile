@@ -33,22 +33,25 @@ GATE_FILES = ../00_TESTBED/testbench/Final_tb.v \
              $(NETLIST_FILE) \
              -v /home/raid7_2/course/cvsd/CBDK_IC_Contest/CIC/Verilog/tsmc13.v
 
+# 新增 CSV Header 定義 (包含 Gate Sim 專屬的 Reset 後違例統計)
+CSV_HEADER = "pattern,result,sim_time,timing_violations,timing_violations_after_reset,stall_total,icache_miss,icache_stall,dcache_miss,dcache_stall,stall_lu,stall_mul,br_occ,br_taken,br_pen,jal_occ,jal_taken,jal_pen,jalr_occ,jalr_taken,jalr_pen,cycle_count"
+
 # Gate simulation
 run:
-	vcs $(GATE_FILES) +define+$(PATTERN) +define+SDF +define+SDFFILE=\"$(SDF_FILE)\" +define+CYCLE=$(SIM_TIME) $(VCS_WARN_OPTS) -full64 -R +v2k -debug_access+all | tee vcs_$(PATTERN).log
+	vcs $(GATE_FILES) +define+$(PATTERN) +define+SDF +define+SDFFILE=\"$(SDF_FILE)\" +define+CYCLE=$(SIM_TIME) +define+FSDB $(VCS_WARN_OPTS) -full64 -R +v2k -debug_access+all +neg_tchk | tee vcs_$(PATTERN).log
 
 clean:
 	-rm novas*
 	-rm ucli.key
 	-rm simv
 	-rm -rf csrc/
-	-rm -rf *.fsdb
+#	-rm -rf *.fsdb
 	-rm -rf nWaveLog/
 	-rm -rf simv.daidir/
 
 run_all:
 	@rm -f $(SUMMARY); \
-	echo "pattern,result,sim_time,timing_violations,timing_violations_after_reset,stall_total,stall_load_use,stall_mem,stall_mul,stall_ifetch,stall_dmem,stall_imem,branch_wrong,branch_wrong_cycles,cycle_count" > $(SUMMARY)
+	echo $(CSV_HEADER) > $(SUMMARY)
 	@set -e; \
 	overall=pass; \
 	for pat in $(PATTERNS); do \
@@ -67,7 +70,25 @@ run_all:
 		else result=$$functional; fi; \
 		if [ "$$result" = "FAIL" ] || [ "$$result" = "UNKNOWN" ]; then overall=fail; \
 		elif [ "$$result" = "FAIL_TIMING" ] && [ "$$overall" = "pass" ]; then overall='fail(timing violation)'; fi; \
-		stalls=$$(awk '/STALL_SUMMARY/ {for (i=1;i<=NF;i++) {split($$i,a,"="); v[a[1]]=a[2]}} END {printf "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s", v["total"]+0, v["load_use"]+0, v["mem"]+0, v["mul"]+0, v["ifetch"]+0, v["dmem"]+0, v["imem"]+0, v["branch_wrong"]+0, v["branch_wrong_cycles"]+0, v["cycles"]+0}' vcs_$$pat.log); \
+		stalls=$$(awk -F'|' ' \
+			/Total Execution Cycles/ {gsub(/[^0-9]/, "", $$2); cyc=$$2} \
+			/Total Global Stalls/ {gsub(/[^0-9]/, "", $$2); tot=$$2} \
+			/I-Cache Miss Count/ {gsub(/[^0-9]/, "", $$2); im_m=$$2} \
+			/I-Cache Stall Cycles/ {gsub(/[^0-9]/, "", $$2); im_s=$$2} \
+			/D-Cache Miss Count/ {gsub(/[^0-9]/, "", $$2); dm_m=$$2} \
+			/D-Cache Stall Cycles/ {gsub(/[^0-9]/, "", $$2); dm_s=$$2} \
+			/Load-Use Hazard Stall/ {gsub(/[^0-9]/, "", $$2); lu=$$2} \
+			/Multiplier Stall/ {gsub(/[^0-9]/, "", $$2); mu=$$2} \
+			/\[Branch\] Total Occurrences/ {gsub(/[^0-9]/, "", $$2); bro=$$2} \
+			/\[Branch\] Taken Count/ {gsub(/[^0-9]/, "", $$2); brt=$$2} \
+			/\[Branch\] Penalty Cycles/ {gsub(/[^0-9]/, "", $$2); brp=$$2} \
+			/\[JAL\]    Total Occurrences/ {gsub(/[^0-9]/, "", $$2); jalo=$$2} \
+			/\[JAL\]    Taken Count/ {gsub(/[^0-9]/, "", $$2); jalt=$$2} \
+			/\[JAL\]    Penalty Cycles/ {gsub(/[^0-9]/, "", $$2); jalp=$$2} \
+			/\[JALR\]   Total Occurrences/ {gsub(/[^0-9]/, "", $$2); jalro=$$2} \
+			/\[JALR\]   Taken Count/ {gsub(/[^0-9]/, "", $$2); jalrt=$$2} \
+			/\[JALR\]   Penalty Cycles/ {gsub(/[^0-9]/, "", $$2); jalrp=$$2} \
+			END {printf "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d", tot+0, im_m+0, im_s+0, dm_m+0, dm_s+0, lu+0, mu+0, bro+0, brt+0, brp+0, jalo+0, jalt+0, jalp+0, jalro+0, jalrt+0, jalrp+0, cyc+0}' vcs_$$pat.log); \
 		printf "%s,%s,%s,%s,%s,%s\n" "$$pat" "$$result" "$$time" "$$viol" "$$eff_viol" "$$stalls" | tee -a $(SUMMARY); \
 	done; \
 	final_summary="$(SUMMARY_PREFIX)_$(CHIP_BASE)_$(SYN_CYCLE)_$(SIM_TIME)_$${overall}.csv"; \
@@ -78,7 +99,7 @@ run_all:
 
 run3:
 	@rm -f $(SUMMARY); \
-	echo "pattern,result,sim_time,timing_violations,timing_violations_after_reset,stall_total,stall_load_use,stall_mem,stall_mul,stall_ifetch,stall_dmem,stall_imem,branch_wrong,branch_wrong_cycles,cycle_count" > $(SUMMARY)
+	echo $(CSV_HEADER) > $(SUMMARY)
 	@set -e; \
 	overall=pass; \
 	for pat in $(PATTERNS3); do \
@@ -97,7 +118,25 @@ run3:
 		else result=$$functional; fi; \
 		if [ "$$result" = "FAIL" ] || [ "$$result" = "UNKNOWN" ]; then overall=fail; \
 		elif [ "$$result" = "FAIL_TIMING" ] && [ "$$overall" = "pass" ]; then overall='fail(timing violation)'; fi; \
-		stalls=$$(awk '/STALL_SUMMARY/ {for (i=1;i<=NF;i++) {split($$i,a,"="); v[a[1]]=a[2]}} END {printf "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s", v["total"]+0, v["load_use"]+0, v["mem"]+0, v["mul"]+0, v["ifetch"]+0, v["dmem"]+0, v["imem"]+0, v["branch_wrong"]+0, v["branch_wrong_cycles"]+0, v["cycles"]+0}' vcs_$$pat.log); \
+		stalls=$$(awk -F'|' ' \
+			/Total Execution Cycles/ {gsub(/[^0-9]/, "", $$2); cyc=$$2} \
+			/Total Global Stalls/ {gsub(/[^0-9]/, "", $$2); tot=$$2} \
+			/I-Cache Miss Count/ {gsub(/[^0-9]/, "", $$2); im_m=$$2} \
+			/I-Cache Stall Cycles/ {gsub(/[^0-9]/, "", $$2); im_s=$$2} \
+			/D-Cache Miss Count/ {gsub(/[^0-9]/, "", $$2); dm_m=$$2} \
+			/D-Cache Stall Cycles/ {gsub(/[^0-9]/, "", $$2); dm_s=$$2} \
+			/Load-Use Hazard Stall/ {gsub(/[^0-9]/, "", $$2); lu=$$2} \
+			/Multiplier Stall/ {gsub(/[^0-9]/, "", $$2); mu=$$2} \
+			/\[Branch\] Total Occurrences/ {gsub(/[^0-9]/, "", $$2); bro=$$2} \
+			/\[Branch\] Taken Count/ {gsub(/[^0-9]/, "", $$2); brt=$$2} \
+			/\[Branch\] Penalty Cycles/ {gsub(/[^0-9]/, "", $$2); brp=$$2} \
+			/\[JAL\]    Total Occurrences/ {gsub(/[^0-9]/, "", $$2); jalo=$$2} \
+			/\[JAL\]    Taken Count/ {gsub(/[^0-9]/, "", $$2); jalt=$$2} \
+			/\[JAL\]    Penalty Cycles/ {gsub(/[^0-9]/, "", $$2); jalp=$$2} \
+			/\[JALR\]   Total Occurrences/ {gsub(/[^0-9]/, "", $$2); jalro=$$2} \
+			/\[JALR\]   Taken Count/ {gsub(/[^0-9]/, "", $$2); jalrt=$$2} \
+			/\[JALR\]   Penalty Cycles/ {gsub(/[^0-9]/, "", $$2); jalrp=$$2} \
+			END {printf "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d", tot+0, im_m+0, im_s+0, dm_m+0, dm_s+0, lu+0, mu+0, bro+0, brt+0, brp+0, jalo+0, jalt+0, jalp+0, jalro+0, jalrt+0, jalrp+0, cyc+0}' vcs_$$pat.log); \
 		printf "%s,%s,%s,%s,%s,%s\n" "$$pat" "$$result" "$$time" "$$viol" "$$eff_viol" "$$stalls" | tee -a $(SUMMARY); \
 	done; \
 	if [ "$$overall" = "pass" ]; then \
