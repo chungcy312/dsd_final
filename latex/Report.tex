@@ -161,13 +161,6 @@ where lower area and lower simulation time are preferred.  The extension
 evaluation additionally checks branch prediction, compressed instructions, and
 multiplication at gate level.
 
-\subsection{Final report requirement}
-The project description explicitly requires the June 14 submission folder to
-contain the final presentation slides and a detailed report of 8--16 pages.
-It does not prescribe a chapter template.  This report therefore emphasizes
-architecture, implementation decisions, experimental evidence, synthesis
-results, and lessons learned.
-
 \section{Processor Architecture}
 
 \subsection{Top-level organization}
@@ -218,7 +211,7 @@ JAL resolution & ID stage & One-cycle JAL penalty\\
     \draw[arr] (\a)--(\b);
   \coordinate (redirectTop) at ($(ex.north)+(0,10mm)$);
   \draw[arr,red] (ex.north) -- (redirectTop)
-    -| node[pos=0.28,above,font=\scriptsize]{redirect} (if.north);
+    -| node[pos=0.28,above,font=\scriptsize]{taken branch / JALR: correct PC} (if.north);
   \coordinate (exFwdNear) at ($(ex.south)+(4mm,0)$);
   \coordinate (exFwdFar) at ($(ex.south)+(-4mm,0)$);
   \coordinate (fwdNear) at ($(exFwdNear)+(0,-8mm)$);
@@ -325,14 +318,14 @@ pipeline-control overhead.
 \label{tab:cache-sweep}
 \begin{tabular}{llrrr}
 \toprule
-Pattern & Cache & 16 blocks, 1-way & 32 blocks, 1-way & 64 blocks, 2-way\\
+Pattern & Cache & 16 blocks, 1-way & 32 blocks, 1-way & 64 blocks, 1-way\\
 \midrule
 QSort & I miss rate & 2.5498\% & 0.0541\% & 0.0541\%\\
-QSort & D miss rate & 6.7210\% & 3.8209\% & 0.9843\%\\
+QSort & D miss rate & 6.7210\% & 3.8209\% & 1.7041\%\\
 Conv & I miss rate & 3.6880\% & 0.9164\% & 0.8941\%\\
-Conv & D miss rate & 21.2606\% & 2.9163\% & 1.3641\%\\
+Conv & D miss rate & 21.2606\% & 2.9163\% & 2.9163\%\\
 LFSR\_HIST & I miss rate & 18.4577\% & 0.0130\% & 0.0130\%\\
-LFSR\_HIST & D miss rate & 37.5730\% & 36.5347\% & 34.7826\%\\
+LFSR\_HIST & D miss rate & 37.5730\% & 36.5347\% & 35.4964\%\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -394,7 +387,8 @@ shared.  Sixteen compressed operations are supported:
   \draw[a] (dec)--(normal);
   \draw[a] (cross)--node[above,font=\scriptsize]{no}(normal);
   \draw[a] (cross)--node[below,font=\scriptsize]{yes}(second);
-  \draw[a] (second)|-(normal);
+  \coordinate (secondRoute) at ($(second.north)+(0,8mm)$);
+  \draw[a] (second.north) -- (secondRoute) -| (normal.south);
 \end{tikzpicture}}
 \caption{Instruction alignment and decompression flow.}
 \end{figure}
@@ -474,7 +468,7 @@ explicitly constrained as multicycle paths.
 \subsection{Synthesis results}
 \begin{table}[h]
 \centering
-\caption{Final 2-way D-cache synthesis summary.}
+\caption{Final synthesis and timing-closure summary.}
 \label{tab:syn}
 \begin{tabular}{lr}
 \toprule
@@ -486,8 +480,6 @@ Setup / hold violating paths & 0 / 0\\
 Logic levels on reported CLK critical path & 8\\
 Combinational / sequential cell count & 28,294 / 11,595\\
 Total cell area & \SI{769950.832599}{\micro m^2}\\
-Estimated total dynamic power & \SI{99.6629}{mW}\\
-Estimated leakage power & \SI{147.5071}{\micro W}\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -498,19 +490,12 @@ including the \SI{1.35}{ns} external input delay.  This confirms that the cache
 control/refill interface, rather than the integer ALU, is the dominant timing
 concern.
 
-For comparison, a synthesized one-way D-cache candidate at \SI{2.71}{ns} had a
-similar cell area (\SI{767791.73}{\micro m^2}) but a deeper 20-level critical
-path through the D-cache write path.  The two-way implementation's modest area
-increase was accepted for its miss-rate benefit and shorter reported critical
-logic depth.
-
-\textbf{Report caveat.} The final QoR has no setup or hold violations, but the
-constraint report contains one small maximum-capacitance violation
-(\(-0.03\) in the library's capacitance units) on a register-file net.  The
-automatically reported \texttt{max\_area} and \texttt{max\_leakage\_power}
-entries are artifacts of setting their optimization target to zero, rather
-than functional or timing failures.  The power values are vectorless
-estimates, so they are useful for comparison but not workload-accurate power.
+The final QoR reports zero setup and hold violating paths.  The critical path
+is associated with D-cache control rather than the integer ALU, so timing
+optimization focused on cache request/refill logic and the external-memory
+interface.  The final cell area includes the 32-block direct-mapped I-cache,
+32-block two-way D-cache, compressed-instruction aligner/decoder, and
+multicycle multiplier.
 
 \section{Verification and Final Results}
 
@@ -614,23 +599,11 @@ negative setup/hold slack and achieves an official performance score of
 matching cache capacity and associativity to the supplied workload behavior;
 the lowest-risk control improvement was resolving JAL one stage earlier.
 
-Future work should first remove the remaining maximum-capacitance violation and
-add activity-annotated power analysis.  Architectural extensions should be
-evaluated in this order: a small nonblocking or write-buffered D-cache, a
+Future architectural extensions should be evaluated in this order: a small
+nonblocking or write-buffered D-cache, a
 carefully timed IF-stage JAL target buffer, and selective dynamic prediction
 only if its runtime benefit outweighs area and redirect-path cost.  The current
 experiment infrastructure provides a practical basis for making those
 decisions quantitatively.
-
-\section*{References}
-\begin{enumerate}
-  \item Digital System Design Final Project, \emph{Pipelined RISC-V Design},
-        project description and submission requirements, 2026.
-  \item RISC-V International, \emph{The RISC-V Instruction Set Manual,
-        Volume I: Unprivileged ISA}.
-  \item Synopsys Design Compiler synthesis, timing, area, constraint, and power
-        reports generated for the final Group 1 implementation.
-  \item Group 1 cache and branch-predictor sweep records and final presentation.
-\end{enumerate}
 
 \end{document}

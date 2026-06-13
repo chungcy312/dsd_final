@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.4.29)  13 JUN 2026 18:15
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.4.29)  13 JUN 2026 18:36
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -915,20 +915,9 @@ File: lstlang1.sty 2025/11/14 1.11b listings language file
 File: lstlang2.sty 2025/11/14 1.11b listings language file
 )
 LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10> not available
-(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 417.
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 411.
 
-[4]
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-
-Underfull \hbox (badness 1454) in paragraph at lines 501--506
-[]\T1/lmr/m/n/10.95 For com-par-i-son, a syn-the-sized one-way D-cache can-di-d
-ate at $\OT1/lmr/m/n/10.95 2\OML/lmm/m/it/10.95 :\OT1/lmr/m/n/10.95 71 []$ \T1/
-lmr/m/n/10.95 had a sim-i-lar cell area
- []
-
-[5] [6] [7] [8] (Report.aux)
+[4] [5] [6] [7] (Report.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-12-24>
@@ -937,11 +926,11 @@ Package rerunfilecheck Info: File `Report.out' has not changed.
 (rerunfilecheck)             Checksum: EFC06FACF5C64F63466D332D3B81B7C4;1669.
  ) 
 Here is how much of TeX's memory you used:
- 24156 strings out of 467871
- 446597 string characters out of 5418376
- 1074682 words of memory out of 5000000
- 52560 multiletter control sequences out of 15000+600000
- 702806 words of font info for 83 fonts, out of 8000000 for 9000
+ 24154 strings out of 467871
+ 446668 string characters out of 5418376
+ 1074265 words of memory out of 5000000
+ 52566 multiletter control sequences out of 15000+600000
+ 698543 words of font info for 82 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  84i,10n,94p,455b,1388s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/chung/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx10.pf
@@ -950,7 +939,6 @@ b><C:/Users/chung/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi10.pf
 b><C:/Users/chung/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr10.pfb
 ><C:/Users/chung/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr7.pfb><
 C:/Users/chung/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr8.pfb><C:
-/Users/chung/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri10.pfb><C:
 /Users/chung/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmss10.pfb><C:
 /Users/chung/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmss12.pfb><C:
 /Users/chung/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmss8.pfb><C:/
@@ -958,9 +946,9 @@ Users/chung/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmssbx10.pfb><C
 :/Users/chung/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy10.pfb><C
 :/Users/chung/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtk10.pfb><C
 :/Users/chung/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt10.pfb>
-Output written on Report.pdf (10 pages, 361418 bytes).
+Output written on Report.pdf (9 pages, 339262 bytes).
 PDF statistics:
- 242 PDF objects out of 1000 (max. 8388607)
- 69 named destinations out of 1000 (max. 500000)
+ 226 PDF objects out of 1000 (max. 8388607)
+ 62 named destinations out of 1000 (max. 500000)
  85 words of extra memory for PDF output out of 10000 (max. 10000000)
 
