@@ -877,8 +877,6 @@ localparam WB_ALU = 2'd0;
 localparam WB_MEM = 2'd1;
 localparam WB_PC4 = 2'd2;
 localparam WB_IMM = 2'd3;
-localparam [3:0] MUL_CYCLES_4 = MUL_CYCLES;
-
 wire [31:0] fwd_rs1;
 wire [31:0] fwd_rs2;
 wire [31:0] alu_input2;
@@ -887,15 +885,6 @@ wire [31:0] pc4;
 wire [31:0] branch_target;
 wire [31:0] branch_next_pc;
 wire branch_taken;
-wire mul_active;
-wire mul_done;
-wire [31:0] mul_product;
-reg [31:0] mul_a_reg;
-reg [31:0] mul_b_reg;
-reg [31:0] mul_result_reg;
-reg [3:0]  mul_count;
-reg        mul_busy;
-reg        mul_done_r;
 
 assign fwd_rs1 = exmem_fwd_rs1 ? exmem_wdata :
                  (memwb_wen && memwb_rd != 5'b0 && memwb_rd == rs1) ? memwb_wdata :
@@ -921,45 +910,11 @@ assign redirect = jalr | branch_taken;
 assign redirect_pc = jalr ? ((fwd_rs1 + imm_alu) & 32'hffff_fffe) :
                      branch_next_pc;
 
-assign mul_active = valid & is_mul;
-assign mul_done = mul_done_r;
-assign mul_stall = mul_active & ~mul_done;
-assign mul_product = mul_a_reg * mul_b_reg;
+// MUL shares the single-cycle ALU result path, so it never holds the pipeline.
+assign mul_stall = 1'b0;
 assign result = (wb_sel == WB_PC4) ? pc4 :
                 (wb_sel == WB_IMM) ? imm_aux :
-                is_mul ? mul_result_reg :
                 alu_result;
-
-always @(posedge clk) begin
-    if (!rst_n) begin
-        mul_count <= 4'b0;
-        mul_busy <= 1'b0;
-        mul_done_r <= 1'b0;
-    end else begin
-        if (mul_done_r) begin
-            if (advance) begin
-                mul_done_r <= 1'b0;
-                mul_count <= 4'b0;
-            end
-        end else if (!mul_active) begin
-            mul_busy <= 1'b0;
-            mul_count <= 4'b0;
-        end else if (!mul_busy) begin
-            mul_a_reg <= fwd_rs1;
-            mul_b_reg <= fwd_rs2;
-            mul_busy <= 1'b1;
-            mul_count <= 4'd1;
-        end else if (mul_busy) begin
-            if (mul_count >= MUL_CYCLES_4) begin
-                mul_result_reg <= mul_product;
-                mul_busy <= 1'b0;
-                mul_done_r <= 1'b1;
-            end else begin
-                mul_count <= mul_count + 1'b1;
-            end
-        end
-    end
-end
 
 alu alu0 (
     .input1     (fwd_rs1),
@@ -1030,13 +985,15 @@ localparam ALU_SLT = 4'd5;
 localparam ALU_SLL = 4'd6;
 localparam ALU_SRL = 4'd7;
 localparam ALU_SRA = 4'd8;
+localparam ALU_MUL = 4'd9;
 
 always @(*) begin
     alu_ctrl = ALU_ADD;
     if (opcode == 7'b0110011) begin
         alu_ctrl = 4'bxxxx;
         case (funct3)
-            3'b000: alu_ctrl = (funct7 == 7'b0100000) ? ALU_SUB : ALU_ADD;
+            3'b000: alu_ctrl = (funct7 == 7'b0100000) ? ALU_SUB :
+                               (funct7 == 7'b0000001) ? ALU_MUL : ALU_ADD;
             3'b111: alu_ctrl = ALU_AND;
             3'b110: alu_ctrl = ALU_OR;
             3'b100: alu_ctrl = ALU_XOR;
@@ -1078,6 +1035,7 @@ localparam ALU_SLT = 4'd5;
 localparam ALU_SLL = 4'd6;
 localparam ALU_SRL = 4'd7;
 localparam ALU_SRA = 4'd8;
+localparam ALU_MUL = 4'd9;
 
 wire is_sub_op;
 wire [31:0] add_sub_b;
@@ -1100,6 +1058,7 @@ always @(*) begin
         ALU_SLL: result = input1 << input2[4:0];
         ALU_SRL: result = input1 >> input2[4:0];
         ALU_SRA: result = $signed(input1) >>> input2[4:0];
+        ALU_MUL: result = input1 * input2;
         default: result = 32'bx;
     endcase
 end

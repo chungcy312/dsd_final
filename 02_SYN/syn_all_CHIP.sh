@@ -4,11 +4,11 @@ set -eu
 cd "$(dirname "$0")"
 
 chips="
-CHIP_d16.v
+CHIP.v
 "
 
 cycles="
-2.66 2.68 2.7 2.72 2.6 2.62 2.64 
+2.76 2.77 2.78 2.79 2.8
 "
 
 max_jobs="${MAX_JOBS:-4}"

@@ -1,0 +1,28 @@
+\contentsline {section}{\numberline {1}Specification and Design Goals}{1}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Required behavior}{1}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Evaluation targets}{1}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.3}Final report requirement}{1}{subsection.1.3}%
+\contentsline {section}{\numberline {2}Processor Architecture}{1}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Top-level organization}{1}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Pipeline operation}{2}{subsection.2.2}%
+\contentsline {section}{\numberline {3}Hazards and Control Flow}{2}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Data and structural hazards}{2}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Control hazards and ID-stage JAL}{3}{subsection.3.2}%
+\contentsline {section}{\numberline {4}Cache Design and Optimization}{3}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Cache microarchitecture}{3}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Cache sweep methodology}{3}{subsection.4.2}%
+\contentsline {section}{\numberline {5}ISA Extensions}{4}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Compressed instruction support}{4}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Multicycle multiplication}{4}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Branch-prediction exploration}{5}{subsection.5.3}%
+\contentsline {section}{\numberline {6}Synthesis and Timing Closure}{5}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Flow and constraints}{5}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Synthesis results}{5}{subsection.6.2}%
+\contentsline {section}{\numberline {7}Verification and Final Results}{6}{section.7}%
+\contentsline {subsection}{\numberline {7.1}Verification strategy}{6}{subsection.7.1}%
+\contentsline {subsection}{\numberline {7.2}Official final results}{6}{subsection.7.2}%
+\contentsline {section}{\numberline {8}Engineering Process and Lessons Learned}{7}{section.8}%
+\contentsline {subsection}{\numberline {8.1}Experiment-driven decisions}{7}{subsection.8.1}%
+\contentsline {subsection}{\numberline {8.2}Use of AI-assisted tools}{7}{subsection.8.2}%
+\contentsline {subsection}{\numberline {8.3}Work assignment}{7}{subsection.8.3}%
+\contentsline {section}{\numberline {9}Conclusion and Future Work}{7}{section.9}%

@@ -1,7 +1,7 @@
 module CHIP #(
     parameter ICACHE_BLOCKS = 32,
     parameter DCACHE_BLOCKS = 64,
-    parameter MUL_CYCLES    = 2
+    parameter MUL_CYCLES    = 1
 ) (
     clk,
     rst_n,
